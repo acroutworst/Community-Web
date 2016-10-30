@@ -10,11 +10,6 @@ import requests
 def index(request):
     return render(request, 'index.html')
 
-
-def register(request):
-    return render(request, 'auth/register.html')
-
-
 def list_groups(request):
     #api_views.group.GroupViewSet
     #group_serializer = serializers.group.GroupSerializer(response)

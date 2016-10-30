@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+SITE_ID = 1
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'django_extensions',
+    'community.web',
+    'community.rest_api',
 ]
 
 MIDDLEWARE = [
@@ -87,12 +94,12 @@ DATABASES = {
 }
 
 # Authentication --------------------------------------
-LOGIN_URL = '/auth/login'
-# AUTHENTICATION_BACKENDS = (
-#     'django_stormpath.backends.StormpathBackend',
-#     'django_stormpath.backends.StormpathIdSiteBackend',
-#     'django_stormpath.backends.StormpathSocialBackend'
-# )
+LOGIN_URL = '/account/login'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 #
 # AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
 #
@@ -107,16 +114,16 @@ LOGIN_URL = '/auth/login'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.authentication.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.authentication.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.authentication.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.authentication.password_validation.NumericPasswordValidator',
     },
 ]
 # --------------------------------------------------------

@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Community - Group List</title>
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block content %}
         <b>Groups:</b><br/>
         {% for group in groups %}
             {{ group }}<br/>
         {% endfor %}
-    </body>
-</html>
+{% endblock %}
