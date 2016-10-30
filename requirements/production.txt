@@ -1,4 +1,6 @@
 -r base.txt
 psycopg2
+gunicorn
+whitenoise
 
 # Anything else for production environment
