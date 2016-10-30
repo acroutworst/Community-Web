@@ -18,4 +18,4 @@ REM ---------------------------------------------
 ECHO Installing requirements
 pip install -r %~dp0requirements.txt
 
-ECHO .venv setup complete. Virtual environment is activated.
+ECHO .venv setup complete.
