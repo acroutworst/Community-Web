@@ -4,3 +4,5 @@ django-extensions
 django-allauth
 Werkzeug
 pyOpenSSL
+dj-database-url
+requests
