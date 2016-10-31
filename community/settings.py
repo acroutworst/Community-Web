@@ -27,7 +27,7 @@ SECRET_KEY = 'pvw0)1q4r$jup#+zd0^ljvrui@f74=_^=0f%hr_m92n)bs8^#9'
 DEBUG = True
 DEV_LOCAL = False
 DEPLOYMENT_ENVIRONMENT = 'LOCAL'
-os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
+DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
 
@@ -108,6 +108,7 @@ else:
     DATABASES = {
         'default': db_from_env
     }
+print('DEV_LOCAL: ', DEV_LOCAL)
 print('Database: ', DATABASES)
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
