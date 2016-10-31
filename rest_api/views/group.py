@@ -1,12 +1,10 @@
 from django.contrib.auth.models import Group
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .. import serializers
 from rest_framework import viewsets
+from ..serializers import group
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `detail` actions.
     """
     queryset = Group.objects.all()
-    serializer_class = serializers.group.GroupSerializer
+    serializer_class = group.GroupSerializer
