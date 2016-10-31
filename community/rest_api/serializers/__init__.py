@@ -1,1 +1,1 @@
-from . import user, group
+from . import user, group, user_profile
