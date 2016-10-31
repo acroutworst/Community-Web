@@ -25,11 +25,11 @@ SECRET_KEY = 'pvw0)1q4r$jup#+zd0^ljvrui@f74=_^=0f%hr_m92n)bs8^#9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-DEV_LOCAL = True
-DEPLOYMENT_ENVIRONMENT = None
+DEV_LOCAL = False
+DEPLOYMENT_ENVIRONMENT = 'LOCAL'
 os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
-if DEPLOYMENT_ENVIRONMENT is not None:
-    DEV_LOCAL = False
+if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
+    DEV_LOCAL = True
 
 ALLOWED_HOSTS = []
 
