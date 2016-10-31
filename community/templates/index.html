@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load static %}
+    <a href="{% url 'list groups' %}">List groups</a><br />
+    <a href="/api">REST API Viewer</a><br/>
+    <h1><b>text</b></h1>
+    <img src="{% static 'community.jpg' %}" alt="Community!" style="width:50%; height:50%;">
+{% endblock %}

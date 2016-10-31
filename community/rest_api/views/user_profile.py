@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from accounts.models import UserProfile
+from community.accounts.models import UserProfile
 from ..serializers.user_profile import UserProfileSerializer
 
 
