@@ -1,9 +1,8 @@
-from community.web.models import UserProfile
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from ..serializers.user_profile import UserProfileSerializer
 from rest_framework import viewsets
+
+from accounts.models import UserProfile
+from ..serializers.user_profile import UserProfileSerializer
+
 
 class UserProfileViewSet(viewsets.ReadOnlyModelViewSet):
     """
