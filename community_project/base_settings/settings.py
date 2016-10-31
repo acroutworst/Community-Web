@@ -62,12 +62,12 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'community_project.urls'
+ROOT_URLCONF = 'base_settings.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'community_project', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'community_project.wsgi.application'
+WSGI_APPLICATION = 'base_settings.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
@@ -104,14 +104,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-#
-# AUTH_USER_MODEL = 'django_stormpath.StormpathUser'
-#
-# STORMPATH_API_KEY = os.path.join(BASE_DIR, '.stormpath', 'apiKey.properties')
-# stormpathClient = StormpathClient(api_key_file=STORMPATH_API_KEY)
-# STORMPATH_ID = '7D497EQD0O7OQVQDKUXHC962X'
-# STORMPATH_SECRET = 'c6QEI+UbXqU6WG0d2MmSDPsPdvmsM6CVj//NLvPGTK0'
-# STORMPATH_APPLICATION = 'https://api.stormpath.com/v1/applications/5uTPKngEwo8kvC1ijkH3Kf'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -152,7 +145,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, '../staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Extra places for collectstatic to find staticfiles files.
