@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import UserProfile
+from community.accounts.models import UserProfile
 
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
