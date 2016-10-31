@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +25,9 @@ SECRET_KEY = 'pvw0)1q4r$jup#+zd0^ljvrui@f74=_^=0f%hr_m92n)bs8^#9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+DEV_MODE = True
+if(os.environ['DEPLOYMENT_ENVIRONMENT'] != None):
+    DEV_MODE = False
 ALLOWED_HOSTS = []
 
 
@@ -96,6 +99,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+if not DEV_MODE:
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
