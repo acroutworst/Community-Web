@@ -25,12 +25,12 @@ SECRET_KEY = 'pvw0)1q4r$jup#+zd0^ljvrui@f74=_^=0f%hr_m92n)bs8^#9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-DEV_MODE = True
+DEV_LOCAL = True
 DEPLOYMENT_ENVIRONMENT = None
 os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is not None:
-    DEV_MODE = False
-    
+    DEV_LOCAL = False
+
 ALLOWED_HOSTS = []
 
 
@@ -96,17 +96,19 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEV_LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-
-if not DEV_MODE:
+else:
     db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
+    DATABASES = {
+        'default': db_from_env
+    }
+print('Database: ', DATABASES)
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
