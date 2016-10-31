@@ -98,7 +98,7 @@ DATABASES = {
 }
 
 # Authentication --------------------------------------
-LOGIN_URL = '/account/login'
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

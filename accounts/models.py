@@ -11,19 +11,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username + "'s profile"
-
-
-class AbstractCommunity(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        abstract = True
-
-
-class Community(AbstractCommunity):
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-    location = models.CharField(max_length=100, blank=True, null=True)
