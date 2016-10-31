@@ -8,7 +8,11 @@ from django.http import HttpResponseRedirect
 @login_required
 def profile_view(request):
     user = request.user
-    profile = UserProfile.objects.get(user=user)
+    profileQuery = UserProfile.objects.filter(user=user)
+    if profileQuery.count() == 0:
+        profile = UserProfile.objects.create(user=user)
+    else:
+        profile = UserProfile.objects.get(user=user)
     context = {'profile': profile}
     return render(request, 'accounts/profile/view.html', context)
 
