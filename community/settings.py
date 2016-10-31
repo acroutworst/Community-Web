@@ -148,9 +148,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Extra places for collectstatic to find staticfiles files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'community', 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'static'),
+# )
 
 # Simplified staticfiles file serving.
 # https://warehouse.python.org/project/whitenoise/
