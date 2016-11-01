@@ -2,9 +2,14 @@
 
 {% block content %}
     <h1>{{ profile.user }}'s Profile</h1>
-    {% if profile.position %}Position: {{ profile.position }}<br/>{% endif %}
-    {% if profile.department %}Department: {{ profile.department }}<br/>{% endif %}
-    {% if profile.interests %}Interests: {{ profile.interests }}<br/>{% endif %}
-    {% if profile.transportation %}Transportation: {{ profile.transportation }}<br/>{% endif %}
+    {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
+    <b>User since:</b> {{ profile.user.date_joined }}<br/>
+    <b>E-mail addresses:</b><br/>
+    {% for email in emails %} {{ email.email }} <br/>{% endfor %}
+    <a href="{% url 'account_email' %}">modify e-mails</a><br/>
+    {% if profile.position %}<b>Position: </b>{{ profile.position }}<br/>{% endif %}
+    {% if profile.department %}<b>Department: </b>{{ profile.department }}<br/>{% endif %}
+    {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
+    {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
     <a href="edit.html">Edit Profile</a><br/>
 {% endblock %}
