@@ -3,3 +3,7 @@ deployment:
     branch: development
     heroku:
       appname: community-ci
+  production:
+    branch: master
+    heroku:
+      appname: community-cd
