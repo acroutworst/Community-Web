@@ -3,6 +3,10 @@
     {% load static %}
     <a href="{% url 'list groups' %}">List groups</a><br />
     <a href="/api">REST API Viewer</a><br/>
-    <h1><b>text</b></h1>
+    <div ng-app="">
+		<p>AngularJS Test: <input type="text" ng-model="name"></p>
+		<p ng-bind="name"></p>
+	</div>
+	<h1><b>text</b></h1>
     <img src="{% static 'site/img/community.jpg' %}" alt="Community!" style="width:50%; height:50%;">
 {% endblock %}
