@@ -6,3 +6,4 @@ Werkzeug
 pyOpenSSL
 dj-database-url
 requests
+feedparser

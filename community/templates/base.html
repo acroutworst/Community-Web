@@ -26,6 +26,7 @@
       <strong>Menu:</strong>
       <ul>
     <li><a href="/">Home</a></li>
+    <li><a href="{% url 'rss_view' %}">RSS Feed</a></li>
 	{% if user.is_authenticated %}
         <li><a href="{% url 'accounts_profile' %}">My Profile</a></li>
         <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
