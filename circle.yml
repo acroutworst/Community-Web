@@ -1,5 +1,5 @@
 deployment:
   staging:
-    branch: master
+    branch: development
     heroku:
       appname: community-ci
