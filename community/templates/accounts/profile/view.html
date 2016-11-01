@@ -5,6 +5,7 @@
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
     <b>User since:</b> {{ profile.user.date_joined }}<br/>
     <b>E-mail addresses:</b><br/>
+    {{ profile.user.email }}<br/>
     {% for email in emails %} {{ email.email }} <br/>{% endfor %}
     <a href="{% url 'account_email' %}">modify e-mails</a><br/>
     {% if profile.position %}<b>Position: </b>{{ profile.position }}<br/>{% endif %}
