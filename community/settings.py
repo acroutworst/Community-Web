@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+
 import dj_database_url
+
+from community.util.secret_key_gen import generate_key
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +24,14 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pvw0)1q4r$jup#+zd0^ljvrui@f74=_^=0f%hr_m92n)bs8^#9'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 DEV_LOCAL = False
 DEPLOYMENT_ENVIRONMENT = 'LOCAL'
+SECRET_KEY = ''
+SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
@@ -55,6 +60,8 @@ INSTALLED_APPS = [
     'community.accounts',
     'community.groups',
     'community.rest_api',
+    'community.communities',
+    'community.events',
 ]
 
 MIDDLEWARE = [
