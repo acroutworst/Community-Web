@@ -7,6 +7,8 @@ class ProfileEditForm(forms.ModelForm):
     position = forms.CharField(required=False)
     interests = forms.CharField(required=False)
     transportation = forms.CharField(required=False)
+    phone_number = forms.CharField(required=False)
+
     class Meta:
         model = UserProfile
-        fields = ['position', 'department', 'interests', 'transportation']
+        fields = ['position', 'department', 'interests', 'transportation', 'phone_number']

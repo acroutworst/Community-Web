@@ -7,10 +7,11 @@
     <b>E-mail addresses:</b><br/>
     {{ profile.user.email }}<br/>
     {% for email in emails %} {{ email.email }} <br/>{% endfor %}
-    <a href="{% url 'account_email' %}">modify e-mails</a><br/>
+    {% if current_user == profile.user %}<a href="{% url 'account_email' %}">modify e-mails</a><br/>{% endif %}
     {% if profile.position %}<b>Position: </b>{{ profile.position }}<br/>{% endif %}
     {% if profile.department %}<b>Department: </b>{{ profile.department }}<br/>{% endif %}
     {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
     {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
-    <a href="edit.html">Edit Profile</a><br/>
+    {% if profile.phone_number %}<b>Phone Number: </b>{{ profile.phone_number }}<br/>{% endif %}
+    {% if current_user == profile.user %}<a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/> {% endif %}
 {% endblock %}
