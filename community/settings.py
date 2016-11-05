@@ -115,8 +115,6 @@ else:
     DATABASES = {
         'default': db_from_env
     }
-print('DEV_LOCAL: ', DEV_LOCAL)
-print('Database: ', DATABASES)
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
