@@ -36,8 +36,9 @@ def profile_view(request, userid=None):
         profile = UserProfile.objects.get(user=profile_user)
     context = {
         'profile': profile,
-        'current_user': profile_user,
+        'profile_user': profile_user,
         'emails': email_query,
+        'current_user': request.user,
     }
     return render(request, 'accounts/profile/view.html', context)
 
@@ -45,13 +46,18 @@ def profile_view(request, userid=None):
 def profile_edit(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
+    print('hi')
+    print(profile)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/accounts/profile/')
-    else:
+    elif request.method == 'GET':
         form = ProfileEditForm(instance=profile)
+    else:
+        return HttpResponseRedirect('/accounts/profile/')
+
     context = {
         'user': user,
         'profile': profile,

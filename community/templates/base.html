@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="shortcut icon" href="{% static 'site/ico/favicon.ico' %} ">
+    <link rel="shortcut icon" href="{% static 'site/ico/favicon_1.ico' %} ">
     <title>{% block head_title %}{% endblock %}</title>
     <link href="{% static "site/css/application.scss" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet"> 
   
     {% block extra_head %}
     {% endblock %}
@@ -29,7 +30,7 @@
     <li><a href="/">Home</a></li>
     <li><a href="{% url 'rss_view' %}">RSS Feed</a></li>
 	{% if user.is_authenticated %}
-        <li><a href="{% url 'accounts_profile' %}">My Profile</a></li>
+        <li><a href="{% url 'accounts_view_profile' %}">My Profile</a></li>
         <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
         <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
 	{% else %}

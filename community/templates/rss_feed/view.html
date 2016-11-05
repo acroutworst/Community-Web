@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    {% for entry in entries %}
+    {% for entry in entries|slice:":10" %}
         {% autoescape off %}
         <li><a href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
         {{ entry.description }}<p/>
