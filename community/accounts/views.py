@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import UserProfile
+from .models import Profile
 from .forms import ProfileEditForm
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseRedirect, QueryDict
@@ -10,12 +10,12 @@ from django.http import HttpResponseRedirect, QueryDict
 @login_required
 def profile_view(request):
     profile_user = request.user
-    profile_query = UserProfile.objects.filter(user=profile_user)
+    profile_query = Profile.objects.filter(user=profile_user)
     email_query = EmailAddress.objects.filter(user=profile_user)
     if profile_query.count() == 0:
-        profile = UserProfile.objects.create(user=profile_user)
+        profile = Profile.objects.create(user=profile_user)
     else:
-        profile = UserProfile.objects.get(user=profile_user)
+        profile = Profile.objects.get(user=profile_user)
     context = {
         'profile': profile,
         'current_user': profile_user,
@@ -28,12 +28,12 @@ def profile_view(request, userid=None):
     profile_user = request.user
     if userid:
         profile_user = User.objects.get(id=userid)
-    profile_query = UserProfile.objects.filter(user=profile_user)
+    profile_query = Profile.objects.filter(user=profile_user)
     email_query = EmailAddress.objects.filter(user=profile_user)
     if profile_query.count() == 0:
-        profile = UserProfile.objects.create(user=profile_user)
+        profile = Profile.objects.create(user=profile_user)
     else:
-        profile = UserProfile.objects.get(user=profile_user)
+        profile = Profile.objects.get(user=profile_user)
     context = {
         'profile': profile,
         'profile_user': profile_user,
@@ -45,12 +45,13 @@ def profile_view(request, userid=None):
 @login_required
 def profile_edit(request):
     user = request.user
-    profile = UserProfile.objects.get(user=user)
+    profile = Profile.objects.get(user=user)
     print('hi')
     print(profile)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
+            form.image.upload_to = 'user_profiles/' + profile.id
             form.save()
             return HttpResponseRedirect('/accounts/profile/')
     elif request.method == 'GET':

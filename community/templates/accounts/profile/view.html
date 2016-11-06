@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% load avatar_tags %}
     <h1>{{ profile.user }}'s Profile</h1>
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
     <b>User since:</b> {{ profile.user.date_joined }}<br/>
@@ -13,5 +14,7 @@
     {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
     {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
     {% if profile.phone_number %}<b>Phone Number: </b>{{ profile.phone_number }}<br/>{% endif %}
+    {% avatar user 100 %}
     {% if current_user == profile.user %}<a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/> {% endif %}
+    <a href="{% url 'avatar_change' %}">Change your avatar</a>
 {% endblock %}

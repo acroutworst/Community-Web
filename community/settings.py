@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'django_extensions',
+    'avatar',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -166,6 +167,11 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets')
+MEDIA_URL = '/assets/'
+
+AVATAR_STORAGE_DIR = 'accounts/avatar'
 # Extra places for collectstatic to find staticfiles files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static'),
