@@ -1,7 +1,11 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+
+from .events import views
+
 urlpatterns = [
+    url(r'^events/$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('community.rest_api.urls')),
     url(r'^accounts/', include('community.accounts.urls')),
