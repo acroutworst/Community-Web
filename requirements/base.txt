@@ -7,3 +7,4 @@ pyOpenSSL
 dj-database-url
 requests
 feedparser
+pillow
