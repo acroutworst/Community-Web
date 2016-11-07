@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Create {{ community.title }} Profile</h1>
+    <form method="post" action="">
+    {% csrf_token %}
+        {% for field in form %}
+            {{ field.label }} {{ field }}<br/>
+        {% endfor %}
+        <input type="Submit" value="Submit" /> <a href="{% url 'communities_view' community.slug %}"><input type="button" value="Cancel"></a>
+    </form>
+{% endblock %}
