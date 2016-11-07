@@ -38,7 +38,12 @@ if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
 if DEPLOYMENT_ENVIRONMENT is 'community-cd':
     DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'community-ci.herokuapp.com',
+    'localhost:8000',
+    'community-cd.herokuapp.com',
+    'community-uw.herokuapp.com',
+]
 
 
 # Application definition
