@@ -51,7 +51,6 @@ def profile_edit(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            form.image.upload_to = 'user_profiles/' + profile.id
             form.save()
             return HttpResponseRedirect('/accounts/profile/')
     elif request.method == 'GET':

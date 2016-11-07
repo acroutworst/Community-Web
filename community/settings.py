@@ -178,7 +178,21 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets')
 MEDIA_URL = '/assets/'
 
+
+# -------- AVATAR SETTINGS -----------
 AVATAR_STORAGE_DIR = 'accounts/avatar'
+AVATAR_PROVIDERS = (
+    'avatar.providers.PrimaryAvatarProvider',
+    'avatar.providers.GravatarAvatarProvider',
+    'avatar.providers.DefaultAvatarProvider',
+)
+#AVATAR_MAX_SIZE = '1920x1920'
+#AVATAR_ADD_TEMPLATE = 'accounts/avatar/add.html'
+#AVATAR_CHANGE_TEMPLATE = 'accounts/avatar/change.html'
+#AVATAR_DELETE_TEMPLATE = 'accounts/avatar/delete.html'
+AVATAR_EXPOSE_USERNAMES = False
+AVATAR_GRAVATAR_DEFAULT = 'mm'
+
 # Extra places for collectstatic to find staticfiles files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static'),
