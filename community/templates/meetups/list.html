@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block head_title %}List Meetups{% endblock %}
+{% block content %}
+    <h1>Meetups</h1>
+    {% for m in meetups %}
+        <li><a href="">{{ m }}</a></li><br/>
+    {% endfor %}
+{% endblock %}

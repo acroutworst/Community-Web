@@ -19,7 +19,17 @@ class Meetup(models.Model):
 
 
 class MeetupAttendee(models.Model):
+    STATUS_CHOICES = (
+        ('GOING', 'going'),
+        ('PROBABLY', 'probably'),
+        ('MIGHT', 'might'),
+        ('NOT_GOING', 'not going'),
+    )
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=200, default='Going', blank=False, null=False)
-    signup_time = models.DateTimeField('date joined', auto_now_add=True)
+    status = models.CharField(max_length=200, choices=STATUS_CHOICES, default='GOING', blank=False, null=False)
+    signup_time = models.DateTimeField('date joined', auto_created=True)
+    updated = models.DateTimeField('last updated', auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'meetup')
