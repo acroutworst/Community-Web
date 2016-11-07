@@ -14,7 +14,15 @@
     {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
     {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
     {% if profile.phone_number %}<b>Phone Number: </b>{{ profile.phone_number }}<br/>{% endif %}
-    {% avatar profile.user %}
-    {% if current_user == profile.user %}<a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/>
-    <a href="{% url 'avatar_change' %}">Change your avatar</a><br/>{% endif %}
+    {% avatar profile.user %}<br/>
+    {% if current_user == profile.user %}
+        <a href="{% url 'avatar_change' %}">Change your avatar</a><br/>
+        <a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/>
+    {% endif %}
+    {% if memberships.count > 0 %}
+        <h2>Active Memberships:</h2>
+        {% for membership in memberships %}
+            <a href="{% url 'communities_view' membership.community.slug %}">{{ membership.community.title }}</a>
+        {% endfor%}
+    {% endif %}
 {% endblock %}

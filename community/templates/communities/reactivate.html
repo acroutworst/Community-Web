@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Reactivate {{ community.title }} Profile</h1>
+    <form method="post" action="">
+    {% csrf_token %}
+        Are you sure you want to reactivate your profile{% if community.acronym %} for {{ community.acronym }}{% endif %}?
+        <input type="Submit" value="Yes" /> <a href="{% url 'communities_view' community.slug %}"><input type="button" value="No"></a>
+    </form>
+{% endblock %}

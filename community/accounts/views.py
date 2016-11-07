@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from .models import Profile
 from .forms import ProfileEditForm
 from allauth.account.models import EmailAddress
-from django.http import HttpResponseRedirect, QueryDict
+from django.http import HttpResponseRedirect
+from community.communities.models import CommunityUserProfile
 
 @login_required
 def profile_view(request):
@@ -34,11 +34,13 @@ def profile_view(request, userid=None):
         profile = Profile.objects.create(user=profile_user)
     else:
         profile = Profile.objects.get(user=profile_user)
+    memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
     context = {
         'profile': profile,
         'profile_user': profile_user,
         'emails': email_query,
         'current_user': request.user,
+        'memberships': memberships,
     }
     return render(request, 'accounts/profile/view.html', context)
 
@@ -46,8 +48,6 @@ def profile_view(request, userid=None):
 def profile_edit(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    print('hi')
-    print(profile)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
