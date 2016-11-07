@@ -27,7 +27,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DEV_LOCAL = False
 DEPLOYMENT_ENVIRONMENT = 'LOCAL'
 SECRET_KEY = ''
@@ -35,9 +35,8 @@ SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
-    DEBUG = True
-if DEPLOYMENT_ENVIRONMENT is 'community-ci':
-    DEBUG = True
+if DEPLOYMENT_ENVIRONMENT is 'community-cd':
+    DEBUG = False
 
 ALLOWED_HOSTS = []
 
