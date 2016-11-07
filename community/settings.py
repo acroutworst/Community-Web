@@ -40,7 +40,8 @@ if DEPLOYMENT_ENVIRONMENT is 'community-cd':
 
 ALLOWED_HOSTS = [
     'community-ci.herokuapp.com',
-    'localhost:8000',
+    'localhost',
+    '127.0.0.1',
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
 ]
