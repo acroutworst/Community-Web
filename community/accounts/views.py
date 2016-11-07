@@ -1,21 +1,21 @@
 from django.contrib.auth.decorators import login_required
-from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import UserProfile
+from .models import Profile
 from .forms import ProfileEditForm
 from allauth.account.models import EmailAddress
-from django.http import HttpResponseRedirect, QueryDict
+from django.http import HttpResponseRedirect
+from community.communities.models import CommunityUserProfile
 
 @login_required
 def profile_view(request):
     profile_user = request.user
-    profile_query = UserProfile.objects.filter(user=profile_user)
+    profile_query = Profile.objects.filter(user=profile_user)
     email_query = EmailAddress.objects.filter(user=profile_user)
     if profile_query.count() == 0:
-        profile = UserProfile.objects.create(user=profile_user)
+        profile = Profile.objects.create(user=profile_user)
     else:
-        profile = UserProfile.objects.get(user=profile_user)
+        profile = Profile.objects.get(user=profile_user)
     context = {
         'profile': profile,
         'current_user': profile_user,
@@ -28,26 +28,26 @@ def profile_view(request, userid=None):
     profile_user = request.user
     if userid:
         profile_user = User.objects.get(id=userid)
-    profile_query = UserProfile.objects.filter(user=profile_user)
+    profile_query = Profile.objects.filter(user=profile_user)
     email_query = EmailAddress.objects.filter(user=profile_user)
     if profile_query.count() == 0:
-        profile = UserProfile.objects.create(user=profile_user)
+        profile = Profile.objects.create(user=profile_user)
     else:
-        profile = UserProfile.objects.get(user=profile_user)
+        profile = Profile.objects.get(user=profile_user)
+    memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
     context = {
         'profile': profile,
         'profile_user': profile_user,
         'emails': email_query,
         'current_user': request.user,
+        'memberships': memberships,
     }
     return render(request, 'accounts/profile/view.html', context)
 
 @login_required
 def profile_edit(request):
     user = request.user
-    profile = UserProfile.objects.get(user=user)
-    print('hi')
-    print(profile)
+    profile = Profile.objects.get(user=user)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():

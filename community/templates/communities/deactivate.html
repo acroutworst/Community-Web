@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Deactivate Acount - {{ community.title }}</h1>
+    <form method="post" action="">
+    {% csrf_token %}
+        Are you sure you want to deactivate your{% if community.acronym %} {{ community.acronym }}{% endif %} community account?
+        <input type="Submit" value="Yes" /> <a href="{% url 'communities_view' community.slug %}"><input type="button" value="No"></a>
+    </form>
+{% endblock %}

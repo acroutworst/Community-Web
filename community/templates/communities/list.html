@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Communities</h1>
+    {% for community in communities %}
+        <li><a href="{% url 'communities_view' community.slug %}">{{ community }}</a></li><br/>
+    {% endfor %}
+{% endblock %}

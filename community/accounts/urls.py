@@ -6,4 +6,5 @@ urlpatterns = [
     url('', include('allauth.urls')),
     url(r'^profile/((?P<userid>[0-9]+)/{0,1}){0,1}$', views.profile_view, name="accounts_view_profile"),
     url(r'^profile/edit', views.profile_edit, name="accounts_profile_edit"),
+    url(r'^avatar/', include('avatar.urls')),
 ]
