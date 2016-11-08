@@ -1,4 +1,4 @@
-django==1.10.2
+django==1.10.3
 djangorestframework==3.4.7
 django-extensions
 django-allauth
@@ -7,3 +7,4 @@ pyOpenSSL
 dj-database-url
 requests
 feedparser
+django-avatar>=3.1.0
