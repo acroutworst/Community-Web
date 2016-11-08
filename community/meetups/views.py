@@ -7,6 +7,7 @@ from .models import Meetup, Attendee
 from community.communities.models import Community
 from .forms import CreateMeetupForm, AttendMeetupForm
 import datetime
+from django.db.models import Q
 
 @login_required
 def meetups_list(request, slug):
@@ -31,6 +32,8 @@ def meetups_view(request, slug, id):
     my_rsvp = Attendee.objects.filter(meetup=meetup, user=user)
     if my_rsvp.count() != 0:
         attending = True
+    else:
+        attending = False
     context = {
         'community': community,
         'meetup': meetup,
@@ -91,7 +94,7 @@ def meetups_attend(request, slug, id):
 def util_meetup_still_open(meetup):
     if not meetup.active:
         return False
-    if meetup.max_attendees and meetup.max_attendees <= Attendee.objects.filter(meetup=meetup).count():
+    if meetup.max_attendees and meetup.max_attendees <= Attendee.objects.filter(meetup=meetup).exclude(status=Attendee.STATUS_CHOICES['NOT_GOING']).count():
         return False
     start_time = meetup.created_date
     end_time = start_time + datetime.timedelta(hours=meetup.duration)
