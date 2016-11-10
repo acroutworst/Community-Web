@@ -6,6 +6,7 @@ from .forms import ProfileEditForm
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseRedirect
 from community.communities.models import CommunityUserProfile
+from community.meetups.models import Attendee, Meetup
 
 @login_required
 def profile_view(request):
@@ -34,6 +35,8 @@ def profile_view(request, userid=None):
         profile = Profile.objects.create(user=profile_user)
     else:
         profile = Profile.objects.get(user=profile_user)
+    attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=profile_user)
+    meetups = Meetup.objects.filter(attendee__in=attending, active=True)
     memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
     context = {
         'profile': profile,
@@ -41,6 +44,7 @@ def profile_view(request, userid=None):
         'emails': email_query,
         'current_user': request.user,
         'memberships': memberships,
+        'meetups': meetups,
     }
     return render(request, 'accounts/profile/view.html', context)
 

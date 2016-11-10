@@ -1,13 +1,10 @@
-import copy
-
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Meetup, Attendee
 from community.communities.models import Community
 from .forms import CreateMeetupForm, AttendMeetupForm
 import datetime
-from django.db.models import Q
+
 
 @login_required
 def meetups_list(request, slug):
@@ -27,7 +24,7 @@ def meetups_list(request, slug):
 def meetups_view(request, slug, id):
     community = Community.objects.get(slug=slug)
     meetup = Meetup.objects.get(community=community, id=id)
-    attendees = Attendee.objects.filter(meetup__community=community, meetup__id=id)
+    attendees = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(meetup__community=community, meetup__id=id)
     user = request.user
     my_rsvp = Attendee.objects.filter(meetup=meetup, user=user)
     if my_rsvp.count() != 0:
@@ -89,6 +86,32 @@ def meetups_attend(request, slug, id):
     }
     return render(request, template_name='meetups/attend.html', context=context)
 
+
+@login_required()
+def meetup_change_status(request, slug, id):
+    user = request.user
+    community = Community.objects.get(slug=slug)
+    meetup = Meetup.objects.get(community=community, id=id)
+    try:
+        attendee = Attendee.objects.get(user=user, meetup=meetup)
+    except Attendee.DoesNotExist:
+        return redirect('meetups_view', slug=slug, id=meetup.id)
+    if request.method == 'POST':
+        form = AttendMeetupForm(request.POST, request.FILES, instance=attendee)
+        if form.is_valid():
+            form.save()
+            return redirect('meetups_view', slug=slug, id=meetup.id)
+    elif request.method == 'GET':
+        form = AttendMeetupForm(instance=attendee)
+    else:
+        return redirect('meetups_view', slug=slug, id=meetup.id)
+    context = {
+        'community': community,
+        'meetup': meetup,
+        'form': form,
+        'user': request.user,
+    }
+    return render(request, template_name='meetups/attend.html', context=context)
 
 
 def util_meetup_still_open(meetup):

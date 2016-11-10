@@ -10,7 +10,8 @@
 
     <h4>Attendees:</h4>
     {% for attendee in attendees %}
-        <b><a href="{% url 'accounts_view_profile' attendee.user.id %}">{{ attendee }}</a></b> - <em>{{ attendee.status }}</em><br/><br/>
+        <b><a href="{% url 'accounts_view_profile' attendee.user.id %}">{{ attendee }}</a></b> - <em>{{ attendee.get_status_display }}</em>
+        {% if attendee.user == user %}<a href="{% url 'meetups_change_status' community.slug meetup.id %}">change status</a>{% endif %}<br/><br/>
     {% endfor %}
 
     {% if not attending %}
