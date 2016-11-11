@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}{% endblock %}
+{% block body %}
+{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        {% include "dashboard.html" %}
+    {% else %}
+        {% include "home.html" %}
+    {% endif %}
+{% endblock %}

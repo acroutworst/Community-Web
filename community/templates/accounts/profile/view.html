@@ -1,6 +1,6 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "dashboard.html" %}
+{% block head_title %}- Profile{% endblock %}
+{% block main_content %}
     {% load avatar_tags %}
     <h1>{{ profile.user }}'s Profile</h1>
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}

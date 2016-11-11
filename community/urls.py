@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^communities/', include('community.communities.urls')),
     url(r'^groups/', include('community.groups.urls')),
     url(r'^rss/', include('community.rss_feed.urls')),
-    url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^$', TemplateView.as_view(template_name='index_1.html')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
