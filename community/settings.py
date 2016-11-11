@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'community.rest_api',
     'community.communities',
     'community.events',
+    'community.meetups',
 ]
 
 MIDDLEWARE = [
