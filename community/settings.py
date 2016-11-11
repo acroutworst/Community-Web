@@ -35,8 +35,16 @@ SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
+if DEPLOYMENT_ENVIRONMENT is 'community-cd':
+    DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'community-ci.herokuapp.com',
+    'localhost',
+    '127.0.0.1',
+    'community-cd.herokuapp.com',
+    'community-uw.herokuapp.com',
+]
 
 
 # Application definition
@@ -57,11 +65,13 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'django_extensions',
+    'avatar',
     'community.accounts',
     'community.groups',
     'community.rest_api',
     'community.communities',
     'community.events',
+    'community.meetups',
 ]
 
 MIDDLEWARE = [
@@ -115,8 +125,6 @@ else:
     DATABASES = {
         'default': db_from_env
     }
-print('DEV_LOCAL: ', DEV_LOCAL)
-print('Database: ', DATABASES)
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
@@ -167,6 +175,25 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets')
+MEDIA_URL = '/assets/'
+
+
+# -------- AVATAR SETTINGS -----------
+AVATAR_STORAGE_DIR = 'accounts/avatar'
+AVATAR_PROVIDERS = (
+    'avatar.providers.PrimaryAvatarProvider',
+    'avatar.providers.GravatarAvatarProvider',
+    'avatar.providers.DefaultAvatarProvider',
+)
+#AVATAR_MAX_SIZE = '1920x1920'
+#AVATAR_ADD_TEMPLATE = 'accounts/avatar/add.html'
+#AVATAR_CHANGE_TEMPLATE = 'accounts/avatar/change.html'
+#AVATAR_DELETE_TEMPLATE = 'accounts/avatar/delete.html'
+AVATAR_EXPOSE_USERNAMES = False
+AVATAR_GRAVATAR_DEFAULT = 'mm'
+
 # Extra places for collectstatic to find staticfiles files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static'),

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ community }} meetup: {{ meetup }}{% endblock %}
+{% block content %}
+    <h3>{{ community }} meetup: {{ meetup }}</h3>
+    created by {{ meetup.creator }} at {{ meetup.created_date }}<br/>
+    duration: {{ meetup.duration }} hours <br/>
+    {% if meetup.private %}<b>private meetup</b><br/>{% endif %}
+    {{ attendees|length }} {% if meetup.max_attendees %}/ {{ meetup.max_attendees }} {% endif %}attending <br/><br/>
+    <p>{{ meetup.description }}</p>
+
+    <h4>Attendees:</h4>
+    {% for attendee in attendees %}
+        <b><a href="{% url 'accounts_view_profile' attendee.user.id %}">{{ attendee }}</a></b> - <em>{{ attendee.get_status_display }}</em>
+        {% if attendee.user == user %}<a href="{% url 'meetups_change_status' community.slug meetup.id %}">change status</a>{% endif %}<br/><br/>
+    {% endfor %}
+
+    {% if not attending %}
+        <b><a href="{% url 'meetups_attend' community.slug meetup.id %}">Attend this Meetup!</a></b>
+    {% else %}
+{#        <b><a href="{% url 'meetups_attend_edit' community.slug meetup.id user.id %}">Change my status</a></b> #}
+    {% endif %}
+
+{% endblock %}

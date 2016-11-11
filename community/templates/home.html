@@ -1,0 +1,233 @@
+
+{% load static %}
+<nav class="navbar navbar-default navbar-transparent navbar-fixed-top" color-on-scroll="40">
+        <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
+        <div class="container">
+            <div class="navbar-header">
+                <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                <a href="/" class="navbar-brand">Community</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right navbar-uppercase">
+                    <li>
+                        <a href="{% url 'rss_view' %}" class="btn-white">RSS Feed</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-share-alt"></i> Share
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-danger">
+                            <li>
+                                <a href="#"><i class="fa fa-facebook-square"></i> Facebook</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-instagram"></i> Instagram</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href=" {% url 'account_signup' %} " class="btn btn-danger ">Sign Up</a>
+                    </li>
+                    <li>
+                        <a href=" {% url 'account_login' %} " class="btn btn-danger btn-fill">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+</nav>
+
+
+<div class="section section-header">
+    <div class="parallax filter filter-color-green">
+        <div class="image"
+            style="background-image: url({% static 'site/img/home/home_background.png' %})">
+        </div>
+        <div class="container">
+            <div class="content">
+                <div class="title-area">
+                    <div class="avatar ">
+                        <img class="" src="{% static 'site/img/home/home_communitylogo.png' %}" />
+                    </div>
+                </div>
+
+                <div class="button-get-started">
+                    <a href="#search" class="btn btn-white btn-fill btn-lg ">
+                        Find your community
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Our Services</h2>
+                    <div class="separator separator-danger">✻</div>
+                    <p class="description">Community is a social platform for anyone to create a community to connect with like-minded individuals, act as a hub for community-wide information,s and track local events.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-icon">
+                        <div class="icon text-danger">
+                            <i class="pe-7s-bicycle"></i>
+                        </div>
+                        <h3>Events</h3>
+                        <p class="description">Keep track of local events, or create an event and notify your community.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-icon">
+                        <div class="icon text-danger">
+                            <i class="pe-7s-cloud"></i>
+                        </div>
+                        <h3>Meetups</h3>
+                        <p class="description">Need to find members to work on a project, or form an impromptu study session? Connect with like-minded community members through our meetups page. </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-icon">
+                        <div class="icon text-danger">
+                            <i class="pe-7s-culture"></i>
+                        </div>
+                        <h3>Local</h3>
+                        <p class="description">Support your local community!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer footer-big footer-color-black" data-color="black">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-3">
+                <div class="info">
+                    <h5 class="title">Company</h5>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>
+                                <a href="/">Partners</a>
+                            </li>
+                            <li>
+                                <a href="/">Careers</a>
+                            </li>
+                            <li>
+                                <a href="/">Pricing</a>
+                            </li>
+                            <li>
+                                <a href="/">About Us</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-1 col-sm-3">
+                <div class="info">
+                    <h5 class="title"> Help and Support</h5>
+                     <nav>
+                        <ul>
+                            <li>
+                                <a href="/">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="/">How it works</a>
+                            </li>
+                            <li>
+                                <a href="/">Terms &amp; Conditions</a>
+                            </li>
+                            <li>
+                                <a href="/api">API Viewer</a>
+                            </li>
+                            <li>
+                                <a href="/admin">Become a Partner</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="info">
+                    <h5 class="title">Latest News</h5>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i> <b>University of Washington</b> The best community out there, just give it a try and let us...
+                                    <hr class="hr-small">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i> We've just been featured on <b> Techcrunch's Website</b>! Thank you everybody for...
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-2 col-md-offset-1 col-sm-3">
+                <div class="info">
+                    <h5 class="title">Follow us on</h5>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#" class="btn btn-social btn-facebook btn-simple">
+                                    <i class="fa fa-facebook-square"></i> Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-social btn-twitter btn-simple">
+                                    <i class="fa fa-twitter"></i> Twitter
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-social btn-github btn-simple">
+                                    <i class="fa fa-github"></i> Github
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-social btn-snapchat btn-simple">
+                                    <i class="fa fa-snapchat-square"></i> Snapchat
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-social btn-github btn-simple">
+                                    <i class="fa fa-instagram"></i> Instagram
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-social btn-github btn-simple">
+                                    <i class="fa fa-pied-piper-alt"></i> Pied Piper
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="copyright">
+             © <script> document.write(new Date().getFullYear()) </script> Community, made with love
+        </div>
+    </div>
+</footer>

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% load avatar_tags %}
     <h1>{{ profile.user }}'s Profile</h1>
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
     <b>User since:</b> {{ profile.user.date_joined }}<br/>
@@ -13,5 +14,21 @@
     {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
     {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
     {% if profile.phone_number %}<b>Phone Number: </b>{{ profile.phone_number }}<br/>{% endif %}
-    {% if current_user == profile.user %}<a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/> {% endif %}
+    {% avatar profile.user %}<br/>
+    {% if current_user == profile.user %}
+        <a href="{% url 'avatar_change' %}">Change your avatar</a><br/>
+        <a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/>
+    {% endif %}
+    {% if memberships.count > 0 %}
+        <h2>Active Memberships:</h2>
+        {% for membership in memberships %}
+            <a href="{% url 'communities_view' membership.community.slug %}">{{ membership.community.title }}</a>
+        {% endfor%}
+    {% endif %}
+    {% if meetups.count > 0 %}
+        <h2>Attending Meetups:</h2>
+        {% for meetup in meetups %}
+            <a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{ meetup }}</a><br/>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
