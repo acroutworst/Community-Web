@@ -1,11 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block head_title %}dashboard{% endblock %}
+{% block body %}
+{% endblock %}
+{% block content%}
 {% if messages %}
     <div>
       <strong>Messages:</strong>
       <ul>
-	{% for message in messages %}
-	<li>{{message}}</li>
-	{% endfor %}
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
       </ul>
     </div>
 {% endif %}
@@ -18,4 +23,8 @@
     <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
     <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
 </ul>
+
+{% block content2 %}
+{% endblock %}
+{% endblock %}
 

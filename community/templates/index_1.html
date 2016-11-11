@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+{% block head_title %}Hi{% endblock %}
 {% block body %}
-    {% load static %}
+{% endblock %}
+{% block content %}
     {% if user.is_authenticated %}
         {% include "dashboard.html" %}
-	{% else %}
+    {% else %}
         {% include "home.html" %}
-	{% endif %}
+    {% endif %}
 {% endblock %}
