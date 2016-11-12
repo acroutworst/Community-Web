@@ -25,6 +25,7 @@ NOTE: For mac users, ignore the command `python bootstrap_venv.py` and run the s
 
 ### Running the server locally
 1. Activate .venv virtual environment
-2. Execute in project root: `python manage.py runserver`
-3. Navigate to localhost:8000
+2. Execute in project root: `python manage.py migrate`
+3. Execute in project root: `python manage.py runserver`
+4. Navigate to localhost:8000
 
