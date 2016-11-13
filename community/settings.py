@@ -44,6 +44,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
+    'community-test.herokuapp.com',
 ]
 
 
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'avatar',
+    's3_folder_storage',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -172,29 +174,34 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = 'static'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
+STATIC_S3_PATH = 'static'
+DEFAULT_S3_PATH = "media"
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'static/media')
-MEDIA_URL = '/static/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, '/media/')
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 if not DEV_LOCAL:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+    CLOUDFRONT_DOMAIN = os.environ.get('CLOUDFRONT')
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    STATIC_HOST = os.environ.get('STATIC_HOST')
-    STATIC_URL = STATIC_HOST + '/static/'
-    CLOUDFRONT = os.environ.get('CLOUDFRONT')
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    S3_DOMAIN = os.environ.get('STATIC_HOST')
+    STATIC_URL = '//%s/%s/' % (CLOUDFRONT_DOMAIN, STATIC_S3_PATH)
+    MEDIA_URL = '//%s/%s/' % (CLOUDFRONT_DOMAIN, DEFAULT_S3_PATH)
     AWS_STORAGE_BUCKET_NAME = 'community-ci'
+    AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_DOMAIN
     AWS_DEFAULT_ACL = 'public-read'
-    MEDIA_URL = STATIC_HOST + '/static/media/'
+
 
 
 # -------- AVATAR SETTINGS -----------
-AVATAR_STORAGE_DIR = 'media/accounts/avatar'
+AVATAR_STORAGE_DIR = 'accounts/avatar'
 AVATAR_PROVIDERS = (
     'avatar.providers.PrimaryAvatarProvider',
     'avatar.providers.GravatarAvatarProvider',
@@ -208,8 +215,6 @@ AVATAR_EXPOSE_USERNAMES = False
 AVATAR_GRAVATAR_DEFAULT = 'mm'
 
 # Extra places for collectstatic to find staticfiles files.
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, 'static'),
-# )
+
 
 
