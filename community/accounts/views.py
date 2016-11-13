@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import Profile
-from .forms import ProfileEditForm
+from .models import Profile, ProfileImage
+from .forms import ProfileEditForm, ProfileImageUploadForm
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseRedirect
 from community.communities.models import CommunityUserProfile
@@ -35,6 +35,9 @@ def profile_view(request, userid=None):
         profile = Profile.objects.create(user=profile_user)
     else:
         profile = Profile.objects.get(user=profile_user)
+    if profile.image == None:
+        profile.image = ProfileImage.objects.create(profile=profile)
+        profile.image.save()
     attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=profile_user)
     meetups = Meetup.objects.filter(attendee__in=attending, active=True)
     memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
@@ -55,6 +58,7 @@ def profile_edit(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
+            profile.image = form.cleaned_data['image']
             form.save()
             return HttpResponseRedirect('/accounts/profile/')
     elif request.method == 'GET':
@@ -68,3 +72,26 @@ def profile_edit(request):
         'form': form,
     }
     return render(request, 'accounts/profile/edit.html', context)
+
+@login_required
+def profile_image_upload(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    image = ProfileImage.objects.get(profile=profile)
+    if request.method == 'POST':
+        form = ProfileImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image.image = form.cleaned_data['image']
+            image.profile = profile
+            image.save()
+            return HttpResponseRedirect('/accounts/profile')
+    elif request.method == 'GET':
+        form = ProfileImageUploadForm
+    else:
+        return HttpResponseRedirect('/accounts/profile')
+    context = {
+        'user': user,
+        'profile': profile,
+        'form': form,
+    }
+    return render(request, 'accounts/profile/imageupload.html', context)

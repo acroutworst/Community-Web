@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'django_extensions',
-    'avatar',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -178,8 +177,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'static/media')
-MEDIA_URL = '/static/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
 if not DEV_LOCAL:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -191,21 +190,6 @@ if not DEV_LOCAL:
     AWS_STORAGE_BUCKET_NAME = 'community-ci'
     AWS_DEFAULT_ACL = 'public-read'
     MEDIA_URL = STATIC_HOST + '/static/media/'
-
-
-# -------- AVATAR SETTINGS -----------
-AVATAR_STORAGE_DIR = 'media/accounts/avatar'
-AVATAR_PROVIDERS = (
-    'avatar.providers.PrimaryAvatarProvider',
-    'avatar.providers.GravatarAvatarProvider',
-    'avatar.providers.DefaultAvatarProvider',
-)
-#AVATAR_MAX_SIZE = '1920x1920'
-#AVATAR_ADD_TEMPLATE = 'accounts/avatar/add.html'
-#AVATAR_CHANGE_TEMPLATE = 'accounts/avatar/change.html'
-#AVATAR_DELETE_TEMPLATE = 'accounts/avatar/delete.html'
-AVATAR_EXPOSE_USERNAMES = False
-AVATAR_GRAVATAR_DEFAULT = 'mm'
 
 # Extra places for collectstatic to find staticfiles files.
 # STATICFILES_DIRS = (
