@@ -26,8 +26,8 @@ def meetups_view(request, slug, id):
     meetup = Meetup.objects.get(community=community, id=id)
     attendees = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(meetup__community=community, meetup__id=id)
     user = request.user
-    my_rsvp = Attendee.objects.filter(meetup=meetup, user=user)
-    if my_rsvp.count() != 0:
+    my_rsvp = Attendee.objects.filter(meetup=meetup, user=user).first()
+    if not my_rsvp is None or my_rsvp.status is 'NOT_GOING':
         attending = True
     else:
         attending = False
@@ -117,7 +117,7 @@ def meetup_change_status(request, slug, id):
 def util_meetup_still_open(meetup):
     if not meetup.active:
         return False
-    if meetup.max_attendees and meetup.max_attendees <= Attendee.objects.filter(meetup=meetup).exclude(status=Attendee.STATUS_CHOICES['NOT_GOING']).count():
+    if meetup.max_attendees and meetup.max_attendees <= Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(meetup=meetup).count():
         return False
     start_time = meetup.created_date
     end_time = start_time + datetime.timedelta(hours=meetup.duration)
