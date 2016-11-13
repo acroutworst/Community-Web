@@ -17,7 +17,9 @@
     {% if not attending %}
         <b><a href="{% url 'meetups_attend' community.slug meetup.id %}">Attend this Meetup!</a></b>
     {% else %}
-{#        <b><a href="{% url 'meetups_attend_edit' community.slug meetup.id user.id %}">Change my status</a></b> #}
+        {% if my_rsvp.status == 'NOT_GOING' %}
+            <b><a href="{% url 'meetups_change_status' community.slug meetup.id %}">Attend this Meetup!</a></b>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
