@@ -27,7 +27,7 @@ def meetups_view(request, slug, id):
     attendees = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(meetup__community=community, meetup__id=id)
     user = request.user
     my_rsvp = Attendee.objects.filter(meetup=meetup, user=user).first()
-    if not my_rsvp is None or my_rsvp.status is 'NOT_GOING':
+    if my_rsvp is not None and my_rsvp.status is not 'NOT_GOING':
         attending = True
     else:
         attending = False
