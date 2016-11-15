@@ -8,13 +8,12 @@
 <body>
 <h1>Welcome to the events page</h1>
 
-<form>
-<input type="button" value="Create Event">
-<input type="button" value="View Event">
-<input type="button" value="Edit Event">
-</form>
+<a href="{% url 'create_events' %}"  class="button">Create Event</a>
+<a href="{% url 'create_events' %}"  class="button">Edit Event</a>
+<a href="{% url 'create_events' %}"  class="button">View Event</a>
 
 
 </body>
+
 
 </html>

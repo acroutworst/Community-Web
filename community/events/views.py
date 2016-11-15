@@ -3,5 +3,7 @@ from django.http import HttpResponse
 
 def index(request):
     return render(request,template_name='events/home.html')
-    #return HttpResponse('<p>Events Main Page</p>')
+
+def create_events(request):
+    return render(request, template_name='events/create_events.html')
 
