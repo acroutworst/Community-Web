@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from community.communities.models import Group,Group_Members
+from community.groups.models import Group,Group_Members
 from community.communities.models import Community
 
 @login_required
-def list_groups(request, slug):
+def groups_list(request, slug):
     community = Community.objects.get(slug = slug)
     groups = Group.objects.filter (community = community)
     user = request.user
@@ -18,7 +18,7 @@ def list_groups(request, slug):
     return render(request, 'groups/list.html', context = context)
 
 @login_required
-def view_group (request, slug, id):
+def groups_view (request, slug, id):
     community = Community.objects.get(slug=slug)
     groups = Group.objects.filter(community=community, id = id)
     group_member = Group_Members.objects.filter(community = community, group = groups)
