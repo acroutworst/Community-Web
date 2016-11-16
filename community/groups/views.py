@@ -4,18 +4,17 @@ from community.groups.models import Group,Group_Members
 from community.communities.models import Community
 
 @login_required
-def groups_list(request, slug):
-    community = Community.objects.get(slug = slug)
-    groups = Group.objects.filter (community = community)
+def groups_list(request):
+    groups = Group.objects.all()
     user = request.user
     context = {
-        'community': community,
+
         'groups': groups,
         'user': user,
     }
 
 
-    return render(request, 'groups/list.html', context = context)
+    return render(request, template_name='groups/list.html', context=context)
 
 @login_required
 def groups_view (request, slug, id):
@@ -30,4 +29,4 @@ def groups_view (request, slug, id):
         'group_members': group_member,
     }
 
-    return render(request, 'group/view.html', context = context)
+    return render(request, template_name= 'group/view.html', context = context)

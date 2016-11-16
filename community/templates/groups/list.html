@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_user.html" %}
 {% block head_title %}Group List {% endblock %}
 
 {% block content %}
-        <b>Groups:</b><br/>
-        {% for group in groups %}
-            {{ group }}<br/>
-        {% endfor %}
+      <b>Groups:</b><br/>
+    {% for group in groups %}
+        {{ group }}<br/>
+      {% endfor %}
 {% endblock %}
