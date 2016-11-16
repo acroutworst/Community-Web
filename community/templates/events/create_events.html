@@ -2,7 +2,7 @@
 <html>
 <body>
 <h1>Create Your Event</h1>
-<form>
+<form action="" method="POST">{% csrf_token %}
   First Name<br>
   <input type=text name="firstname">
   <br>
@@ -14,12 +14,12 @@
   <br>
 
   Start Date<br>
-  <input type=date name="startdate">
+  <input type=date name="start_time">
   <br>
 
 
   End Date<br>
-  <input type=date name="enddate">
+  <input type=date name="end_time">
   <br>
 
   <select name="event_type">
