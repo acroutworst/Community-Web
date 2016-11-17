@@ -1,6 +1,5 @@
 django==1.10.3
 djangorestframework==3.4.7
-django-extensions
 django-allauth
 Werkzeug
 pyOpenSSL
