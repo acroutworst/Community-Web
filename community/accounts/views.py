@@ -49,7 +49,6 @@ def profile_edit(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            profile.image = form.cleaned_data['image']
             form.save()
             return HttpResponseRedirect('/accounts/profile/')
     elif request.method == 'GET':
@@ -68,13 +67,15 @@ def profile_edit(request):
 def profile_image_upload(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    image = ProfileImage.objects.get(profile=profile)
+    image = ProfileImage.objects.create(profile=profile)
     if request.method == 'POST':
         form = ProfileImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             image.image = form.cleaned_data['image']
             image.profile = profile
+            profile.image = image
             image.save()
+            profile.save()
             return HttpResponseRedirect('/accounts/profile')
     elif request.method == 'GET':
         form = ProfileImageUploadForm

@@ -1,5 +1,5 @@
 from django import template
-from community.accounts.models import Profile, ProfileImage
+from ..models import Profile, ProfileImage
 from django.conf import settings
 from django.utils.html import format_html
 import os
@@ -14,4 +14,4 @@ def avatar(user):
     except:
         image = os.path.join(settings.MEDIA_URL, 'accounts/profiles/default.jpg')
 
-    return format_html('''<img src="{}">''', image)
+    return format_html('<img src="{}">', image)
