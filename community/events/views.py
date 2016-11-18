@@ -11,21 +11,22 @@ def create_events(request):
         event = Event()
         query = request.POST
         event.firstname = query['firstname']
-        event.lasttname = query['lastname']
+        event.lastname = query['lastname']
         event.email = query['email']
         event.start_time = query['start_time']
         event.end_time = query['end_time']
+
         if query['event_type'] == 'Private':
             event.private = True
         else:
             event.private = False
         event.save()
-        return redirect('view_events')
+        return view_event(request, event)
     return render(request, template_name='events/create_events.html')
 
 def view_event(request, event=None):
     context = {}
     if event != None:
-        context['event']=event
+         context['event']=event
     return render(request, template_name='events/view_event.html', context=context)
 
