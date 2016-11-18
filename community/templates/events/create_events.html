@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Create Your Event</h1>
+<form action="" method="POST">{% csrf_token %}
+  First Name<br>
+  <input type=text name="firstname">
+  <br>
+  Last Name<br>
+  <input type=text name="lastname">
+  <br>
+  Email <br>
+  <input type=email name="email">
+  <br>
+
+  Start Date<br>
+  <input type=date name="start_time">
+  <br>
+
+
+  End Date<br>
+  <input type=date name="end_time">
+  <br>
+
+  <select name="event_type">
+    <option value="private">Private</option>
+    <option value="public">Public</option>
+  </select>
+
+  Upload Image: <input type="file" name="pic" id="pic"><br>
+  <br><br>
+  <input type="submit">
+</form>
+
+</body>
+</html>
+
