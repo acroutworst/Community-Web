@@ -1,23 +1,31 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block head_title %}{% endblock %}
+{% block body %}
+{% endblock %}
+{% block content%}
 {% if messages %}
     <div>
       <strong>Messages:</strong>
       <ul>
-	{% for message in messages %}
-	<li>{{message}}</li>
-	{% endfor %}
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
       </ul>
     </div>
 {% endif %}
 
 <strong>Menu:</strong>
 <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'communities_list' %}">Communities</a></li>
     <li><a href="{% url 'rss_view' %}">RSS Feed</a></li>
     <li><a href="{% url 'accounts_view_profile' %}">My Profile</a></li>
     <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
     <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
 </ul>
 
-{% block content %}
+{% block main_content %}
 {% endblock %}
+{% endblock %}
+

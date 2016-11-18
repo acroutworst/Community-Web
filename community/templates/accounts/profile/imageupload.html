@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Edit {{ profile.user }}'s Profile</h1>
-    <form method="post" action="{% url 'accounts_profile_edit' %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'accounts_image_upload' %}" enctype="multipart/form-data">
     {% csrf_token %}
         {% for field in form %}
             {{ field.label }} {{ field }}<br/>

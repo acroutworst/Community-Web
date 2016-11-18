@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'django_extensions',
-    'avatar',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -173,34 +172,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'assets')
-MEDIA_URL = '/assets/'
 
+STATIC_URL = '/static/'
 
-# -------- AVATAR SETTINGS -----------
-AVATAR_STORAGE_DIR = 'accounts/avatar'
-AVATAR_PROVIDERS = (
-    'avatar.providers.PrimaryAvatarProvider',
-    'avatar.providers.GravatarAvatarProvider',
-    'avatar.providers.DefaultAvatarProvider',
-)
-#AVATAR_MAX_SIZE = '1920x1920'
-#AVATAR_ADD_TEMPLATE = 'accounts/avatar/add.html'
-#AVATAR_CHANGE_TEMPLATE = 'accounts/avatar/change.html'
-#AVATAR_DELETE_TEMPLATE = 'accounts/avatar/delete.html'
-AVATAR_EXPOSE_USERNAMES = False
-AVATAR_GRAVATAR_DEFAULT = 'mm'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
+if not DEV_LOCAL:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    STATIC_HOST = os.environ.get('STATIC_HOST')
+    STATIC_URL = STATIC_HOST + '/static/'
+    CLOUDFRONT = os.environ.get('CLOUDFRONT')
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_STORAGE_BUCKET_NAME = 'community-ci'
+    AWS_DEFAULT_ACL = 'public-read'
+    MEDIA_URL = STATIC_HOST + '/static/media/'
 
 # Extra places for collectstatic to find staticfiles files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static'),
 # )
-
-# Simplified staticfiles file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
