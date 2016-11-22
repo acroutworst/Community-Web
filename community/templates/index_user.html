@@ -11,7 +11,6 @@
     {% endfor %}
 
     <h3>Meetups</h3>
-
     {% regroup attendees by meetup as meetup_list %}
     {% for meetup in meetup_list %}
         <h4><a href="{% url 'meetups_view' community.slug meetup.grouper.id %}">{{ meetup.grouper }}</a></h4>
@@ -24,3 +23,5 @@
 
     <img src="{% static 'site/img/community.jpg' %}" alt="Community!">
 {% endblock %}
+
+
