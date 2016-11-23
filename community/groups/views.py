@@ -30,3 +30,14 @@ def groups_view (request, slug, id):
     }
 
     return render(request, template_name= 'group/view.html', context = context)
+
+@login_required
+def group_create(request, slug):
+    community = Community.objects.get(slug=slug)
+    user = request.user
+    form = CreateGroupForm
+
+    context = {
+        'community': community,
+        'user': user,
+    }
