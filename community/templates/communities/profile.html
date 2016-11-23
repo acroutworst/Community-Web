@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p><b>{{ community.title }} {% if community.acronym %}({{ community.acronym }}){% endif %}</b><br/>
+    {% if communityuserprofile.user %}User:{{ communityprofile.user }}{% endif %}
+    {% if community.creator %}Created by: {{ community.creator }}{% endif %}
+    {% if community.date_created %}on {{ community.date_created }}{% endif %}<br/>
+    {% if community.phone_number %}{{ community.phone_number }}{% endif %}</p>
+    {% if community.description %}<p>{{ community.description }}</p>{% endif %}
+    {% if communityuserprofile.postion %}<p>{{ communityusrprofile.position }}</p>{% endif %}
+    {% if communityuserprofile.apartment %}<p>{{ communityusrprofile.apartment }}</p>{% endif %}
+{% endblock %}
