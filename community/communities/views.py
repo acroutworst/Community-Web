@@ -86,3 +86,33 @@ def communities_deactivate(request, slug):
     }
     return render(request, template_name='communities/deactivate.html', context=context)
 
+@login_required
+def communities_profile(request, slug):
+    if slug is None:
+        HttpResponseRedirect('/communities/')
+    community = CommunityUserProfile.objects.filter(slug=slug).first()
+    user = request.user
+    department = CommunityUserProfile.objects.values_list('department', flat = True).get(user=user, community=community)
+    position = CommunityUserProfile.objects.values_list('position', flat=True).get(user=user, community=community)
+    if community.count() == 0:
+        HttpResponseRedirect('/communities/')
+    profile = CommunityUserProfile.objects.get(user=user, community=community).first()
+
+
+
+
+
+    if not profile.active:
+        return HttpResponseRedirect('/communities/' + slug)
+    if request.method == 'POST':
+        profile.active = False
+        profile.save()
+        return HttpResponseRedirect('/communities/' + slug)
+
+    context = {
+        'community': community.first(),
+        'user': user,
+        'department': department,
+        'position':position,
+    }
+    return render(request, template_name='communities/community_profile.html', context=context)
