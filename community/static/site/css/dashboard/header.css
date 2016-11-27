@@ -1,0 +1,10 @@
+.header {
+    background: #560095;
+    width: 700px;
+    height: 75px;
+    color: white;
+    position: relative;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    vertical-align: middle  ;
+}

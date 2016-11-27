@@ -19,7 +19,7 @@ def home(request):
 def home_login(request):
     all_communities = Community.objects.all()
     my_communities = Community.objects.filter(communityuserprofile__user=request.user)
-    meetup_list = Meetup.objects.all()
+    meetup_list = Meetup.objects.filter(community__in=my_communities, active=True)
     context = {
         'user': request.user,
         'all_communities': all_communities,

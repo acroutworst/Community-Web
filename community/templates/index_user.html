@@ -4,24 +4,20 @@
     <div ng-app="">
 	</div>
     <h2 class="title-color-purple">University of Washington Bothell</h2>
+    <div class="header">
+        University of Washington Bothell
+    </div>
 
     <h3>Communities</h3>
     {% for community in my_communities %}
-        <li><a href="{% url 'communities_view' community.slug %}">{{ community }}</a></li><br/>
+        <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
     {% endfor %}
 
     <h3>Meetups</h3>
-    {% regroup attendees by meetup as meetup_list %}
-    {% for meetup in meetup_list %}
-        <h4><a href="{% url 'meetups_view' community.slug meetup.grouper.id %}">{{ meetup.grouper }}</a></h4>
-        started at {{ meetup.grouper.created_date.time }} by {{ meetup.grouper.creator }}<br/>
-        {% regroup meetup.list by status as status_list %}
-            {% for status in status_list %}
-                <b>{{ status.grouper }}</b> - {{ status.list|length }}<br/>
-            {% endfor %}
+    {% for meetup in meetup_list%}
+        <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
     {% endfor %}
 
-    <img src="{% static 'site/img/community.jpg' %}" alt="Community!">
 {% endblock %}
 
 
