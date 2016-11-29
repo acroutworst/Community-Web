@@ -1,0 +1,15 @@
+.search-field {
+    color = #488888;
+}
+
+.input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    color: black;
+}
+
+input[type=text]:focus {
+    width: 50%;
+    color: black;
+}
