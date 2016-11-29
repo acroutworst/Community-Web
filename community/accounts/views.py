@@ -67,12 +67,12 @@ def profile_edit(request):
 def profile_image_upload(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    image = ProfileImage.objects.create(profile=profile)
     if request.method == 'POST':
         form = ProfileImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            image.image = form.cleaned_data['image']
-            image.profile = profile
+            image = ProfileImage.objects.create(profile=profile,
+                                                image=form.cleaned_data['image']
+                                                )
             profile.image = image
             image.save()
             profile.save()
