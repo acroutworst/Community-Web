@@ -89,36 +89,6 @@ class ProfileImage(models.Model):
         self.thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=True)
         return True
 
-    # def save(self, *args, **kwargs):
-    #     super(ProfileImage, self).save(*args, **kwargs)
-    #     image_file = BytesIO(self.image.open())
-    #     image = Image.open(self.image.read())
-    #     w, h = image.size
-    #
-    #     # create thumbnail
-    #     thumb = image.copy()
-    #     thumb_file = BytesIO()
-    #     thumb_w, thumb_h = image.size
-    #     if w > THUMBNAIL_MAX_WIDTH:
-    #         thumb_w = THUMBNAIL_MAX_WIDTH
-    #         thumb_h = int(thumb_w * THUMBNAIL_RATIO)
-    #     if h > THUMBNAIL_MAX_HEIGHT:
-    #         thumb_h = THUMBNAIL_MAX_HEIGHT
-    #         thumb_w = int(thumb_h / THUMBNAIL_RATIO)
-    #     thumb = image.resize((thumb_w, thumb_h), Image.ANTIALIAS)
-    #     thumb.save(thumb_file, 'JPEG', quality=90)
-    #     self.thumbnail.file = thumb_file
-    #
-    #     # resize image if larger than max size
-    #     if w * h > IMAGE_MAX_SIZE:
-    #         ratio = w * h / IMAGE_MAX_SIZE
-    #         w = int(w / ratio)
-    #         h = int(h / ratio)
-    #         image = image.resize((w, h), Image.ANTIALIAS)
-    #         image_file = BytesIO()
-    #         image.save(image_file, 'JPEG', quality=90)
-    #         self.image.file = image_file
-
     def __str__(self):
         return "{}'s profile pic {}".format(self.profile.user.username, self.image.name)
 
