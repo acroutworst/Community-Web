@@ -1,6 +1,10 @@
+import operator
+import re
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 
 def home(request):
@@ -19,3 +23,4 @@ def home_login(request):
         'user': request.user,
     }
     return render(request, template_name='index_user.html', context=context)
+
