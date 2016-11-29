@@ -10,8 +10,18 @@ register = template.Library()
 def avatar(user):
     profile = Profile.objects.get(user=user)
     try:
+        thumbnail = profile.image.thumbnail.url
+        image = profile.image.image.url
+        return format_html('<a href="{}"><img src="{}"></a>', image, thumbnail)
+    except:
+        image = os.path.join('/', settings.STATIC_URL, 'site/img/accounts/profiles/default.jpg')
+        return format_html('<img src="{}">', image)
+
+@register.simple_tag
+def avatar_full(user):
+    profile = Profile.objects.get(user=user)
+    try:
         image = profile.image.image.url
     except:
-        image = os.path.join(settings.MEDIA_URL, 'accounts/profiles/default.jpg')
-
+        image = os.path.join('/', settings.STATIC_URL, 'site/img/accounts/profiles/default.jpg')
     return format_html('<img src="{}">', image)
