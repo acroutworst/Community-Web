@@ -86,3 +86,11 @@ def communities_deactivate(request, slug):
     }
     return render(request, template_name='communities/deactivate.html', context=context)
 
+
+def community_search_results(request):
+    query_string = request.GET['q']
+    community_list = Community.objects.filter(title__contains=query_string)
+    context = {
+        'community_list': community_list,
+    }
+    return render(request, template_name='communities/search/results.html', context=context)
