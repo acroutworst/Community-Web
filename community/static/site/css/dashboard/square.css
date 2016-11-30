@@ -1,0 +1,17 @@
+.square {
+    background: #3C3C3C;
+    width: 10vw;
+    height: 10vw;
+    border-style: solid;
+    border-bottom: thin solid gray;
+}
+.square h1 {
+    font-size: 15px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.square img {
+    height: 70%;
+    width: 100%;
+}

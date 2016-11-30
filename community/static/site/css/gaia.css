@@ -1275,7 +1275,6 @@ a,
 }
 .navbar .navbar-brand {
   margin: 10px 0px;
-  padding: 15px 15px;
   font-size: 20px;
   line-height: 22px;
 }
@@ -1364,7 +1363,6 @@ a,
 }
 
 .navbar-transparent {
-  padding-top: 15px;
   background-color: transparent;
   border-bottom: 1px solid transparent;
 }
