@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{#{% block content %}#}
+{% block content %}
     {% autoescape on %}
     <p>NOTIFICATIONS</p> {# even this doesn't print out #}
     {% endautoescape %}
@@ -16,4 +16,4 @@
     {% else %}
         <p>No notifications are available.</p>
     {% endif %}
-{#{% endblock %}#}
+{% endblock %}

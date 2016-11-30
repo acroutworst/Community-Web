@@ -14,7 +14,7 @@ class Notification(models.Model):
     status = models.CharField(max_length=10, choices=NOTIFICATION_STATUS, default='UNSEEN', blank=False, null=False)
 
     def __str__(self):
-        return "{0} {1}".format(self.description, self.notif_date)
+        return "{0} {1}".format(self.description, self.date)
 
     class Meta:
         unique_together = ('user', 'notification_id')
