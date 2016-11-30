@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Community, CommunityUserProfile
@@ -89,7 +90,7 @@ def communities_deactivate(request, slug):
 
 def community_search_results(request):
     query_string = request.GET['q']
-    community_list = Community.objects.filter(title__contains=query_string)
+    community_list = Community.objects.filter(Q(title__contains=query_string) | Q(acronym__contains=query_string))
     context = {
         'community_list': community_list,
     }
