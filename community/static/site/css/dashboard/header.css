@@ -1,5 +1,5 @@
 .dashboard {
-    width: 1028px;
+    width: 1029.1px;
     margin: 0 auto;
     float: left;
 }
@@ -10,6 +10,10 @@
     background: #560095;
     color: white;
     height: 8vw;
+}
+
+.dashboard .content {
+    overflow: scroll;
 }
 
 .wrap {

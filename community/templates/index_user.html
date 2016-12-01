@@ -42,15 +42,17 @@
             University of Washington Bothell
         </h2>
 
-        <h3>Communities</h3>
-        {% for community in my_communities %}
-            <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-        {% endfor %}
+        <div class="dashboard content">
+            <h3>Communities</h3>
+            {% for community in my_communities %}
+                <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+            {% endfor %}
 
-        <h3>Meetups</h3>
-        {% for meetup in meetup_list%}
-            <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
-        {% endfor %}
+            <h3>Meetups</h3>
+            {% for meetup in meetup_list%}
+                <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+            {% endfor %}
+        </div>
     </div>
 
     <section class="square-col">
