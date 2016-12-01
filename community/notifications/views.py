@@ -4,7 +4,7 @@ from .models import Notification
 
 # Create your views here.
 def notifications_view(request):
-    notifications = Notification.objects.order_by('date')[:10]
+    notifications = Notification.objects.filter(user=request.user).order_by('-date')[:10]
     context = {
         'notifications_list': notifications
     }

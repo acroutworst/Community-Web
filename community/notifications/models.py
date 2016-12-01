@@ -18,3 +18,5 @@ class Notification(models.Model):
 
     class Meta:
         unique_together = ('user', 'notification_id')
+        verbose_name = 'Notification'
+        verbose_name_plural = 'Notifications'
