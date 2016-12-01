@@ -60,14 +60,13 @@
                     </div>
                 </div>
 
-                <form id="searchform" action="{% url 'communities_search_results' %}" method="get" accept-charset="utf-8">
-                  <button class="searchbutton" type="submit">
-                    <i class="fa fa-search"></i>
-                  </button>
+                <form id="search-form" action="{% url 'communities_search_results' %}" method="get" accept-charset="utf-8">
                   <input class="search-field" id="searchbox" name="q" type="text" placeholder="Find your community">
+                    <button class="search-button" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
