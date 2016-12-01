@@ -333,6 +333,7 @@ body > .navbar-collapse a {
   overflow: hidden;
   max-width: 350px;
   margin: 0 auto;
+  padding-top: 30px;
 }
 .avatar img {
   width: 100%;
@@ -1272,7 +1273,9 @@ a,
 .navbar {
   border: 0;
   font-size: 16px;
+  margin-bottom: 0px;
 }
+
 .navbar .navbar-brand {
   margin: 10px 0px;
   font-size: 20px;
@@ -1363,6 +1366,7 @@ a,
 }
 
 .navbar-transparent {
+  padding-top: 15px;
   background-color: transparent;
   border-bottom: 1px solid transparent;
 }
@@ -1371,6 +1375,7 @@ a,
   padding-top: 5px;
   background-color: #55bea4;
   border-bottom: 1px solid transparent;
+  border-radius: 0;
 }
 
 .navbar-toggle {

@@ -4,52 +4,88 @@
     <div ng-app="">
 	</div>
 
-    <h2 class="header">
-        University of Washington Bothell
-    </h2>
-
-
-
-    <div class="square">
+<div class="wrap">
+    <section class="square-col">
+        <div class="square">
         <img src="{% static 'site/img/home/community-logo.png' %}"/>
         <h1>Our Community</h1>
         <hr/>
+        </div>
+
+        <div class="square">
+            <img src="{% static 'site/img/home/community-calendar.png' %}"/>
+            <h1>Calendar</h1>
+              <hr/>
+        </div>
+
+        <div class="square">
+            <img src="{% static 'site/img/home/event-logo.png' %}"/>
+            <h1>Events</h1>
+              <hr/>
+        </div>
+
+        <div class="square">
+            <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
+            <h1>Meetups</h1>
+              <hr/>
+        </div>
+
+        <div class="square">
+            <img src="{% static 'site/img/home/search-logo.png' %}"/>
+            <h1>Search</h1>
+              <hr/>
+        </div>
+    </section>
+
+    <div class="content">
+        <h2 class="content title">
+            University of Washington Bothell
+        </h2>
+
+        <h3>Communities</h3>
+        {% for community in my_communities %}
+            <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+        {% endfor %}
+
+        <h3>Meetups</h3>
+        {% for meetup in meetup_list%}
+            <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+        {% endfor %}
     </div>
 
-    <div class="square">
-        <img src="{% static 'site/img/home/community-calendar.png' %}"/>
-        <h1>Calendar</h1>
-          <hr/>
-    </div>
+    <section class="square-col">
+        <div class="square">
+        <img src="{% static 'site/img/home/community-logo.png' %}"/>
+        <h1>Our Community</h1>
+        <hr/>
+        </div>
 
-    <div class="square">
-        <img src="{% static 'site/img/home/event-logo.png' %}"/>
-        <h1>Events</h1>
-          <hr/>
-    </div>
+        <div class="square">
+            <img src="{% static 'site/img/home/community-calendar.png' %}"/>
+            <h1>Calendar</h1>
+              <hr/>
+        </div>
 
-    <div class="square">
-        <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-        <h1>Meetups</h1>
-          <hr/>
-    </div>
+        <div class="square">
+            <img src="{% static 'site/img/home/event-logo.png' %}"/>
+            <h1>Events</h1>
+              <hr/>
+        </div>
 
-    <div class="square">
-        <img src="{% static 'site/img/home/search-logo.png' %}"/>
-        <h1>Search</h1>
-          <hr/>
-    </div>
+        <div class="square">
+            <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
+            <h1>Meetups</h1>
+              <hr/>
+        </div>
 
-    <h3>Communities</h3>
-    {% for community in my_communities %}
-        <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-    {% endfor %}
+        <div class="square">
+            <img src="{% static 'site/img/home/search-logo.png' %}"/>
+            <h1>Search</h1>
+              <hr/>
+        </div>
+    </section>
 
-    <h3>Meetups</h3>
-    {% for meetup in meetup_list%}
-        <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
-    {% endfor %}
-
+</div>
 {% endblock %}
 
 

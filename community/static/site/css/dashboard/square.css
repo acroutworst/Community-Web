@@ -1,10 +1,17 @@
+.square-col {
+    float: left;
+    overflow: auto;
+}
+
 .square {
     background: #3C3C3C;
-    width: 10vw;
-    height: 10vw;
+    width: 9.8vw;
+    height: 9.8vw;
     border-style: solid;
     border-bottom: thin solid gray;
+    margin: 0;
 }
+
 .square h1 {
     font-size: 15px;
     text-align: center;
