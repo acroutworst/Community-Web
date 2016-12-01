@@ -37,7 +37,7 @@
     opacity: 1;
 }
 
-input[type=text]:hover {
+input[type=text]:focus {
     width: 50%;
     color: black;
 }
