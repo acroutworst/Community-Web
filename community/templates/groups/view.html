@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-{% block head_title %} {{ community }} group: {{ group.title }} {% endblock %}
+{% block head_title %} group: {{ group.title }} {% endblock %}
 {% block content %}
     <h2> {{ community }} group: {{ group.title }}</h2>
     created by {{ group.created_by }} at {{ group.create_date }} <br/>
     current leader: {{ group.current_leader }}<br/>
+    description: {{ group.description }}<br/>
 
 
 {% endblock %}

@@ -24,7 +24,7 @@ def groups_list(request):
 #def groups_view (request, slug, id):
 def groups_view (request, id):
     #community = Community.objects.get(slug=slug)
-    groups = Group.objects.filter(id = id)
+    groups = Group.objects.get(id = id)
 
     user = request.user
     context = {
