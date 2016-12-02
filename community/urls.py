@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^communities/', include('community.communities.urls')),
     url(r'^groups/', include('community.groups.urls')),
     url(r'^rss/', include('community.rss_feed.urls')),
-    url(r'^bus_schedule/', include ('community.bus_schedule')),
+    url(r'^bus_schedule/', include ('community.bus_schedule.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

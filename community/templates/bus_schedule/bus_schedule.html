@@ -1,20 +1,21 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
 {% load static %}
-{% block head_title %}Bus Schedule{% endblock %}
 <html ng-app="app">
 
-  {% block extra_head %}
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="{% static 'busParse.js' %}"></script>
+  <title>Bus Schedule</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+  <script src="{% static 'javascript/busParse.js' %}"></script>
   <script src="{% static 'javascript/TimeUnit.js' %}"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <meta http-equiv="refresh" content="40" />
-  {% endblock %}
-
+</head>
 
 <body ng-controller="MainCtrl">
-
-  {% block content %}
 
   <table id="businfo" style="margin: 0 auto; text-align: center;" cellpadding="20px">
     <tr>
@@ -23,8 +24,6 @@
       <th> Minutes to Arrival </th>
     </tr>
   </table>
-
-  {% endblock %}
 
 </body>
 

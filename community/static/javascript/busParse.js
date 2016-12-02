@@ -1,6 +1,3 @@
-/**
- * Created by Jessica on 12/1/16.
- */
 //intialize the app
 var app = angular.module('app', []);
 
@@ -10,11 +7,14 @@ app.controller('MainCtrl', function($scope, $http) {
   //store the JSON URL
   var theUrl = "http://api.pugetsound.onebusaway.org/api/where/schedule-for-stop/1_76305.json?key=65f351d5-6625-4a62-af86-88c05ae26b54";
 
+
   //parse the JSON URL w/ jsonp and AJAX
   $.ajax({
     dataType: "jsonp",
     url: theUrl,
   }).done(function(data) {
+
+    //console.log(data);  //use to test connection to JSON
 
     //define scopes for the JSON data
     $scope.data = data.data;
@@ -71,7 +71,6 @@ app.controller('MainCtrl', function($scope, $http) {
 
     //create new BSTree var
     var bst = new BinarySearchTree();
-
     //intialize variables to hold desc, time, bus to be pushed into the BSTree
     var d, t, b;
 
@@ -124,8 +123,9 @@ app.controller('MainCtrl', function($scope, $http) {
     }
 
     function fill() {
-      populate.innerHTML += finalForm;
+        populate.innerHTML += finalForm;
     }
+
 
   });
 
