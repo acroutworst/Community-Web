@@ -14,6 +14,7 @@ class ProfileEditForm(forms.ModelForm):
 
 class ProfileImageUploadForm(forms.ModelForm):
     image = forms.ImageField()
+    thumbnail = forms.HiddenInput()
 
     class Meta:
         model = ProfileImage
