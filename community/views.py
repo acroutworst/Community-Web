@@ -1,8 +1,14 @@
+import operator
+import re
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .communities.models import Community, CommunityUserProfile
 from .meetups.models import Meetup
+
+from django.db.models import Q
+
 
 
 def home(request):
@@ -27,3 +33,4 @@ def home_login(request):
         'meetup_list': meetup_list,
     }
     return render(request, template_name='index_user.html', context=context)
+

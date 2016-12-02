@@ -35,7 +35,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href=" {% url 'account_signup' %} " class="btn btn-danger ">Sign Up</a>
+                        <a href=" {% url 'account_signup' %} " class="btn btn-danger btn-fill">Sign Up</a>
                     </li>
                     <li>
                         <a href=" {% url 'account_login' %} " class="btn btn-danger btn-fill">Sign In</a>
@@ -60,13 +60,13 @@
                     </div>
                 </div>
 
-                <div class="button-get-started">
-                    <a href="#search" class="btn btn-white btn-fill btn-lg ">
-                        Find your community
-                    </a>
-                </div>
+                <form id="search-form" action="{% url 'communities_search_results' %}" method="get" accept-charset="utf-8">
+                  <input class="search-field" id="searchbox" name="q" type="text" placeholder="Find your community">
+                    <button class="search-button" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
             </div>
-
         </div>
     </div>
 </div>
