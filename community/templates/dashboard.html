@@ -15,15 +15,43 @@
     </div>
 {% endif %}
 
-<strong>Menu:</strong>
-<ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'communities_list' %}">Communities</a></li>
-    <li><a href="{% url 'rss_view' %}">RSS Feed</a></li>
-    <li><a href="{% url 'accounts_view_profile' %}">My Profile</a></li>
-    <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-</ul>
+<nav class="navbar navbar-default navbar-green " color-on-scroll="40">
+        <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
+        <div class="container">
+            <div class="navbar-header">
+                <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                <a href="{% url 'home' %}" class="navbar-brand">Home</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right navbar-uppercase">
+                    <li>
+                        <a href=" {% url 'communities_list' %} " class="btn-white"><i class="fa fa-hand-peace-o "></i> Communities</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'communities_view' 'university-of-washington-bothell' %}" class="btn-white"><i class="fa fa-child  "></i> Meetups</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'rss_view' %}" class="btn-white"><i class="fa fa-rss-square"></i> RSS Feed</a>
+                    </li>
+                     <li>
+                        <a href="{% url 'accounts_view_profile' %}" class="btn-white"><i class="fa fa-user-o"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_email' %}" class="btn-white"><i class="fa fa-envelope-o "></i> Change E-mail</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_logout' %}" class="btn-white"><i class="fa fa-cog"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+</nav>
 
 {% block main_content %}
 {% endblock %}
