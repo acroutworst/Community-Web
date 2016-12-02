@@ -4,6 +4,6 @@
 {% block content %}
       <b>Groups:</b><br/>
     {% for group in groups %}
-        {{ group }}<br/>
+        <li><a href="{% url 'groups_view' group.id %}">{{ group }}</a></li><br/>
       {% endfor %}
 {% endblock %}
