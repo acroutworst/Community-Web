@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
-    'django_extensions',
     'community.accounts',
     'community.groups',
     'community.rest_api',
