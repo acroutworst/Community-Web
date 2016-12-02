@@ -6,6 +6,7 @@
     {% if community.phone_number %}{{ community.phone_number }}{% endif %}</p>
     {% if community.description %}<p>{{ community.description }}</p>{% endif %}
     <a href="{% url 'meetups_list' community.slug %}">view meetups</a>
+
     <br/><br/>
     {% if member.active %}<a href="{% url 'communities_deactivate' community.slug %}">Deactivate {{ community.title }} Account</a>{% else %}<a href="{% url 'communities_join' community.slug %}">Join {{ community.title }}!</a>{% endif %}
 {% endblock %}
