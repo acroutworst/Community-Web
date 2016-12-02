@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Bus Schedule{% endblock %}
+<html ng-app="app">
+
+  {% block extra_head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="{% static 'busParse.js' %}"></script>
+  <script src="{% static 'javascript/TimeUnit.js' %}"></script>
+  <meta http-equiv="refresh" content="40" />
+  {% endblock %}
+
+
+<body ng-controller="MainCtrl">
+
+  {% block content %}
+
+  <table id="businfo" style="margin: 0 auto; text-align: center;" cellpadding="20px">
+    <tr>
+      <th> Bus Route # </th>
+      <th style = "text-align: center;"> Description </th>
+      <th> Minutes to Arrival </th>
+    </tr>
+  </table>
+
+  {% endblock %}
+
+</body>
+
+</html>
