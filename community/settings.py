@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'community.communities',
     'community.events',
     'community.meetups',
-    'community.bus_schedule',
     'community.notifications',
 ]
 
