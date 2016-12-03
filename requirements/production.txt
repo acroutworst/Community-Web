@@ -2,5 +2,6 @@
 psycopg2
 gunicorn
 whitenoise
+django-bmemcached
 
 # Anything else for production environment
