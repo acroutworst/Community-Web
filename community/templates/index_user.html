@@ -1,92 +1,112 @@
 {% extends "base_user.html" %}
-{% block content %}
+{% block extra_head %}
     {% load static %}
-    <div ng-app="">
-	</div>
+    <script src="{% static 'javascript/busParse.js' %}"></script>
+    <script src="{% static 'javascript/TimeUnit.js' %}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta http-equiv="refresh" content="40" />
+{% endblock %}
+{% block content %}
+{% load static %}
+<div ng-app="app" ng-controller="MainCtrl">
+    <div class="wrap">
+        <section class="square-col">
+            <div class="square">
+            <img src="{% static 'site/img/home/community-logo.png' %}"/>
+            <h1>Our Community</h1>
+            <hr/>
+            </div>
 
-<div class="wrap">
-    <section class="square-col">
-        <div class="square">
-        <img src="{% static 'site/img/home/community-logo.png' %}"/>
-        <h1>Our Community</h1>
-        <hr/>
+            <div class="square">
+                <img src="{% static 'site/img/home/community-calendar.png' %}"/>
+                <h1>Calendar</h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/event-logo.png' %}"/>
+                <h1>Events</h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
+                <h1>Meetups</h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/search-logo.png' %}"/>
+                <h1>Search</h1>
+                  <hr/>
+            </div>
+        </section>
+
+        <div class="dashboard">
+            <h2 class="dashboard title">
+                University of Washington Bothell
+            </h2>
+
+            <div class="dashboard content">
+                <h3>Communities</h3>
+                {% for community in my_communities %}
+                    <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+                {% endfor %}
+
+                <h3>Meetups</h3>
+                {% for meetup in meetup_list%}
+                    <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+                {% endfor %}
+
+                <h3>Bus Schedule</h3>
+                <table id="businfo-limit" style="text-align: center;" cellpadding="20px">
+                    <tr>
+                        <th> Bus Route # </th>
+                        <th style = "text-align: center;"> Description </th>
+                        <th> Minutes to Arrival </th>
+                    </tr>
+                </table>
+
+                <h3>Notifications</h3>
+
+                <h3>RSS Feed</h3>
+
+            </div>
         </div>
 
-        <div class="square">
-            <img src="{% static 'site/img/home/community-calendar.png' %}"/>
-            <h1>Calendar</h1>
-              <hr/>
-        </div>
+        <section class="square-col">
+            <div class="square">
+            <img src="{% static 'site/img/home/community-logo.png' %}"/>
+            <h1>Our Community</h1>
+            <hr/>
+            </div>
 
-        <div class="square">
-            <img src="{% static 'site/img/home/event-logo.png' %}"/>
-            <h1>Events</h1>
-              <hr/>
-        </div>
+            <div class="square">
+                <img src="{% static 'site/img/home/community-calendar.png' %}"/>
+                <h1>Calendar</h1>
+                  <hr/>
+            </div>
 
-        <div class="square">
-            <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-            <h1>Meetups</h1>
-              <hr/>
-        </div>
+            <div class="square">
+                <img src="{% static 'site/img/home/event-logo.png' %}"/>
+                <h1>Events</h1>
+                  <hr/>
+            </div>
 
-        <div class="square">
-            <img src="{% static 'site/img/home/search-logo.png' %}"/>
-            <h1>Search</h1>
-              <hr/>
-        </div>
-    </section>
+            <div class="square">
+                <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
+                <h1>Meetups</h1>
+                  <hr/>
+            </div>
 
-    <div class="dashboard">
-        <h2 class="dashboard title">
-            University of Washington Bothell
-        </h2>
+            <div class="square">
+                <img src="{% static 'site/img/home/search-logo.png' %}"/>
+                <h1>Search</h1>
+                  <hr/>
+            </div>
+        </section>
 
-        <div class="dashboard content">
-            <h3>Communities</h3>
-            {% for community in my_communities %}
-                <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-            {% endfor %}
-
-            <h3>Meetups</h3>
-            {% for meetup in meetup_list%}
-                <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
-            {% endfor %}
-        </div>
     </div>
-
-    <section class="square-col">
-        <div class="square">
-        <img src="{% static 'site/img/home/community-logo.png' %}"/>
-        <h1>Our Community</h1>
-        <hr/>
-        </div>
-
-        <div class="square">
-            <img src="{% static 'site/img/home/community-calendar.png' %}"/>
-            <h1>Calendar</h1>
-              <hr/>
-        </div>
-
-        <div class="square">
-            <img src="{% static 'site/img/home/event-logo.png' %}"/>
-            <h1>Events</h1>
-              <hr/>
-        </div>
-
-        <div class="square">
-            <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-            <h1>Meetups</h1>
-              <hr/>
-        </div>
-
-        <div class="square">
-            <img src="{% static 'site/img/home/search-logo.png' %}"/>
-            <h1>Search</h1>
-              <hr/>
-        </div>
-    </section>
-
 </div>
 {% endblock %}
 

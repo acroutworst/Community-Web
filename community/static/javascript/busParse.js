@@ -105,13 +105,38 @@ app.controller('MainCtrl', function($scope, $http) {
 
     //adds data into the "businfo" element id in html file
     var populate = document.getElementById("businfo");
+    var limitPopulate = document.getElementById("businfo-limit");
 
     var finalForm = "";
+    var limitFinalForm= "";
 
-    inorder(bst.root);
-    //tree inorder function
+    var count = 0;
 
-    fill();
+    if(populate) {
+      inorder(bst.root);
+      //tree inorder function
+
+      fill();
+    }
+
+    if(limitPopulate) {
+      limit_inorder(bst.root);
+      //tree inorder function
+
+      limitFill();
+    }
+
+    function limit_inorder(node) {
+      count++;
+      if (node && count < 5) {
+        limit_inorder(node.left);
+        //console.log(node.bus + ", " + node.desc + ", " + node.time);
+        limitFinalForm += ("<tr><td>" + node.bus + "</td><td>" + node.desc + "</td><td>" + node.time + "</td></tr>");
+        limit_inorder(node.right);
+      } else {
+        return;
+      }
+    }
 
     function inorder(node) {
       if (node) {
@@ -124,6 +149,10 @@ app.controller('MainCtrl', function($scope, $http) {
 
     function fill() {
         populate.innerHTML += finalForm;
+    }
+
+    function limitFill() {
+        limitPopulate.innerHTML += limitFinalForm;
     }
 
 
