@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+    <h1>Join {{ group.title }} </h1>
+    <form method="post" action="">
+        <h2>Do you want join group: {{ group.title }}</h2>
 
-</body>
-</html>
+        <input type="Submit" value="Yes" /> <a href="{% url 'groups_view' group.id %}"><input type="button" value="No"></a>
+    </form>
+{% endblock %}

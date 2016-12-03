@@ -1,6 +1,8 @@
 
 from django.contrib.auth.decorators import login_required
-from community.groups.models import Group
+from django.http import HttpResponseRedirect
+
+from community.groups.models import Group, GroupMembers
 from community.communities.models import Community
 from community.groups.form import CreateGroupForm
 import datetime
@@ -56,6 +58,40 @@ def group_create(request):
     }
 
     return render (request, template_name='groups/create.html', context=context)
+
+@login_required
+def group_join(request, id):
+    if id is None:
+        HttpResponseRedirect('/groups/')
+    group = Group.objects.get(id=id)
+    user=request.user
+    member=GroupMembers.objects.filter(user=user,group=group).first()
+    if member:
+        if member.active:
+            return HttpResponseRedirect('/greops/' + id)
+        else:
+            if request.method == 'POST':
+                    member.active=True
+                    member.save()
+                    return HttpResponseRedirect('/groups/' + id)
+    else:
+
+        member = GroupMembers(user = user,group=group, join_date=datetime.datetime.now())
+    #member.user=user
+    #member.group=group
+        if request.method == 'POST':
+            member.save()
+            return HttpResponseRedirect('/groups/' + id)
+
+    context = {
+        'user': user,
+        'group': group,
+    }
+    return render(request, template_name='groups/join.html', context=context)
+
+
+
+
 
 
 
