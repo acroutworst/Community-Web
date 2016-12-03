@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
-    'django_extensions',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -72,6 +71,7 @@ INSTALLED_APPS = [
     'community.events',
     'community.meetups',
     'community.bus_schedule',
+    'community.notifications',
 ]
 
 MIDDLEWARE = [
