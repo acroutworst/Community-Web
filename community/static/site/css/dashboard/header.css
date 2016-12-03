@@ -14,6 +14,22 @@
 
 .dashboard .content {
     overflow: scroll;
+
+}
+
+.dashboard .content .poster {
+    display: flex;
+    flex-flow: column wrap;
+
+}
+
+.dashboard .content .box {
+    width: 40%;
+    border: 2px solid #560095;
+    float: left;
+    margin-left: 1em;
+    margin-top: 0.4em;
+    margin-right: 1em;
 }
 
 .wrap {

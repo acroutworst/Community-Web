@@ -128,7 +128,7 @@ app.controller('MainCtrl', function($scope, $http) {
 
     function limit_inorder(node) {
       count++;
-      if (node && count < 5) {
+      if (node && count <= 5) {
         limit_inorder(node.left);
         //console.log(node.bus + ", " + node.desc + ", " + node.time);
         limitFinalForm += ("<tr><td>" + node.bus + "</td><td>" + node.desc + "</td><td>" + node.time + "</td></tr>");

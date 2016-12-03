@@ -48,28 +48,58 @@
             </h2>
 
             <div class="dashboard content">
-                <h3>Communities</h3>
-                {% for community in my_communities %}
-                    <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-                {% endfor %}
+                <div class="dashboard content poster">
+                    <h3>Communities</h3>
+                    <div class="dashboard content box">
+                        {% for community in my_communities %}
+                            <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+                        {% endfor %}
+                    </div><br/>
 
-                <h3>Meetups</h3>
-                {% for meetup in meetup_list%}
-                    <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
-                {% endfor %}
+                    <h3>Meetups</h3>
+                    <div class="dashboard content box">
+                        {% for meetup in meetup_list%}
+                            <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+                        {% endfor %}
+                    </div>
 
-                <h3>Bus Schedule</h3>
-                <table id="businfo-limit" style="text-align: center;" cellpadding="20px">
-                    <tr>
-                        <th> Bus Route # </th>
-                        <th style = "text-align: center;"> Description </th>
-                        <th> Minutes to Arrival </th>
-                    </tr>
-                </table>
+                    <h3>Bus Schedule</h3>
+                    <div class="dashboard content box">
+                        <table id="businfo-limit" style="text-align: center;" cellpadding="20px">
+                            <tr>
+                                <th> Bus Route # </th>
+                                <th style = "text-align: center;"> Description </th>
+                                <th> Minutes to Arrival </th>
+                            </tr>
+                        </table>
+                    </div><br/>
 
-                <h3>Notifications</h3>
+                    {% autoescape on %}
+                        <h3>Notifications</h3>
+                    {% endautoescape %}
+                    <div class="dashboard content box">
+                        {% if notifications_list %}
+                            <ul>
+                            {% for notification in notifications_list %}
+                                <li>{{ notification.description }} {{ notification.date }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No notifications are available.</p>
+                        {% endif %}
+                    </div><br/>
 
-                <h3>RSS Feed</h3>
+                    <h3>RSS Feed</h3>
+                    <div class="dashboard content box">
+                        {% for entry in entries|slice:":2" %}
+                            {% autoescape off %}
+                            <li><a href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
+                            {{ entry.description }}<p/>
+                        {% endautoescape %}
+                        {% endfor %}
+                    </div><br/>
+                </div>
+
 
             </div>
         </div>
