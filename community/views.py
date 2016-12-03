@@ -36,6 +36,7 @@ def home_login(request):
         'user': request.user,
         'all_communities': all_communities,
         'my_communities': my_communities,
+        'community': my_communities.first(),
         'meetup_list': meetup_list,
         'notifications_list': notifications,
         'feed': feed,

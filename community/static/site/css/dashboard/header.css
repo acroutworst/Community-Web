@@ -14,22 +14,40 @@
 
 .dashboard .content {
     overflow: scroll;
+}
 
+.top-content {
+    display: inline-flex;
+    width: 100%;
+    margin-left: 1.7em;
+    margin-right: 1.7em;
+    margin-top: 1em;
+}
+
+.dashboard-button {
+    float: right;
+    margin-right: 1em;
+    margin-left: auto;
 }
 
 .dashboard .content .poster {
     display: flex;
     flex-flow: column wrap;
-
+    align-items: center;
+    align-content: space-around;
+    justify-content: inherit;
+    height: 35.6vw;
 }
 
 .dashboard .content .box {
-    width: 40%;
+    align-content: space-between;
+    width: 45%;
     border: 2px solid #560095;
     float: left;
     margin-left: 1em;
-    margin-top: 0.4em;
     margin-right: 1em;
+    overflow: hidden;
+    list-style-type: none;
 }
 
 .wrap {

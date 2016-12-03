@@ -4,7 +4,6 @@
     <script src="{% static 'javascript/busParse.js' %}"></script>
     <script src="{% static 'javascript/TimeUnit.js' %}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <meta http-equiv="refresh" content="40" />
 {% endblock %}
 {% block content %}
 {% load static %}
@@ -12,32 +11,32 @@
     <div class="wrap">
         <section class="square-col">
             <div class="square">
-            <img src="{% static 'site/img/home/community-logo.png' %}"/>
-            <h1>Our Community</h1>
-            <hr/>
+                <img src="{% static 'site/img/home/community-logo.png' %}"/>
+                <h1><a href="/">Our Community</a></h1>
+                <hr/>
             </div>
 
             <div class="square">
                 <img src="{% static 'site/img/home/community-calendar.png' %}"/>
-                <h1>Calendar</h1>
+                <h1><a href="{% url 'notifications_view' %}">Notifications</a></h1>
                   <hr/>
             </div>
 
             <div class="square">
                 <img src="{% static 'site/img/home/event-logo.png' %}"/>
-                <h1>Events</h1>
+                <h1><a href="{% url 'view_event' %}">Events</a></h1>
                   <hr/>
             </div>
 
             <div class="square">
                 <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-                <h1>Meetups</h1>
+                <h1><a href="{% url 'meetups_list' community.slug %}">Meetups</a></h1>
                   <hr/>
             </div>
 
             <div class="square">
                 <img src="{% static 'site/img/home/search-logo.png' %}"/>
-                <h1>Search</h1>
+                <h1><a href="{% url 'bus_schedule_view' %}">Search</a></h1>
                   <hr/>
             </div>
         </section>
@@ -48,38 +47,43 @@
             </h2>
 
             <div class="dashboard content">
-                <div class="dashboard content poster">
-                    <h3>Communities</h3>
-                    <div class="dashboard content box">
-                        {% for community in my_communities %}
-                            <li><a href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-                        {% endfor %}
-                    </div><br/>
+                <div class="top-content">
+                    <h3>COMMUNITY PAGE</h3>
 
-                    <h3>Meetups</h3>
-                    <div class="dashboard content box">
-                        {% for meetup in meetup_list%}
-                            <li><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+                </div>
+
+                <div class="dashboard content poster">
+                    <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
+                    <div class="dashboard content box" style=" padding-left: 5px; ">
+                        {% for community in my_communities %}
+                            <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
                         {% endfor %}
                     </div>
 
-                    <h3>Bus Schedule</h3>
+                    <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
+                    <div class="dashboard content box" style=" padding-left: 5px;">
+                        {% for meetup in meetup_list%}
+                            <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+                        {% endfor %}
+                    </div>
+
+                    <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
                     <div class="dashboard content box">
-                        <table id="businfo-limit" style="text-align: center;" cellpadding="20px">
+                        <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
                             <tr>
-                                <th> Bus Route # </th>
+                                <th> Route # </th>
                                 <th style = "text-align: center;"> Description </th>
-                                <th> Minutes to Arrival </th>
+                                <th> Arrives in </th>
                             </tr>
                         </table>
-                    </div><br/>
+                    </div>
 
                     {% autoescape on %}
-                        <h3>Notifications</h3>
+                        <h4 style="margin-bottom: 0px;margin-top: 0px;">Notifications</h4>
                     {% endautoescape %}
                     <div class="dashboard content box">
                         {% if notifications_list %}
-                            <ul>
+                            <ul style="list-style-type: none;">
                             {% for notification in notifications_list %}
                                 <li>{{ notification.description }} {{ notification.date }}</li>
                             {% endfor %}
@@ -87,53 +91,32 @@
                         {% else %}
                             <p>No notifications are available.</p>
                         {% endif %}
-                    </div><br/>
+                    </div>
 
-                    <h3>RSS Feed</h3>
-                    <div class="dashboard content box">
-                        {% for entry in entries|slice:":2" %}
+                    <h4 style="margin-bottom: 0px;margin-top: 0px;">RSS Feed</h4>
+                    <div class="dashboard content box" style=" padding-left: 5px;">
+                        {% for entry in entries|slice:":1" %}
                             {% autoescape off %}
-                            <li><a href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
+                            <li><a style="color: #560095;" href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
                             {{ entry.description }}<p/>
                         {% endautoescape %}
                         {% endfor %}
                     </div><br/>
+
+                    <div class="dashboard-button">
+                        <a class="btn btn-danger-purple btn-fill" href="{% url 'meetups_create' community.slug %}">CREATE A MEETUP</a>
+                        <a class="btn btn-danger-purple btn-fill">INVITE PEOPLE</a>
+                    </div>
                 </div>
-
-
             </div>
         </div>
 
         <section class="square-col">
-            <div class="square">
-            <img src="{% static 'site/img/home/community-logo.png' %}"/>
-            <h1>Our Community</h1>
-            <hr/>
-            </div>
-
-            <div class="square">
-                <img src="{% static 'site/img/home/community-calendar.png' %}"/>
-                <h1>Calendar</h1>
-                  <hr/>
-            </div>
-
-            <div class="square">
-                <img src="{% static 'site/img/home/event-logo.png' %}"/>
-                <h1>Events</h1>
-                  <hr/>
-            </div>
-
-            <div class="square">
-                <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-                <h1>Meetups</h1>
-                  <hr/>
-            </div>
-
-            <div class="square">
-                <img src="{% static 'site/img/home/search-logo.png' %}"/>
-                <h1>Search</h1>
-                  <hr/>
-            </div>
+            <div class="square-full" style="color: #FFFFFF; text-align: center; font-size: 10px">COMMUNITY CHAT</div>
+            <div class="square-full"></div>
+            <div class="square-full"></div>
+            <div class="square-full"></div>
+            <div class="square-full"></div>
         </section>
 
     </div>

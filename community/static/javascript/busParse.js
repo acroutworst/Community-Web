@@ -110,7 +110,9 @@ app.controller('MainCtrl', function($scope, $http) {
     var finalForm = "";
     var limitFinalForm= "";
 
-    var count = 0;
+    var count = 1;
+    var countLeft = 0;
+    var countright = 0;
 
     if(populate) {
       inorder(bst.root);
@@ -130,8 +132,7 @@ app.controller('MainCtrl', function($scope, $http) {
       count++;
       if (node && count <= 5) {
         limit_inorder(node.left);
-        //console.log(node.bus + ", " + node.desc + ", " + node.time);
-        limitFinalForm += ("<tr><td>" + node.bus + "</td><td>" + node.desc + "</td><td>" + node.time + "</td></tr>");
+        limitFinalForm += ("<tr><td>" + node.bus + "</td><td>" + node.desc + "</td><td>" + node.time + "m </td></tr>");
         limit_inorder(node.right);
       } else {
         return;
@@ -141,7 +142,6 @@ app.controller('MainCtrl', function($scope, $http) {
     function inorder(node) {
       if (node) {
         inorder(node.left);
-        //console.log(node.bus + ", " + node.desc + ", " + node.time);
         finalForm += ("<tr><td>" + node.bus + "</td><td>" + node.desc + "</td><td>" + node.time + "</td></tr>");
         inorder(node.right);
       }

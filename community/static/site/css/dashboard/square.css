@@ -1,6 +1,19 @@
 .square-col {
     float: left;
-    overflow: auto;
+    overflow: hidden;
+}
+
+.square-full {
+    background: #3C3C3C;
+    width: 9.8vw;
+    height: 9.8vw;
+    margin: 0;
+}
+
+.square-full h4 {
+    font-size: 12px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 .square {
@@ -21,4 +34,8 @@
 .square img {
     height: 70%;
     width: 100%;
+}
+
+.square a {
+    color: #FFFFFF;
 }
