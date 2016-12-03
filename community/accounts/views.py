@@ -23,12 +23,6 @@ def profile_view(request, userid=None):
         profile = Profile.objects.create(user=profile_user)
     else:
         profile = Profile.objects.get(user=profile_user)
-    # try:
-    #     ProfileImage.objects.get(profile__image__profile=profile)
-    # except ProfileImage.DoesNotExist:
-    #     profile.image = ProfileImage.objects.create(profile=profile)
-    #     profile.image.save()
-    #     profile.save()
     attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=profile_user)
     meetups = Meetup.objects.filter(attendee__in=attending, active=True)
     memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
