@@ -31,9 +31,35 @@ class Meetup(models.Model):
             except:
                 pass
 
+    def timeleft(self):
+        now = timezone.now()
+        time = self.created_date
+        endtime = time + timedelta(hours=self.duration)
+        timeleft = endtime - now
+        seconds = timeleft.total_seconds()
+        print(seconds)
+        # if seconds < 0:
+        #     hoursleft = 0
+        #     minutesleft = 0
+        #     secondsleft = 0
+        #     if self.active:
+        #         self.active = False
+        #         self.save()
+        # else:
+        hoursleft = int(seconds // 3600)
+        minutesleft = int(seconds // 60 % 60)
+        secondsleft = int(seconds % 60)
+        return (hoursleft, minutesleft, secondsleft)
 
     def __str__(self):
-        return self.name
+        hours, minutes, seconds = self.timeleft()
+        print(hours)
+        print(minutes)
+        print(seconds)
+        if self.active:
+            return "{} - {}:{} left".format(self.name, hours, minutes)
+        else:
+            return self.name
 
     class Meta:
         unique_together = ('community', 'id')
