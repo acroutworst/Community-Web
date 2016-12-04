@@ -13,3 +13,4 @@ boto
 easy_thumbnails
 celery
 django-celery-results
+Collectfast
