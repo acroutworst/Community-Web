@@ -1,73 +1,67 @@
 {% extends "base_dashboard.html" %}
 {% block community_content %}
 {% load static %}
-<div class="dashboard">
-        <h2 class="dashboard title">
-            University of Washington Bothell
-        </h2>
+<div class="dashboard content">
+    <div class="top-content">
+        <h3>COMMUNITY PAGE</h3>
 
-        <div class="dashboard content">
-            <div class="top-content">
-                <h3>COMMUNITY PAGE</h3>
+    </div>
 
-            </div>
+    <div class="dashboard content poster">
+        <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
+        <div class="dashboard content box" style=" padding-left: 5px; ">
+            {% for community in my_communities %}
+                <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+            {% endfor %}
+        </div>
 
-            <div class="dashboard content poster">
-                <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
-                <div class="dashboard content box" style=" padding-left: 5px; ">
-                    {% for community in my_communities %}
-                        <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-                    {% endfor %}
-                </div>
+        <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for meetup in meetup_list%}
+                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+            {% endfor %}
+        </div>
 
-                <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
-                <div class="dashboard content box" style=" padding-left: 5px;">
-                    {% for meetup in meetup_list%}
-                        <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
-                    {% endfor %}
-                </div>
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
+        <div class="dashboard content box">
+            <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
+                <tr>
+                    <th> Route # </th>
+                    <th style = "text-align: center;"> Description </th>
+                    <th> Arrives in </th>
+                </tr>
+            </table>
+        </div>
 
-                <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
-                <div class="dashboard content box">
-                    <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
-                        <tr>
-                            <th> Route # </th>
-                            <th style = "text-align: center;"> Description </th>
-                            <th> Arrives in </th>
-                        </tr>
-                    </table>
-                </div>
+        {% autoescape on %}
+            <h4 style="margin-bottom: 0px;margin-top: 0px;">Notifications</h4>
+        {% endautoescape %}
+        <div class="dashboard content box">
+            {% if notifications_list %}
+                <ul style="list-style-type: none;">
+                {% for notification in notifications_list %}
+                    <li>{{ notification.description }} {{ notification.date }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications are available.</p>
+            {% endif %}
+        </div>
 
-                {% autoescape on %}
-                    <h4 style="margin-bottom: 0px;margin-top: 0px;">Notifications</h4>
-                {% endautoescape %}
-                <div class="dashboard content box">
-                    {% if notifications_list %}
-                        <ul style="list-style-type: none;">
-                        {% for notification in notifications_list %}
-                            <li>{{ notification.description }} {{ notification.date }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>No notifications are available.</p>
-                    {% endif %}
-                </div>
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">RSS Feed</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for entry in entries|slice:":1" %}
+                {% autoescape off %}
+                <li><a style="color: #560095;" href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
+                {{ entry.description }}<p/>
+            {% endautoescape %}
+            {% endfor %}
+        </div><br/>
 
-                <h4 style="margin-bottom: 0px;margin-top: 0px;">RSS Feed</h4>
-                <div class="dashboard content box" style=" padding-left: 5px;">
-                    {% for entry in entries|slice:":1" %}
-                        {% autoescape off %}
-                        <li><a style="color: #560095;" href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
-                        {{ entry.description }}<p/>
-                    {% endautoescape %}
-                    {% endfor %}
-                </div><br/>
-
-                <div class="dashboard-button">
-                    <a class="btn btn-danger-purple btn-fill" href="{% url 'meetups_create' community.slug %}">CREATE A MEETUP</a>
-                    <a class="btn btn-danger-purple btn-fill">INVITE PEOPLE</a>
-                </div>
-            </div>
+        <div class="dashboard-button">
+            <a class="btn btn-danger-purple btn-fill" href="{% url 'meetups_create' community.slug %}">CREATE A MEETUP</a>
+            <a class="btn btn-danger-purple btn-fill">INVITE PEOPLE</a>
         </div>
     </div>
+</div>
 {% endblock %}

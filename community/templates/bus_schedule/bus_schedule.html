@@ -1,22 +1,16 @@
-<!DOCTYPE html>
+{% extends "base_user.html" %}
+{% block extra_head %}
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Bus Schedule</title>
+    <script src="{% static 'javascript/busParse.js' %}"></script>
+    <script src="{% static 'javascript/TimeUnit.js' %}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta http-equiv="refresh" content="40" />
+{% endblock %}
+{% block content %}
 {% load static %}
-<html ng-app="app">
-
-<head>
-  <meta charset="utf-8">
-  <title>Bus Schedule</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
-  <script src="{% static 'javascript/busParse.js' %}"></script>
-  <script src="{% static 'javascript/TimeUnit.js' %}"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <meta http-equiv="refresh" content="40" />
-</head>
-
-<body ng-controller="MainCtrl">
-
+<div ng-app="app" ng-controller="MainCtrl">
   <table id="businfo" style="margin: 0 auto; text-align: center;" cellpadding="20px">
     <tr>
       <th> Bus Route # </th>
@@ -24,7 +18,5 @@
       <th> Minutes to Arrival </th>
     </tr>
   </table>
-
-</body>
-
-</html>
+</div>
+{% endblock %}
