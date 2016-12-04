@@ -43,5 +43,5 @@ def home_login(request):
         'entries': entries,
         'num_entries': num_entries,
     }
-    return render(request, template_name='index_user.html', context=context)
+    return render(request, template_name='dashboard.html', context=context)
 
