@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+<<<<<<< HEAD
 {% block head_title %}{% endblock %}
 {% block body %}
 {% endblock %}
@@ -26,6 +27,39 @@
                     <span class="icon-bar bar3"></span>
                 </button>
                 <a href="{% url 'home' %}" class="navbar-brand">Home</a>
+=======
+<div ng-app="app" ng-controller="MainCtrl">
+    <div class="wrap">
+        <section class="square-col">
+            <div class="square">
+                <img src="{% static 'site/img/home/community-logo.png' %}"/>
+                <h1><a href="/">Our Community</a></h1>
+                <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/community-calendar.png' %}"/>
+                <h1><a href="{% url 'notifications_view' %}">Notifications</a></h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/event-logo.png' %}"/>
+                <h1><a href="{% url 'view_event' %}">Events</a></h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
+                <h1><a href="{% url 'community_meetups_list' community.slug %}">Meetups</a></h1>
+                  <hr/>
+            </div>
+
+            <div class="square">
+                <img src="{% static 'site/img/home/search-logo.png' %}"/>
+                <h1><a href="{% url 'bus_schedule_view' %}">Search</a></h1>
+                  <hr/>
+>>>>>>> development
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right navbar-uppercase">
