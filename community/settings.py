@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
     'community-ben.herokuapp.com',
+
 ]
 
 # Application definition
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'storages',
+    'collectfast',
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
@@ -140,7 +142,7 @@ else:
             "KEY_PREFIX": "cache"
         }
     }
-    
+
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
@@ -185,7 +187,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
-if not DEV_LOCAL:
+COLLECTFAST_CACHE = 'default'
+AWS_PRELOAD_METADATA = True
+if DEV_LOCAL:
+    COLLECTFAST_ENABLED = False
+else:
     CLOUDFRONT = os.environ.get('CLOUDFRONT')
     STATIC_HOST = os.environ.get('STATIC_HOST')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
