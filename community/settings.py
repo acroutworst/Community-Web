@@ -132,16 +132,16 @@ else:
         'default': db_from_env
     }
     CACHES = {
-        'default': {
-            'BACKEND': 'django_bmemcached.memcached.BMemcached',
-            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-            'OPTIONS': {
-                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-            }
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('REDIS_URL'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": "cache"
         }
     }
-
+    
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
