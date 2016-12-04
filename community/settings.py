@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
     'community-ben.herokuapp.com',
+
 ]
 
 # Application definition
@@ -186,6 +187,9 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 if not DEV_LOCAL:
+    INSTALLED_APPS += 'collectfast'
+    COLLECTFAST_CACHE = 'default'
+    AWS_PRELOAD_METADATA = True
     CLOUDFRONT = os.environ.get('CLOUDFRONT')
     STATIC_HOST = os.environ.get('STATIC_HOST')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
