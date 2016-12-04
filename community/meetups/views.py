@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from .models import Meetup, Attendee
 from community.communities.models import Community
 from .forms import CreateMeetupForm, AttendMeetupForm
@@ -7,9 +8,9 @@ import datetime
 
 
 @login_required
-def meetups_list(request, slug):
+def community_meetups_list(request, slug):
     community = Community.objects.get(slug=slug)
-    meetups = Meetup.objects.filter(community=community)
+    meetups = Meetup.objects.filter(community=community, active=True)
     attendees = Attendee.objects.filter(meetup__community=community)
     context = {
         'community': community,
@@ -17,7 +18,25 @@ def meetups_list(request, slug):
         'attendees': attendees,
         'user': request.user,
     }
-    return render(request, template_name='meetups/list.html', context=context)
+    return render(request, template_name='meetups/list_community.html', context=context)
+
+@login_required
+def user_meetups_list(request, user_id=None):
+    if not user_id:
+        user = request.user
+    else:
+        user = User.objects.get(id=user_id)
+    meetups = Meetup.objects.filter(attendee__user=user, active=True)
+    meetup_history = Meetup.objects.filter(attendee__user=user, active=False)
+    attendees = Attendee.objects.filter(meetup__in=meetups)
+    context = {
+        'meetups': meetups,
+        'attendees': attendees,
+        'user': user,
+        'current_user': request.user,
+        'meetup_history': meetup_history,
+    }
+    return render(request, template_name='meetups/list_user.html', context=context)
 
 
 @login_required

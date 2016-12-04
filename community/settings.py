@@ -215,3 +215,9 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (200, 200), 'crop': True},
     },
 }
+
+#CELERY
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_TASK_SERIALIZER = 'json'

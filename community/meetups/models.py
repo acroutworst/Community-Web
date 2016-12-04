@@ -3,7 +3,10 @@ from ..communities.models import Community
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import datetime
+from django.utils import timezone
+from datetime import datetime, timedelta
+from . import tasks
+import json
 
 class Meetup(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
@@ -12,11 +15,19 @@ class Meetup(models.Model):
     duration = models.IntegerField('duration (hours)', blank=False, null=False, default=2)
     name = models.CharField(max_length=128, blank=False, null=False)
     description = models.TextField(max_length=512, blank=True, null=True)
-    #location
     max_attendees = models.IntegerField(blank=True, null=True)
-    active = models.BooleanField(default=True)
     private = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     #tag
+
+    def save(self, *args, **kwargs):
+        create_task = False
+        if self.pk is None:
+            create_task = True
+        super(Meetup, self).save(*args, **kwargs)
+        if create_task:
+            end_time = self.created_date + timedelta(seconds=30)
+            tasks.set_inactive_after_time.apply_async((self.community.id, self.id), eta=end_time)
 
     def __str__(self):
         return self.name
@@ -48,7 +59,7 @@ class Attendee(models.Model):
 @receiver(post_save, sender=Meetup)
 def create_meetup_creator_attendee(sender, instance, created, **kwargs):
     if created:
-        attendee = Attendee.objects.create(meetup=instance, user=instance.creator, signup_time=datetime.datetime.now(), updated=datetime.datetime.now())
+        attendee = Attendee.objects.create(meetup=instance, user=instance.creator, signup_time=datetime.now(), updated=datetime.now())
         attendee.save()
 
 

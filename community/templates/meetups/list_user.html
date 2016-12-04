@@ -1,0 +1,17 @@
+{% extends 'base_user.html' %}
+{% block head_title %}List Meetups{% endblock %}
+{% block content %}
+    {% load tz %}
+    <h1>{% if user == current_user %}My{% else %}{{ user }}'s{% endif %} Meetups</h1>
+    {% for meetup in meetups %}
+        <h4><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{ meetup }}</a></h4>
+        started at {{ meetup.created_date.time }} by {{ meetup.creator }}<br/>
+    {% endfor %}
+    {% if meetup_history %}
+        <h3>History</h3>
+        {% for meetup in meetup_history %}
+        <h4><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{ meetup }}</a></h4>
+        started at {{ meetup.created_date.time }} by {{ meetup.creator }}<br/>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

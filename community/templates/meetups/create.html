@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_user.html" %}
 
 {% block content %}
     <h1>Create {{ community }} Meetup</h1>
@@ -7,6 +7,6 @@
         {% for field in form %}
             {{ field.label }}<br/>{{ field }}<br/>
         {% endfor %}
-        <input type="Submit" value="Submit" class="btn" /><a href="{% url 'meetups_list' community.slug %}" class="btn btn-default">Cancel</a>
+        <input type="Submit" value="Submit"/><button type="reset" value="Reset">Reset</button><button type="cancel" onclick="window.location='{% url 'community_meetups_list' community.slug %}';return false;">Cancel</button>
     </form>
 {% endblock %}
