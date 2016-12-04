@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+    <link href="{% static "site/css/application.scss" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/gaia.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/dashboard/title.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/dashboard/header.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/dashboard/square.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/home.css" %}" rel="stylesheet">
+    <link href="{% static "site/css/account/account.css" %}" rel="stylesheet">
+
+    <!--     Fonts and icons     -->
+    <link href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static "site/css/fonts/pe-icon-7-stroke.css" %}" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
+  </head>
+  <body>
+    {% block body %}
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>
