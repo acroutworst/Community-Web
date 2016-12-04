@@ -27,12 +27,14 @@ def groups_list(request):
 def groups_view (request, id):
     #community = Community.objects.get(slug=slug)
     groups = Group.objects.get(id = id)
+    member = GroupMembers.objects.filter(group=groups).first()
 
     user = request.user
     context = {
         'user': user,
         #'community': community,
         'group': groups,
+        'member':member,
 
     }
 
@@ -81,6 +83,7 @@ def group_join(request, id):
         member.group=group
         member.join_date=datetime.datetime.now()
         if request.method == 'POST':
+            member.active=True
             member.save()
             #form = JoinGroupForm(request.POST, request.FILES,instance=member)
             #form.save()
@@ -89,6 +92,7 @@ def group_join(request, id):
     context = {
         'user': user,
         'group': group,
+        'member': member,
 
     }
     return render(request, template_name='groups/join.html', context=context)

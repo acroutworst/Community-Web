@@ -6,4 +6,5 @@
     {% for group in groups %}
         <li><a href="{% url 'groups_view' group.id %}">{{ group }}</a></li><br/>
       {% endfor %}
+    <a href="{% url 'groups_create'%}">Create Your Own Group</a>
 {% endblock %}

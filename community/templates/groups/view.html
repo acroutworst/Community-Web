@@ -6,7 +6,6 @@
     current leader: {{ group.current_leader }}<br/>
     description: {{ group.description }}<br/>
 
-    <a href="{% url 'groups_join' group.id %}">Join group: {{ group.title }}</a>
-
+    {% if member.active %}<a href="{% url 'groups_join' group.id %}">Deactivate group: {{ group.title }}</a>{% endif %}
 
 {% endblock %}
