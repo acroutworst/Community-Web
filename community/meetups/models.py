@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from django.utils import timezone
 from datetime import datetime, timedelta
 from . import tasks
-import json
 
 class Meetup(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
