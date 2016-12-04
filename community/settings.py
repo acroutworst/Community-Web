@@ -115,8 +115,7 @@ REST_FRAMEWORK = {
 if DEV_LOCAL:
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'cachetable',
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 
