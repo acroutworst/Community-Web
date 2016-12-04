@@ -518,7 +518,7 @@ a,
 .btn.btn-fill,
 .navbar .navbar-nav > li > a.btn.btn-fill {
   color: #FFFFFF;
-  background-color: #888888;
+  background-color: #0C9548;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -573,6 +573,7 @@ a,
   background-color: transparent;
   color: #242424;
   border-color: #242424;
+  box-shadow: 1px 1px 9px rgba(0,0,0,.7);
 }
 .btn-danger:disabled, .btn-danger[disabled], .btn-danger.disabled,
 .navbar .navbar-nav > li > a.btn-danger:disabled,
