@@ -4,5 +4,4 @@ gunicorn
 whitenoise
 redis
 django-redis
-Collectfast
 # Anything else for production environment
