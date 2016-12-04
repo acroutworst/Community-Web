@@ -30,7 +30,8 @@
 
             <div class="square">
                 <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-                <h1><a href="{% url 'community_meetups_list' community.slug %}">Meetups</a></h1>
+                  <h1>Meetups</h1>
+{#                <h1><a href="{% url 'community_meetups_list' community.slug %}">Meetups</a></h1>#}
                   <hr/>
             </div>
 
@@ -41,8 +42,13 @@
             </div>
         </section>
 
-        {% block community_content %}
-        {% endblock %}
+        <div class="dashboard">
+            <h2 class="dashboard title">
+                University of Washington Bothell
+            </h2>
+            {% block community_content %}
+            {% endblock %}
+        </div>
 
         <section class="square-col">
             <div class="square-full" style="color: #FFFFFF; text-align: center; font-size: 10px">COMMUNITY CHAT</div>

@@ -1,6 +1,6 @@
-{% extends 'base_user.html' %}
+{% extends 'base_dashboard.html' %}
 {% block head_title %}List Meetups{% endblock %}
-{% block content %}
+{% block community_content %}
     {% load tz %}
     <h1>{{ community }}'s Meetups</h1>
     {% regroup attendees by meetup as meetup_list %}

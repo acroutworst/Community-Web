@@ -1,6 +1,6 @@
-{% extends 'base_user.html' %}
+{% extends 'base_dashboard.html' %}
 {% block head_title %}List Meetups{% endblock %}
-{% block content %}
+{% block community_content %}
     {% load tz %}
     <h1>{% if user == current_user %}My{% else %}{{ user }}'s{% endif %} Meetups</h1>
     {% for meetup in meetups %}

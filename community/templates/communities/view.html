@@ -1,5 +1,5 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base_dashboard.html' %}
+{% block community_content %}
     <p><b>{{ community.title }} {% if community.acronym %}({{ community.acronym }}){% endif %}</b><br/>
     {% if community.creator %}Created by: {{ community.creator }}{% endif %}
     {% if community.date_created %}on {{ community.date_created }}{% endif %}<br/>
