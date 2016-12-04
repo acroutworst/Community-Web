@@ -12,3 +12,6 @@ class CreateGroupForm(forms.ModelForm):
         #fields = ['name', 'title', 'description', 'current_leader']
         fields = ['name', 'title', 'description']
 
+#class JoinGroupForm(forms.ModelForm):
+    #class Meta:
+        #model = Group
