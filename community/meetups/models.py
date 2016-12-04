@@ -26,7 +26,11 @@ class Meetup(models.Model):
         super(Meetup, self).save(*args, **kwargs)
         if create_task:
             end_time = self.created_date + timedelta(hours=self.duration)
-            tasks.set_inactive_after_time.apply_async((self.community.id, self.id), eta=end_time)
+            try:
+                tasks.set_inactive_after_time.apply_async((self.community.id, self.id), eta=end_time)
+            except:
+                pass
+
 
     def __str__(self):
         return self.name
