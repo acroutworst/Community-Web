@@ -1,9 +1,10 @@
 {% extends "base_dashboard.html" %}
 {% load static %}
 {% block community_content %}
-{{ context }}
+{{ event }}
 {{ event.firstname }}
 {{ event.lastname }}
+
 {{ event.email }}
 {{ event.start_time }}
 {{ event.end_time }}
