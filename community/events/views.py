@@ -21,10 +21,7 @@ def create_events(request):
         else:
             event.private = False
         event.save()
-        context = {
-            'event': event
-        }
-        return redirect('/events/view_event/', context=context)
+        return view_event(request, event)
     return render(request, template_name='events/create_events.html')
 
 def view_event(request, event=None):
