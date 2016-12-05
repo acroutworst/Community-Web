@@ -37,25 +37,20 @@ class Meetup(models.Model):
         endtime = time + timedelta(hours=self.duration)
         timeleft = endtime - now
         seconds = timeleft.total_seconds()
-        print(seconds)
-        # if seconds < 0:
-        #     hoursleft = 0
-        #     minutesleft = 0
-        #     secondsleft = 0
-        #     if self.active:
-        #         self.active = False
-        #         self.save()
-        # else:
         hoursleft = int(seconds // 3600)
         minutesleft = int(seconds // 60 % 60)
         secondsleft = int(seconds % 60)
-        return (hoursleft, minutesleft, secondsleft)
+        self.check_active(hoursleft, minutesleft, secondsleft)
+        return hoursleft, minutesleft, secondsleft
+
+    def check_active(self, hours, minutes, seconds):
+        if self.active and (hours < 0 or minutes < 0 or seconds < 0):
+            self.active = False
+            self.save()
+        return self.active
 
     def __str__(self):
         hours, minutes, seconds = self.timeleft()
-        print(hours)
-        print(minutes)
-        print(seconds)
         if self.active:
             return "{} - {}:{} left".format(self.name, hours, minutes)
         else:
