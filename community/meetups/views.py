@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
+from community.notifications.models import Notification
 from .models import Meetup, Attendee
-from community.communities.models import Community
+from community.communities.models import Community, CommunityUserProfile
 from .forms import CreateMeetupForm, AttendMeetupForm
 import datetime
 
@@ -50,6 +52,23 @@ def meetups_create(request, slug):
     if request.method == 'POST':
         meetup = Meetup(community=community, creator=user, created_date=datetime.datetime.now())
         form = CreateMeetupForm(request.POST, request.FILES, instance=meetup)
+
+        community_members = CommunityUserProfile.objects.filter(community=community)
+        for member in community_members:
+            notification = Notification(user=member.user)
+            # notification.description = meetup.__str__()
+            # notification.target = meetup
+            # notification.status = notification.NOTIFICATION_STATUS[0]
+            # notification.save()
+            meetup.notification.create(
+                # user=member.user,
+                description=meetup.__str__(),
+                status=Notification.NOTIFICATION_STATUS[0],
+                content_type__pk=notification.id,
+                object_id=notification.id
+                # content_object=,
+            ).save()
+
         form.save()
         return redirect('meetups_view', slug=slug, id=meetup.id)
     context = {

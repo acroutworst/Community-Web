@@ -1,4 +1,7 @@
 from django.db import models
+
+from community.notifications.models import Notification
+from django.contrib.contenttypes.fields import GenericRelation
 from ..communities.models import Community
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -17,6 +20,7 @@ class Meetup(models.Model):
     active = models.BooleanField(default=True)
     private = models.BooleanField(default=False)
     #tag
+    notification = GenericRelation(Notification)
 
     def __str__(self):
         return self.name

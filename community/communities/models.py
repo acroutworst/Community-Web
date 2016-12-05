@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from community.notifications.models import Notification
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Community(models.Model):
@@ -11,6 +13,7 @@ class Community(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_created=True)
     slug = models.SlugField(max_length=40, db_index=True, unique=True)
+    # notification = GenericRelation(Notification)
 
     def __str__(self):
         return self.title + " ({0})".format(self.acronym)
