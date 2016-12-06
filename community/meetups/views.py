@@ -55,18 +55,16 @@ def meetups_create(request, slug):
 
         community_members = CommunityUserProfile.objects.filter(community=community)
         for member in community_members:
-            notification = Notification(user=member.user)
+            # notification = Notification(user=member.user)
             # notification.description = meetup.__str__()
             # notification.target = meetup
             # notification.status = notification.NOTIFICATION_STATUS[0]
             # notification.save()
             meetup.notification.create(
-                # user=member.user,
+                user=member.user,
                 description=meetup.__str__(),
                 status=Notification.NOTIFICATION_STATUS[0],
-                content_type__pk=notification.id,
-                object_id=notification.id
-                # content_object=,
+                object_id=meetup.id
             ).save()
 
         form.save()

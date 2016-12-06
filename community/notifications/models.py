@@ -16,7 +16,7 @@ class Notification(models.Model):
     status = models.CharField(max_length=10, choices=NOTIFICATION_STATUS, default='UNSEEN', blank=False, null=False)
     #Contenttype framework
     content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField(null=True)
     content_object = GenericForeignKey()
 
     def __str__(self):
