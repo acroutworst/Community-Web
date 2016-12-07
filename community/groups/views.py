@@ -76,6 +76,7 @@ def group_join(request, id):
                     member.active=True
                     member.save()
                     return HttpResponseRedirect('/groups/' + id)
+
     else:
 
         member = GroupMembers()#user=user,group=group,join_date=datetime.datetime.now())
@@ -97,7 +98,35 @@ def group_join(request, id):
     }
     return render(request, template_name='groups/join.html', context=context)
 
+@login_required
+def group_deactivate (request, id):
+    group = Group.objects.filter(id=id).first()
+    user = request.user
+    member = GroupMembers.objects.get(user=user,group=group)
+    if not member.active:
+        return HttpResponseRedirect('/groups/' +id)
+    if request.method=='POST':
+        member.active=False
+        member.save()
+        return HttpResponseRedirect('/groups/' + id)
+    context = {
+        'user':user,
+        'group':group,
+        'member':member,
+    }
+    return render(request, template_name='groups/deactivate.html',context=context)
 
+@login_required
+def group_member_view (request,id):
+    group = Group.objects.filter(id=id).first()
+    user=request.user
+    member = GroupMembers.objects.filter(group = group)
+    context = {
+        'group': group,
+        'user':user,
+        'members':member,
+    }
+    return render(request,template_name='groups/member.html',context=context)
 
 
 

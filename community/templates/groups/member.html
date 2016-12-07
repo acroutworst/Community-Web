@@ -1,0 +1,10 @@
+{% extends "base_user.html" %}
+{% block head_title %}Member List {% endblock %}
+
+{% block content %}
+      <b>GroupMembers:</b><br/>
+    {% for member in members %}
+        <b>{{ member.user }}</b><br/>
+      {% endfor %}
+
+{% endblock %}
