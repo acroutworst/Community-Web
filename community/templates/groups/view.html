@@ -5,7 +5,10 @@
     created by {{ group.create_by }} at {{ group.create_date }} <br/>
     current leader: {{ group.current_leader }}<br/>
     description: {{ group.description }}<br/>
+    active members: <a href="{% url 'groups_member' community.slug group.id%}">
+    {{ active_members|length }} </a>
+    <br/>
 
-    {% if member.active %}<a href="{% url 'groups_deactivate' group.id %}">Deactivate group: {{ group.title }}</a>{% else %}<a href="{% url 'groups_join' group.id %}"> Join group: {{ group.title }}</a> {% endif %}
+    {% if members.active %}<a href="{% url 'groups_deactivate' community.slug group.id %}">Deactivate group: {{ group.title }}</a>{% else %}<a href="{% url 'groups_join' community.slug group.id %}"> Join group: {{ group.title }}</a> {% endif %}
 
 {% endblock %}

@@ -5,6 +5,6 @@
     <form method="post"action="">
     {% csrf_token %}
         Do you want to deactivate your {{ group.title }} account?
-        <input type ="submit" value="Yes"/><a href="{% url 'groups_view' group.id %}"><input type ="button" value="No"> </a>
+        <input type ="submit" value="Yes"/><a href="{% url 'groups_view' community.slug group.id %}"><input type ="button" value="No"> </a>
     </form>
 {% endblock %}

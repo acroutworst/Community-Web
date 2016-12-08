@@ -10,11 +10,13 @@ from django.shortcuts import render, redirect
 
 
 @login_required
-def groups_list(request):
-    groups = Group.objects.all()
+def groups_list(request, slug):
+    community = Community.objects.get(slug=slug)
+    groups = Group.objects.filter(community=community)
     user = request.user
-    context = {
 
+    context = {
+        'community':community,
         'groups': groups,
         'user': user,
     }
@@ -24,37 +26,39 @@ def groups_list(request):
 
 @login_required
 #def groups_view (request, slug, id):
-def groups_view (request, id):
-    #community = Community.objects.get(slug=slug)
-    groups = Group.objects.get(id = id)
+def groups_view (request, slug, id):
+    community = Community.objects.get(slug=slug)
+    groups = Group.objects.get(community=community, id = id)
     member = GroupMembers.objects.filter(group=groups).first()
+    active_member = GroupMembers.objects.exclude(active=False).filter(group=groups)
 
     user = request.user
     context = {
         'user': user,
-        #'community': community,
+        'community':community,
         'group': groups,
-        'member':member,
+        'members':member,
+        'active_members':active_member,
 
     }
 
     return render(request, template_name= 'groups/view.html', context = context)
 
 @login_required
-def group_create(request):
-    #community = Community.objects.get(slug=slug)
+def group_create(request,slug):
+    community = Community.objects.get(slug=slug)
 
     form = CreateGroupForm
     user = request.user
 
     if request.method == 'POST':
        # group = Group(community=community, creat_by =user,create_date=datetime.datetime.now())
-        group = Group(create_by=user, create_date=datetime.datetime.now())
+        group = Group(community=community, create_by=user, create_date=datetime.datetime.now())
         form = CreateGroupForm(request.POST, request.FILES, instance=group)
         form.save()
         return redirect ('groups_view', id=group.id)
     context = {
-        #'community': community,
+        'community': community,
         'user': user,
         'form': form,
     }
@@ -62,12 +66,13 @@ def group_create(request):
     return render (request, template_name='groups/create.html', context=context)
 
 @login_required
-def group_join(request, id):
+def group_join(request,slug, id):
     if id is None:
         HttpResponseRedirect('/groups/')
     group = Group.objects.get(id=id)
     user=request.user
-    member=GroupMembers.objects.filter(user=user,group=group).first()
+    community=Community.objects.get(slug=slug)
+    member=GroupMembers.objects.filter(community=community,user=user,group=group).first()
     if member:
         if member.active:
             return HttpResponseRedirect('/greops/' + id)
@@ -80,6 +85,7 @@ def group_join(request, id):
     else:
 
         member = GroupMembers()#user=user,group=group,join_date=datetime.datetime.now())
+        member.community=community
         member.user=user
         member.group=group
         member.join_date=datetime.datetime.now()
@@ -94,14 +100,16 @@ def group_join(request, id):
         'user': user,
         'group': group,
         'member': member,
+        'community':community,
 
     }
     return render(request, template_name='groups/join.html', context=context)
 
 @login_required
-def group_deactivate (request, id):
+def group_deactivate (request,slug, id):
     group = Group.objects.filter(id=id).first()
     user = request.user
+    community=Community.objects.get(slug=slug)
     member = GroupMembers.objects.get(user=user,group=group)
     if not member.active:
         return HttpResponseRedirect('/groups/' +id)
@@ -113,15 +121,18 @@ def group_deactivate (request, id):
         'user':user,
         'group':group,
         'member':member,
+        'community':community,
     }
     return render(request, template_name='groups/deactivate.html',context=context)
 
 @login_required
-def group_member_view (request,id):
+def group_member_view (request,slug, id):
+    community=Community.objects.get(slug=slug)
     group = Group.objects.filter(id=id).first()
     user=request.user
     member = GroupMembers.objects.filter(group = group)
     context = {
+        'community':community,
         'group': group,
         'user':user,
         'members':member,

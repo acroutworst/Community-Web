@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Join {{ group.title }} </h1>
+    <h1>Join Group:  {{ group.title }} </h1>
     <form method="post" action="">
     {% csrf_token %}
 
 
 
-        <input type="Submit" value="Yes" /> <a href="{% url 'groups_view' group.id %}"><input type="button" value="No"></a>
+        <input type="Submit" value="Yes" /><a href="{% url 'groups_view' community.slug group.id %}"><input type="button" value="No"></a>
     </form>
 {% endblock %}

@@ -7,7 +7,7 @@
         {% for field in form %}
             {{ field.label }} <br/>{{ field }} <br/>
         {% endfor %}
-        <input type="Submit" value="Submit" class="btn" /><a href="{% url 'groups_list'%}" class="btn btn-default"> Cancel</a>
+        <input type="Submit" value="Submit" class="btn" /><a href="{% url 'groups_list' community.slug %}" class="btn btn-default"> Cancel</a>
 
     </form>
 {% endblock %}

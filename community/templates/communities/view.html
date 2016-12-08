@@ -5,6 +5,7 @@
     {% if community.date_created %}on {{ community.date_created }}{% endif %}<br/>
     {% if community.phone_number %}{{ community.phone_number }}{% endif %}</p>
     {% if community.description %}<p>{{ community.description }}</p>{% endif %}
+    <a href="{% url 'groups_list' community.slug %}">view groups</a> <br/>
     <a href="{% url 'meetups_list' community.slug %}">view meetups</a>
 
     <br/><br/>

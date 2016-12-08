@@ -9,6 +9,6 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/deactivate/$', views.communities_deactivate, name="communities_deactivate"),
     url(r'^(?P<slug>[\w-]+)/meetups/', include('community.meetups.urls')),
     url(r'^(?P<slug>[\w-]+)/profile/',views.communities_profile, name = "communities_profile"),
-    #url(r'^(?P<slug>[\w-]+)/groups/', include('community.groups.urls')),
-    url(r'^(?P<slug>[\w-]+)/meetups/', include('community.meetups.urls')),
+    url(r'^(?P<slug>[\w-]+)/groups/', include('community.groups.urls')),
+    #url(r'^(?P<slug>[\w-]+)/meetups/', include('community.meetups.urls')),
 ]
