@@ -34,7 +34,7 @@ SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
-if DEPLOYMENT_ENVIRONMENT is 'community-cd':
+if DEPLOYMENT_ENVIRONMENT is 'production':
     DEBUG = False
 ALLOWED_HOSTS = [
     'community-ci.herokuapp.com',
@@ -189,7 +189,7 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 COLLECTFAST_CACHE = 'default'
 AWS_PRELOAD_METADATA = True
-if DEV_LOCAL:
+if DEBUG:
     COLLECTFAST_ENABLED = False
 else:
     CLOUDFRONT = os.environ.get('CLOUDFRONT')

@@ -72,7 +72,6 @@
 }
 .navigation-example{
     height: 360px;
-    background-image: url('../img/bg.jpg');
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
@@ -125,7 +124,6 @@
 }
 .footer-demo{
     background-color: #DDDDDD;
-    background-image: url('../img/cover_4_blur.jpg');
     background-attachment: fixed;
     position: relative;
 }
@@ -1128,9 +1126,7 @@
   -o-user-select: none;
   user-select: none;
   /*   this code is for fixing safari bug with hidden overflow for border-radius   */
-  -webkit-mask: url("../img/mask.png") 0 0 no-repeat;
   -webkit-mask-size: 60px 24px;
-  mask: url("../img/mask.png") 0 0 no-repeat;
 }
 
 .has-switch.deactivate {
