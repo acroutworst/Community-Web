@@ -1,0 +1,63 @@
+<!doctype html>
+{% load static %}
+<html ng-app="BasicChat">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="{% static 'chatroom/style.css'%}">
+{#    <link rel="apple-touch-icon-precomposed" href="/media/angularjs-chat.png">#}
+{#    <link rel="shortcut icon" href="/media/angularjs-chat.png">#}
+
+    <title>Community Chat</title>
+
+    <script src="{% static 'chatroom/bower_components/angular/angular.js' %}"></script>
+    <script src="{% static 'chatroom/bower_components/angular-chat/angular-chat.js' %}"></script>
+    <script src="{% static 'chatroom/app.js' %}"></script>
+    <script src="{% static 'chatroom/names.js' %}"></script>
+    <style>
+        var {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="chat-container" ng-controller="BasicController as chat">
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- Chat Messages -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <div class="chat-messages">
+            <div class="chat-header">
+                <div class="angularjs-chat-logo"></div><img src = "{% static 'chatroom/uwblogo.png' %}" width = "100px"/>
+            </div>
+            <var id = "currentUser">{{ user }}</var>
+            {% verbatim %}
+            <div ng-repeat="message in chat.messages">
+                <div class="sent-message-{{ message.self }}">
+                    <span class="username">{{ message.user.name }}:</span>
+                    {{ message.data }}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- User Input -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <form ng-submit="chat.send()" class="chat-input">
+            <input type="text" ng-model="chat.textbox" autofocus>
+            <input type="submit" class="send-icon" value=" ">
+            <input type="submit" value=" "
+                class="sent-indicator {{ chat.status }}">
+        </form>
+
+    </div>
+    {% endverbatim %}
+
+</body>
+</html>
