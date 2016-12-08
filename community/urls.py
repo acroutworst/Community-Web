@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^api/', include('community.rest_api.urls')),
     url(r'^accounts/', include('community.accounts.urls')),
     url(r'^communities/', include('community.communities.urls')),
-    url(r'^groups/', include('community.groups.urls')),
+
     url(r'^rss/', include('community.rss_feed.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
