@@ -1,0 +1,17 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block community_content %}
+    {% autoescape on %}
+    <p>NOTIFICATIONS</p> {# even this doesn't print out #}
+    {% endautoescape %}
+
+    {% if notifications_list %}
+        <ul>
+        {% for notification in notifications_list %}
+            <li>{{ notification.description }} {{ notification.date }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notifications are available.</p>
+    {% endif %}
+{% endblock %}

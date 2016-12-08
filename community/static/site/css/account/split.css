@@ -1,0 +1,33 @@
+.split-pane {
+    display: flex;
+}
+
+.split-pane-left {
+    border-right: 1px #EFEFEF solid;
+    flex: 1;
+    text-align: left;
+    font-size: 14px;
+    padding: 0 50px;
+}
+
+.split-pane-right {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 0 50px;
+}
+
+.split-pane-text {
+    line-height: 1.3em;
+    margin-bottom: 2em;
+}
+
+.split-pane-item {
+    display: block;
+    width: 250px;
+    height: 4em;
+    font-size: 12px;
+    padding: 17px 24px;
+    margin: 0 auto;
+}

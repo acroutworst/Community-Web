@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Events</title>
-</head>
-
-<body>
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block community_content %}
 <h1>Welcome to the events page</h1>
 
 <a href="{% url 'create_events' %}"  class="button">Create Event</a>
 <a href="{% url 'create_events' %}"  class="button">Edit Event</a>
 <a href="{% url 'create_events' %}"  class="button">View Event</a>
-
-
-</body>
-
-
-</html>
+{% endblock %}

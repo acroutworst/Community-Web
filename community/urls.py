@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^rss/', include('community.rss_feed.urls')),
     url(r'^bus_schedule/', include ('community.bus_schedule.urls')),
     url(r'^chatroom/', include ('community.chatroom.urls')),
+    url(r'^notifications/', include('community.notifications.urls')),
+    url(r'^meetups/', include('community.meetups.user_urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

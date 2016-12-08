@@ -24,9 +24,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 DEV_LOCAL = False
 DEPLOYMENT_ENVIRONMENT = 'LOCAL'
@@ -35,17 +34,17 @@ SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
-if DEPLOYMENT_ENVIRONMENT is 'community-cd':
+if DEPLOYMENT_ENVIRONMENT is 'production':
     DEBUG = False
-
 ALLOWED_HOSTS = [
     'community-ci.herokuapp.com',
     'localhost',
     '127.0.0.1',
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
-]
+    'community-ben.herokuapp.com',
 
+]
 
 # Application definition
 SITE_ID = 1
@@ -55,16 +54,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+    'storages',
+    'collectfast',
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
+    'easy_thumbnails',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
-    'django_extensions',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'community.meetups',
     'community.bus_schedule',
     'community.chatroom',
+    'community.notifications',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,12 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 if DEV_LOCAL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -126,6 +133,17 @@ else:
     DATABASES = {
         'default': db_from_env
     }
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('REDIS_URL'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": "cache"
+        }
+    }
+
 # Authentication --------------------------------------
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
@@ -158,44 +176,54 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
-if not DEV_LOCAL:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+COLLECTFAST_CACHE = 'default'
+AWS_PRELOAD_METADATA = True
+if DEBUG:
+    COLLECTFAST_ENABLED = False
+else:
+    CLOUDFRONT = os.environ.get('CLOUDFRONT')
+    STATIC_HOST = os.environ.get('STATIC_HOST')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    AWS_MEDIA_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    STATIC_HOST = os.environ.get('STATIC_HOST')
-    STATIC_URL = STATIC_HOST + '/static/'
-    CLOUDFRONT = os.environ.get('CLOUDFRONT')
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    AWS_STORAGE_BUCKET_NAME = 'community-ci'
-    AWS_DEFAULT_ACL = 'public-read'
-    MEDIA_URL = STATIC_HOST + '/static/media/'
 
-# Extra places for collectstatic to find staticfiles files.
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, 'static'),
-# )
+    AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT
 
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
+    MEDIAFILES_LOCATION = 'media'
+    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
+
+#Extra places for collectstatic to find staticfiles files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (200, 200), 'crop': True},
+    },
+}
+
+#CELERY
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_TASK_SERIALIZER = 'json'

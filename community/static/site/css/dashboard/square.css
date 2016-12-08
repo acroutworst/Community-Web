@@ -1,0 +1,41 @@
+.square-col {
+    float: left;
+    overflow: hidden;
+}
+
+.square-full {
+    background: #3C3C3C;
+    width: 9.8vw;
+    height: 9.8vw;
+    margin: 0;
+}
+
+.square-full h4 {
+    font-size: 12px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.square {
+    background: #3C3C3C;
+    width: 9.8vw;
+    height: 9.8vw;
+    border-style: solid;
+    border-bottom: thin solid gray;
+    margin: 0;
+}
+
+.square h1 {
+    font-size: 15px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.square img {
+    height: 70%;
+    width: 100%;
+}
+
+.square a {
+    color: #FFFFFF;
+}

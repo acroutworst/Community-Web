@@ -1,6 +1,8 @@
-{% extends "dashboard.html" %}
+{% extends "index_user.html" %}
 {% block head_title %}- Profile{% endblock %}
 {% block main_content %}
+
+    {% load static %}
     {% load profile_tags %}
     <h1>{{ profile.user }}'s Profile</h1>
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
@@ -14,7 +16,13 @@
     {% if profile.interests %}<b>Interests: </b>{{ profile.interests }}<br/>{% endif %}
     {% if profile.transportation %}<b>Transportation: </b>{{ profile.transportation }}<br/>{% endif %}
     {% if profile.phone_number %}<b>Phone Number: </b>{{ profile.phone_number }}<br/>{% endif %}
-    {% avatar profile.user %}
+
+    {% if profile.image %}
+        {% load thumbnail %}
+        <a href="{{ profile.image.image.url }}"><img src="{{ profile.image.image|thumbnail_url:'avatar' }}" alt="{% static 'site/img/accounts/profile/default.jpg' %}"></a>
+    {% else %}
+        <img src="{% static 'site/img/accounts/profiles/default.jpg' %}">
+    {% endif %}
     {% if current_user == profile.user %}
         <br/><a href="{% url 'accounts_image_upload' %}">Change your picture</a>
         <a href={% url 'accounts_profile_edit' %}>Edit Profile</a><br/>

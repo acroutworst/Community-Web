@@ -60,59 +60,58 @@
                     </div>
                 </div>
 
-                <form id="searchform" action="{% url 'communities_search_results' %}" method="get" accept-charset="utf-8">
-                  <button class="searchbutton" type="submit">
-                    <i class="fa fa-search"></i>
-                  </button>
+                <form id="search-form" action="{% url 'communities_search_results' %}" method="get" accept-charset="utf-8">
                   <input class="search-field" id="searchbox" name="q" type="text" placeholder="Find your community">
+                    <button class="search-button" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
 
 
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="title-area">
-                    <h2>Our Services</h2>
-                    <div class="separator separator-danger">✻</div>
-                    <p class="description">Community is a social platform for anyone to create a community to connect with like-minded individuals, act as a hub for community-wide information,s and track local events.</p>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="title-area">
+                <h2>Our Services</h2>
+                <div class="separator separator-danger">✻</div>
+                <p class="description">Community is a social platform for anyone to create a community to connect with like-minded individuals, act as a hub for community-wide information,s and track local events.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info-icon">
+                    <div class="icon text-danger">
+                        <i class="pe-7s-bicycle"></i>
+                    </div>
+                    <h3>Events</h3>
+                    <p class="description">Keep track of local events, or create an event and notify your community.</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="info-icon">
-                        <div class="icon text-danger">
-                            <i class="pe-7s-bicycle"></i>
-                        </div>
-                        <h3>Events</h3>
-                        <p class="description">Keep track of local events, or create an event and notify your community.</p>
+            <div class="col-md-4">
+                <div class="info-icon">
+                    <div class="icon text-danger">
+                        <i class="pe-7s-cloud"></i>
                     </div>
+                    <h3>Meetups</h3>
+                    <p class="description">Need to find members to work on a project, or form an impromptu study session? Connect with like-minded community members through our meetups page. </p>
                 </div>
-                <div class="col-md-4">
-                    <div class="info-icon">
-                        <div class="icon text-danger">
-                            <i class="pe-7s-cloud"></i>
-                        </div>
-                        <h3>Meetups</h3>
-                        <p class="description">Need to find members to work on a project, or form an impromptu study session? Connect with like-minded community members through our meetups page. </p>
+            </div>
+            <div class="col-md-4">
+                <div class="info-icon">
+                    <div class="icon text-danger">
+                        <i class="pe-7s-culture"></i>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info-icon">
-                        <div class="icon text-danger">
-                            <i class="pe-7s-culture"></i>
-                        </div>
-                        <h3>Local</h3>
-                        <p class="description">Support your local community!</p>
-                    </div>
+                    <h3>Local</h3>
+                    <p class="description">Support your local community!</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 <footer class="footer footer-big footer-color-black" data-color="black">

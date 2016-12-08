@@ -2,5 +2,6 @@
 psycopg2
 gunicorn
 whitenoise
-
+redis
+django-redis
 # Anything else for production environment

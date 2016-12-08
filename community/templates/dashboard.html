@@ -1,31 +1,67 @@
-{% extends 'base.html' %}
+{% extends "base_dashboard.html" %}
+{% block community_content %}
 {% load static %}
-{% block head_title %}{% endblock %}
-{% block body %}
-{% endblock %}
-{% block content%}
-{% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-    {% for message in messages %}
-    <li>{{message}}</li>
-    {% endfor %}
-      </ul>
+<div class="dashboard content">
+    <div class="top-content">
+        <h3>COMMUNITY PAGE</h3>
+
     </div>
-{% endif %}
 
-<strong>Menu:</strong>
-<ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'communities_list' %}">Communities</a></li>
-    <li><a href="{% url 'rss_view' %}">RSS Feed</a></li>
-    <li><a href="{% url 'accounts_view_profile' %}">My Profile</a></li>
-    <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-</ul>
+    <div class="dashboard content poster">
+        <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
+        <div class="dashboard content box" style=" padding-left: 5px; ">
+            {% for community in my_communities %}
+                <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+            {% endfor %}
+        </div>
 
-{% block main_content %}
+        <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for meetup in meetup_list%}
+                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+            {% endfor %}
+        </div>
+
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
+        <div class="dashboard content box">
+            <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
+                <tr>
+                    <th> Route # </th>
+                    <th style = "text-align: center;"> Description </th>
+                    <th> Arrives in </th>
+                </tr>
+            </table>
+        </div>
+
+        {% autoescape on %}
+            <h4 style="margin-bottom: 0px;margin-top: 0px;">Notifications</h4>
+        {% endautoescape %}
+        <div class="dashboard content box">
+            {% if notifications_list %}
+                <ul style="list-style-type: none;">
+                {% for notification in notifications_list %}
+                    <li>{{ notification.description }} {{ notification.date }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications are available.</p>
+            {% endif %}
+        </div>
+
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">RSS Feed</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for entry in entries|slice:":1" %}
+                {% autoescape off %}
+                <li><a style="color: #560095;" href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
+                {{ entry.description }}<p/>
+            {% endautoescape %}
+            {% endfor %}
+        </div><br/>
+
+        <div class="dashboard-button">
+            <a class="btn btn-danger-purple btn-fill" href="{% url 'meetups_create' community.slug %}">CREATE A MEETUP</a>
+            <a class="btn btn-danger-purple btn-fill">INVITE PEOPLE</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
-{% endblock %}
-
