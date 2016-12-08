@@ -1,12 +1,17 @@
 {% extends 'base_dashboard.html' %}
 {% block head_title %}List Meetups{% endblock %}
+{% block extra_head %}
+    {% load static %}
+    <script src="{% static 'javascript/jquery.countdown.min.js' %}"></script>
+{% endblock %}
 {% block community_content %}
     {% load tz %}
+    {% load meetup_tags %}
     <h1>{{ community }}'s Meetups</h1>
     {% regroup attendees by meetup as meetup_list %}
     {% for meetup in meetup_list %}
         <b><a href="{% url 'meetups_view' community.slug meetup.grouper.id %}">{{ meetup.grouper }}</a></b>
-        started at {{ meetup.grouper.created_date.time }} by {{ meetup.grouper.creator }}
+        started at {{ meetup.grouper.created_date.time }} by {{ meetup.grouper.creator }} -- {% meetup_timeleft meetup.grouper %}
         {% regroup meetup.list by status as status_list %}
         {% if status_list %}
             <br/>Attendees: <br/>
