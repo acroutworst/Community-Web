@@ -25,6 +25,14 @@
             <a href="{% url 'communities_view' membership.community.slug %}">{{ membership.community.title }}</a>
         {% endfor%}
     {% endif %}
+
+    {% if active_groups.count > 0 %}
+        <h2>Active Group Memberships:</h2>
+        {% for active_group in active_groups %}
+            <li><a href="{% url 'groups_view' active_group.community.slug active_group.id %}">{{ active_group.group.title }}</a></li><br/>
+        {% endfor %}
+    {% endif %}
+
     {% if meetups.count > 0 %}
         <h2>Attending Meetups:</h2>
         {% for meetup in meetups %}
