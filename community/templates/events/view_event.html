@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-</head>
-<body>
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block community_content %}
 {{ context }}
 {{ event.firstname }}
 {{ event.lastname }}
@@ -18,5 +13,4 @@
 
 
 Hello World
-</body>
-</html>
+{% endblock %}

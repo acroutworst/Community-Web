@@ -34,7 +34,7 @@ SECRET_KEY = generate_key(PROJECT_ROOT)
 DEPLOYMENT_ENVIRONMENT = os.environ.get('DEPLOYMENT_ENVIRONMENT', DEPLOYMENT_ENVIRONMENT)
 if DEPLOYMENT_ENVIRONMENT is 'LOCAL':
     DEV_LOCAL = True
-if DEPLOYMENT_ENVIRONMENT is 'community-cd':
+if DEPLOYMENT_ENVIRONMENT is 'production':
     DEBUG = False
 ALLOWED_HOSTS = [
     'community-ci.herokuapp.com',
@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
     'community-cd.herokuapp.com',
     'community-uw.herokuapp.com',
     'community-ben.herokuapp.com',
+
 ]
 
 # Application definition
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'storages',
+    'collectfast',
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
@@ -70,6 +72,7 @@ INSTALLED_APPS = [
     'community.events',
     'community.meetups',
     'community.bus_schedule',
+    'community.chatroom',
     'community.notifications',
 ]
 
@@ -115,8 +118,7 @@ REST_FRAMEWORK = {
 if DEV_LOCAL:
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'cachetable',
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 
@@ -132,13 +134,13 @@ else:
         'default': db_from_env
     }
     CACHES = {
-        'default': {
-            'BACKEND': 'django_bmemcached.memcached.BMemcached',
-            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-            'OPTIONS': {
-                'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-            }
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('REDIS_URL'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": "cache"
         }
     }
 
@@ -186,7 +188,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
-if not DEV_LOCAL:
+COLLECTFAST_CACHE = 'default'
+AWS_PRELOAD_METADATA = True
+if DEBUG:
+    COLLECTFAST_ENABLED = False
+else:
     CLOUDFRONT = os.environ.get('CLOUDFRONT')
     STATIC_HOST = os.environ.get('STATIC_HOST')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
@@ -215,3 +221,9 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (200, 200), 'crop': True},
     },
 }
+
+#CELERY
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_TASK_SERIALIZER = 'json'

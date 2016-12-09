@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
-        {% include "dashboard.html" %}
+        {% include "index_user.html" %}
     {% else %}
         {% include "home.html" %}
     {% endif %}

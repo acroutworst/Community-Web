@@ -1,5 +1,5 @@
-{% extends 'base_user.html' %}
-{% block content %}
+{% extends 'base_dashboard.html' %}
+{% block community_content %}
     <h1>Communities</h1>
     {% for community in communities %}
         <li><a href="{% url 'communities_view' community.slug %}">{{ community }}</a></li><br/>

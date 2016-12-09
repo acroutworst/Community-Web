@@ -11,3 +11,6 @@ brotlipy
 django-storages
 boto
 easy_thumbnails
+celery
+django-celery-results
+Collectfast

@@ -1,0 +1,19 @@
+{% extends 'base_dashboard.html' %}
+{% block head_title %}List Meetups{% endblock %}
+{% block community_content %}
+    {% load tz %}
+    <h1>{{ community }}'s Meetups</h1>
+    {% regroup attendees by meetup as meetup_list %}
+    {% for meetup in meetup_list %}
+        <b><a href="{% url 'meetups_view' community.slug meetup.grouper.id %}">{{ meetup.grouper }}</a></b>
+        started at {{ meetup.grouper.created_date.time }} by {{ meetup.grouper.creator }}
+        {% regroup meetup.list by status as status_list %}
+        {% if status_list %}
+            <br/>Attendees: <br/>
+            {% for status in status_list %}
+                <b>{{ status.grouper }}</b> - {{ status.list|length }}<br/>
+            {% endfor %}
+        {% endif %}<br/>
+    {% endfor %}
+    <br/><a href="{% url 'meetups_create' community.slug %}">Create a Meetup!</a>
+{% endblock %}

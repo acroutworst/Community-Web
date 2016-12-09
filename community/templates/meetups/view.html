@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block head_title %}{{ community }} meetup: {{ meetup }}{% endblock %}
-{% block content %}
+{% block community_content %}
     <h3>{{ community }} meetup: {{ meetup }}</h3>
     created by {{ meetup.creator }} at {{ meetup.created_date }}<br/>
     duration: {{ meetup.duration }} hours <br/>
