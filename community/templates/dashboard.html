@@ -1,59 +1,67 @@
-{% extends 'base.html' %}
+{% extends "base_dashboard.html" %}
+{% block community_content %}
 {% load static %}
-{% block head_title %}{% endblock %}
-{% block body %}
-{% endblock %}
-{% block content%}
-{% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-    {% for message in messages %}
-    <li>{{message}}</li>
-    {% endfor %}
-      </ul>
+<div class="dashboard content">
+    <div class="top-content">
+        <h3>COMMUNITY PAGE</h3>
+
     </div>
-{% endif %}
 
-<nav class="navbar navbar-default navbar-green " color-on-scroll="40">
-        <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
-        <div class="container">
-            <div class="navbar-header">
-                <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar bar1"></span>
-                    <span class="icon-bar bar2"></span>
-                    <span class="icon-bar bar3"></span>
-                </button>
-                <a href="{% url 'home' %}" class="navbar-brand">Home</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right navbar-uppercase">
-                    <li>
-                        <a href=" {% url 'communities_list' %} " class="btn-white"><i class="fa fa-hand-peace-o "></i> Communities</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'communities_view' 'university-of-washington-bothell' %}" class="btn-white"><i class="fa fa-child  "></i> Meetups</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'rss_view' %}" class="btn-white"><i class="fa fa-rss-square"></i> RSS Feed</a>
-                    </li>
-                     <li>
-                        <a href="{% url 'accounts_view_profile' %}" class="btn-white"><i class="fa fa-user-o"></i> My Profile</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account_email' %}" class="btn-white"><i class="fa fa-envelope-o "></i> Change E-mail</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account_logout' %}" class="btn-white"><i class="fa fa-cog"></i> Sign Out</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+    <div class="dashboard content poster">
+        <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
+        <div class="dashboard content box" style=" padding-left: 5px; ">
+            {% for community in my_communities %}
+                <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+            {% endfor %}
         </div>
-</nav>
 
-{% block main_content %}
-{% endblock %}
-{% endblock %}
+        <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for meetup in meetup_list%}
+                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+            {% endfor %}
+        </div>
 
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
+        <div class="dashboard content box">
+            <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
+                <tr>
+                    <th> Route # </th>
+                    <th style = "text-align: center;"> Description </th>
+                    <th> Arrives in </th>
+                </tr>
+            </table>
+        </div>
+
+        {% autoescape on %}
+            <h4 style="margin-bottom: 0px;margin-top: 0px;">Notifications</h4>
+        {% endautoescape %}
+        <div class="dashboard content box">
+            {% if notifications_list %}
+                <ul style="list-style-type: none;">
+                {% for notification in notifications_list %}
+                    <li>{{ notification.description }} {{ notification.date }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications are available.</p>
+            {% endif %}
+        </div>
+
+        <h4 style="margin-bottom: 0px;margin-top: 0px;">RSS Feed</h4>
+        <div class="dashboard content box" style=" padding-left: 5px;">
+            {% for entry in entries|slice:":1" %}
+                {% autoescape off %}
+                <li><a style="color: #560095;" href="{{ entry.link }}">{{ entry.title }}</a> - {{ entry.published }}</li><br/>
+                {{ entry.description }}<p/>
+            {% endautoescape %}
+            {% endfor %}
+        </div><br/>
+
+        <div class="dashboard-button">
+            <a class="btn btn-danger-purple btn-fill" href="{% url 'meetups_create' community.slug %}">CREATE A MEETUP</a>
+            <a class="btn btn-danger-purple btn-fill">INVITE PEOPLE</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
