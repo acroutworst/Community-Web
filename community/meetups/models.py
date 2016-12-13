@@ -31,6 +31,27 @@ class Meetup(models.Model):
             except:
                 pass
 
+    def timeleft(self):
+        endtime = self.endtime()
+        now = timezone.now()
+        timeleft = endtime - now
+        seconds = timeleft.total_seconds()
+        hoursleft = int(seconds // 3600)
+        minutesleft = int(seconds // 60 % 60)
+        secondsleft = int(seconds % 60)
+        self.check_active(hoursleft, minutesleft, secondsleft)
+        return hoursleft, minutesleft, secondsleft
+
+    def endtime(self):
+        time = self.created_date
+        return time + timedelta(hours=self.duration)
+
+
+    def check_active(self, hours, minutes, seconds):
+        if self.active and (hours < 0 or minutes < 0 or seconds < 0):
+            self.active = False
+            self.save()
+        return self.active
 
     def __str__(self):
         return self.name

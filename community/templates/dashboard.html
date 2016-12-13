@@ -17,8 +17,9 @@
 
         <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
         <div class="dashboard content box" style=" padding-left: 5px;">
+        {% load meetup_tags %}
             {% for meetup in meetup_list%}
-                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a></li>
+                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a> - {% meetup_timeleft meetup %}</li>
             {% endfor %}
         </div>
 
