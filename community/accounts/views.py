@@ -29,7 +29,6 @@ def profile_view(request, userid=None):
     context = {
         'profile': profile,
         'profile_user': profile_user,
-        'emails': email_query,
         'current_user': request.user,
         'memberships': memberships,
         'meetups': meetups,
