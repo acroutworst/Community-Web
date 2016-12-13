@@ -7,9 +7,7 @@
     <h1>{{ profile.user }}'s Profile</h1>
     {% if profile.user.first_name or profile.user.last_name %}<b>Name:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}<br/>{% endif %}
     <b>User since:</b> {{ profile.user.date_joined }}<br/>
-    <b>E-mail addresses:</b><br/>
-    {{ profile.user.email }}<br/>
-    {% for email in emails %} {{ email.email }} <br/>{% endfor %}
+    {% if profile.user.email %}<b>E-mail address:</b> {{ profile.user.email }}<br/>{% endif %}
     {% if current_user == profile.user %}<a href="{% url 'account_email' %}">modify e-mails</a><br/>{% endif %}
     {% if profile.position %}<b>Position: </b>{{ profile.position }}<br/>{% endif %}
     {% if profile.department %}<b>Department: </b>{{ profile.department }}<br/>{% endif %}
@@ -19,7 +17,7 @@
 
     {% if profile.image %}
         {% load thumbnail %}
-        <a href="{{ profile.image.image.url }}"><img src="{{ profile.image.image|thumbnail_url:'avatar' }}" alt="{% static 'site/img/accounts/profile/default.jpg' %}"></a>
+        <a href="{{ profile.image.image.url }}"><img src="{{ profile.image.image|thumbnail_url:'avatar' }}" alt="profile image"></a>
     {% else %}
         <img src="{% static 'site/img/accounts/profiles/default.jpg' %}">
     {% endif %}
