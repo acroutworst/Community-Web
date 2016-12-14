@@ -2,9 +2,10 @@
 {% block head_title %}List Meetups{% endblock %}
 {% block community_content %}
     {% load tz %}
+    {% load meetup_tags %}
     <h1>{% if user == current_user %}My{% else %}{{ user }}'s{% endif %} Meetups</h1>
     {% for meetup in meetups %}
-        <h4><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{ meetup }}</a></h4>
+        <h4><a href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{ meetup }}</a> -- {% meetup_timeleft meetup %}</h4>
         started at {{ meetup.created_date.time }} by {{ meetup.creator }}<br/>
     {% endfor %}
     {% if meetup_history %}

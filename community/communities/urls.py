@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/join/$', views.communities_join, name="communities_join"),
     url(r'^(?P<slug>[\w-]+)/deactivate/$', views.communities_deactivate, name="communities_deactivate"),
     url(r'^(?P<slug>[\w-]+)/meetups/', include('community.meetups.community_urls')),
+    url(r'^(?P<slug>[\w-]+)/groups/', include('community.groups.urls')),
 
 ]

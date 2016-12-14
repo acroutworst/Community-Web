@@ -1,9 +1,13 @@
-{% extends "base_user.html" %}
+{% extends "base_dashboard.html" %}
 {% block head_title %}Group List {% endblock %}
 
 {% block content %}
       <b>Groups:</b><br/>
     {% for group in groups %}
-        {{ group }}<br/>
+        <li><a href="{% url 'groups_view' community.slug group.id %}">{{ group }}</a>
+        <br/>            Description:
+        {{ group.description }}
+        </li><br/>
       {% endfor %}
+    <a href="{% url 'groups_create' community.slug%}">Create Your Own Group</a>
 {% endblock %}

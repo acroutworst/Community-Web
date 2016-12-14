@@ -1,0 +1,11 @@
+{% extends "base_dashboard.html" %}
+{% block head_title %}Member List {% endblock %}
+
+{% block content %}
+      <b>GroupMembers:</b><br/>
+    {% for member in members %}
+        <li><a href="{% url 'accounts_view_profile' member.user.id %}">{{ member.user }} joined group on {{ member.join_date }}</a></li><br/>
+
+      {% endfor %}
+
+{% endblock %}
