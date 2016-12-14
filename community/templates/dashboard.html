@@ -6,23 +6,24 @@
         <h3>COMMUNITY PAGE</h3>
 
     </div>
-
-    <div class="dashboard content poster">
-        <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
-        <div class="dashboard content box" style=" padding-left: 5px; ">
-            {% for community in my_communities %}
-                <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
-            {% endfor %}
-        </div>
-
-        <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
-        <div class="dashboard content box" style=" padding-left: 5px;">
-        {% load meetup_tags %}
-            {% for meetup in meetup_list%}
-                <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a> - {% meetup_timeleft meetup %}</li>
-            {% endfor %}
-        </div>
-
+        {% if my_communities %}
+        <div class="dashboard content poster">
+            <h4 style="margin-bottom: 0px; margin-top: 0px;">Your Communities</h4>
+            <div class="dashboard content box" style=" padding-left: 5px; ">
+                {% for community in my_communities %}
+                    <li><a style="color: #000;" href="{% url 'communities_view' community.slug %}">{{community}}</a></li>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if meetup_list %}
+            <h4 style="margin-bottom: 0px;">Upcoming Meetups</h4>
+            <div class="dashboard content box" style=" padding-left: 5px;">
+            {% load meetup_tags %}
+                {% for meetup in meetup_list%}
+                    <li><a style="color: #000;" href="{% url 'meetups_view' meetup.community.slug meetup.id %}">{{meetup}}</a> - {% meetup_timeleft meetup %}</li>
+                {% endfor %}
+            </div>
+        {% endif %}
         <h4 style="margin-bottom: 0px;margin-top: 0px;">Bus Schedule</h4>
         <div class="dashboard content box">
             <table id="businfo-limit" style="margin: 0 auto; text-align: center;" cellpadding="20px">
