@@ -1,9 +1,16 @@
-{% extends 'base.html' %}
-{% block head_title %} {{ community }} group: {{ group.title }} {% endblock %}
+{% extends 'base_dashboard.html' %}
+{% block head_title %} group: {{ group.title }} {% endblock %}
 {% block content %}
     <h2> {{ community }} group: {{ group.title }}</h2>
-    created by {{ group.created_by }} at {{ group.create_date }} <br/>
+    created by {{ group.create_by }} at {{ group.create_date }} <br/>
     current leader: {{ group.current_leader }}<br/>
+    description: {{ group.description }}<br/>
+    active members:
+    {{ active_members|length }} <br/><br/>
 
+    <a href="{% url 'groups_member' community.slug group.id%}">view active members</a>
+    <br/>
+
+    {% if members.active %}<a href="{% url 'groups_deactivate' community.slug group.id %}">Deactivate group: {{ group.title }}</a>{% else %}<a href="{% url 'groups_join' community.slug group.id %}"> Join group: {{ group.title }}</a> {% endif %}
 
 {% endblock %}
