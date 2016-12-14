@@ -8,7 +8,7 @@ class Group(models.Model):
     create_date = models.DateTimeField ('date created', auto_created = True)
     create_by = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField (max_length = 50, blank = False, null = False)
-    current_leader = models.ForeignKey('GroupMembers', related_name= 'leader', on_delete=models.CASCADE)
+    current_leader = models.ForeignKey(User, related_name= 'leader', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -16,6 +16,7 @@ class Group(models.Model):
 
     class Meta:
         unique_together = ('community', 'id')
+        #unique = ('id')
 
 
 class GroupMembers(models.Model):
@@ -24,14 +25,15 @@ class GroupMembers(models.Model):
     community = models.ForeignKey(Community, on_delete = models.CASCADE)
     position = models.CharField(max_length = 30, blank = True, null = True)
     join_date = models.DateTimeField('date joined', auto_created = True)
-    last_activity = models.CharField(max_length = 300, blank = True, null = True)
+    last_activity = models.DateTimeField('last activity', auto_created=True)
+    #last_activity = models.CharField(max_length = 300, blank = True, null = True)
     active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user
 
     class Meta:
-        unique_together = ('user', 'community', 'group')
+        unique_together = ('user', 'group','community')
 
 
 
