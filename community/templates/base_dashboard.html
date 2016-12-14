@@ -30,7 +30,7 @@
 
             <div class="square">
                 <img src="{% static 'site/img/home/meetup-logo.png' %}"/>
-                <h1><a href="{% url 'community_meetups_list' community.slug %}">Meetups</a></h1>
+                <h1>{% if community %}<a href="{% url 'community_meetups_list' community.slug %}">Meetups</a>{% else %}Meetups{% endif %}</h1>
                   <hr/>
             </div>
 
