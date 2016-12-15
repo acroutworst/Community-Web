@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Meetup, Attendee
 from community.communities.models import Community
 from .forms import CreateMeetupForm, AttendMeetupForm
+from django.utils import timezone
 import datetime
 
 
@@ -67,7 +68,7 @@ def meetups_create(request, slug):
     form = CreateMeetupForm
     user = request.user
     if request.method == 'POST':
-        meetup = Meetup(community=community, creator=user, created_date=datetime.datetime.now())
+        meetup = Meetup(community=community, creator=user, created_date=timezone.now())
         form = CreateMeetupForm(request.POST, request.FILES, instance=meetup)
         form.save()
         return redirect('meetups_view', slug=slug, id=meetup.id)

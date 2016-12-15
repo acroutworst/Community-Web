@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.conf import settings
 from datetime import datetime, timedelta
 from . import tasks
 
@@ -25,7 +26,7 @@ class Meetup(models.Model):
             create_task = True
         super(Meetup, self).save(*args, **kwargs)
         if create_task:
-            end_time = self.created_date + timedelta(hours=self.duration)
+            end_time = self.endtime()
             try:
                 tasks.set_inactive_after_time.apply_async((self.community.id, self.id), eta=end_time)
             except:
@@ -79,7 +80,7 @@ class Attendee(models.Model):
 @receiver(post_save, sender=Meetup)
 def create_meetup_creator_attendee(sender, instance, created, **kwargs):
     if created:
-        attendee = Attendee.objects.create(meetup=instance, user=instance.creator, signup_time=datetime.now(), updated=datetime.now())
+        attendee = Attendee.objects.create(meetup=instance, user=instance.creator, signup_time=timezone.now(), updated=timezone.now())
         attendee.save()
 
 
