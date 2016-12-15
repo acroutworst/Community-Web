@@ -48,7 +48,7 @@ class Meetup(models.Model):
 
 
     def check_active(self, hours, minutes, seconds):
-        if self.active and (hours < 0 or minutes < 0 or seconds < 0):
+        if self.active and (hours <= 0 and minutes <= 0 and seconds <= 0):
             self.active = False
             self.save()
         return self.active
