@@ -1,14 +1,9 @@
-import operator
-import re
 import feedparser
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from .communities.models import Community, CommunityUserProfile
 from .meetups.models import Meetup, Attendee
 from .notifications.models import Notification
-
 from django.db.models import Q
 
 
@@ -27,8 +22,9 @@ def home(request):
 def home_login(request):
     user = request.user
     all_communities = Community.objects.all()
-    my_communities = Community.objects.filter(communityuserprofile__user=user)
-    meetup_list = Meetup.objects.filter(attendee__user=user, active=True)
+    my_communities = Community.objects.filter(communityuserprofile__in=CommunityUserProfile.objects.filter(user=user, active=True))
+    user_attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=user)
+    meetup_list = Meetup.objects.filter(Q(attendee__in=user_attending) & Q(active=True))
     notifications = Notification.objects.filter(user=user).order_by('-date')[:2]
     feed = feedparser.parse('https://www.uwb.edu/news?rss=blogs')
     entries = feed.entries
