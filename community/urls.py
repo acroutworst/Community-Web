@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
+from graphene_django.views import GraphQLView
 from . import views
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     url(r'^chatroom/', include ('community.chatroom.urls')),
     url(r'^notifications/', include('community.notifications.urls')),
     url(r'^meetups/', include('community.meetups.user_urls')),
+    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

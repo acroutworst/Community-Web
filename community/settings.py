@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
+    'graphene_django',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -229,3 +230,9 @@ CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 CELERY_TASK_SERIALIZER = 'json'
+
+
+#GRAPHENE // GraphQL API Config
+GRAPHENE = {
+    'SCHEMA': 'community.schema.schema'
+}
