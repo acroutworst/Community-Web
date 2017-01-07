@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'graphene_django',
+    'graph_auth',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -234,5 +235,8 @@ CELERY_TASK_SERIALIZER = 'json'
 
 #GRAPHENE // GraphQL API Config
 GRAPHENE = {
-    'SCHEMA': 'community.schema.schema'
+    'SCHEMA': 'community.schema.schema',
+    'MIDDLEWARE': [
+        'graphene_django.debug.DjangoDebugMiddleware',
+    ],
 }

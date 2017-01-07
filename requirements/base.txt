@@ -15,4 +15,5 @@ celery
 django-celery-results
 Collectfast
 graphene-django>=1.0
+django-graph-auth
 django-filter
