@@ -28,7 +28,6 @@ class RegisterCommunity(Mutation):
 
     def mutate(self, args, context, info):
         creator_id = from_global_id(args.get('creator'))[1]
-        print(creator_id)
         community = CommunityModel(
             title=args.get('title'),
             acronym=args.get('acronym'),
@@ -41,6 +40,54 @@ class RegisterCommunity(Mutation):
         community.save()
         ok = True
         return RegisterCommunity(community=community, ok=ok)
+
+class JoinCommunity(Mutation):
+    class Input:
+        community = graphene.ID()
+        user = graphene.ID(required=False)
+        department = graphene.String()
+        position = graphene.String()
+
+    ok = graphene.Boolean()
+    community = graphene.Field(lambda: CommunityNode)
+    profile = graphene.Field(lambda: CommunityUserProfileNode)
+
+    def mutate(self, args, context, info):
+        community = CommunityModel.objects.get(id=from_global_id(args.get('community'))[1])
+        if args.get('user'):
+            user = User.objects.get(id=from_global_id(args.get('user'))[1])
+        else:
+            user = context.user
+        profile = ProfileModel(
+            community=community,
+            user=user,
+            department=args.get('department'),
+            position=args.get('position'),
+        )
+        profile.save()
+        ok = True
+        return JoinCommunity(community=community, profile=profile, ok=ok)
+
+class LeaveCommunity(Mutation):
+    class Input:
+        community = graphene.ID()
+        user = graphene.ID(required=False)
+
+    ok = graphene.Boolean()
+    community = graphene.Field(lambda: CommunityNode)
+    profile = graphene.Field(lambda: CommunityUserProfileNode)
+
+    def mutate(self, args, context, info):
+        community = from_global_id(args.get('community'))[1]
+        if args.get('user'):
+            user = User.objects.get(id=from_global_id(args.get('user'))[1])
+        else:
+            user = context.user
+        profile = ProfileModel.objects.get(community_id=community, user=user)
+        profile.active = False
+        profile.save()
+        ok = True
+        return JoinCommunity(community=community, profile=profile, ok=ok)
 
 class CommunityUserProfileNode(DjangoObjectType):
     class Meta:
@@ -57,3 +104,5 @@ class Query(AbstractType):
 
 class Mutation(AbstractType):
     register_community = RegisterCommunity.Field()
+    join_community = JoinCommunity.Field()
+    leave_community = LeaveCommunity.Field()

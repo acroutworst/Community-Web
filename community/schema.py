@@ -9,38 +9,18 @@ import graphene
 from graphene_django.debug import DjangoDebug
 from graph_auth.schema import Query as AuthQuery, Mutation as AuthMutation, UserNode as AuthUserNode
 
-
-class CommunityUserNode(AuthUserNode):
-    class Meta:
-        model = django.contrib.auth.get_user_model()
-        filter_fields = ['id', 'email']
-        interfaces = (Node,)
-
-    # @classmethod
-    # def get_node(cls, id, context, info):
-    #     user = super(UserNode, cls).get_node(id, context, info)
-    #     if context.user.id and user.id == context.user.id:
-    #         return user
-    #     else:
-    #         return None
-
-class UserQuery(AuthQuery):
-    all_users = DjangoFilterConnectionField(CommunityUserNode)
-
-# UserQuery,
-# community.meetups.schema.Query,
-# community.communities.schema.Query,
-# community.accounts.schema.Query,
-
-class Query(UserQuery,
-            community.communities.schema.Query,
+class Query(community.communities.schema.Query,
             community.meetups.schema.Query,
             community.accounts.schema.Query,
+            AuthQuery,
             ObjectType):
     debug = graphene.Field(DjangoDebug, name='__debug')
 
 
-class Mutation(AuthMutation, community.communities.schema.Mutation, ObjectType):
+class Mutation(AuthMutation,
+              community.communities.schema.Mutation,
+              community.meetups.schema.Mutation,
+              ObjectType):
     pass
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
