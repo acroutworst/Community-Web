@@ -4,10 +4,16 @@ from ..groups.models import Group
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime, timedelta
+from easy_thumbnails.fields import ThumbnailerImageField
+
+def get_event_image_path(instance, filename):
+    if instance.event.group:
+        return os.path.join('community', str(instance.event.community.id), 'group', str(instance.event.group.id), 'events', filename)
+    return os.path.join('community', str(instance.event.community.id), 'events', filename)
 
 class Event(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=True, on_delete=models.SET_NULL)
+    group = models.ForeignKey(Group, null=True, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField('date created', default=timezone.now, auto_created=True)
     start_datetime = models.DateTimeField('date created', default=timezone.now)
@@ -17,6 +23,16 @@ class Event(models.Model):
     location = models.CharField(max_length=128, blank=True, null=True)
     private = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+
+class EventImage(models.Model):
+    image = ThumbnailerImageField(null=False, upload_to=get_event_image_path)
+    event = models.ForeignKey(Event, related_name='event_image', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} pic: {}".format(self.event.title, self.image.name)
+
+    class Meta:
+        unique_together = ('event', 'id')
 
 class EventAttendee(models.Model):
     STATUS_CHOICES = (
