@@ -6,8 +6,16 @@ from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, ObjectType
 import django.contrib.auth
 import graphene
+from graphene_django.views import GraphQLView
 from graphene_django.debug import DjangoDebug
 from graph_auth.schema import Query as AuthQuery, Mutation as AuthMutation, UserNode as AuthUserNode
+from oauth2_provider.views.generic import ProtectedResourceView
+from django.http import HttpResponse
+
+
+class ProtectedGraphQLEndpoint(ProtectedResourceView, GraphQLView):
+    pass
+
 
 class Query(community.communities.schema.Query,
             community.meetups.schema.Query,
