@@ -1,6 +1,8 @@
 django==1.10.3
 djangorestframework==3.4.7
 django-allauth
+django-oauth-toolkit
+django-cors-middleware
 Werkzeug
 pyOpenSSL
 dj-database-url
@@ -14,3 +16,6 @@ easy_thumbnails
 celery
 django-celery-results
 Collectfast
+graphene-django>=1.0
+django-graph-auth
+django-filter

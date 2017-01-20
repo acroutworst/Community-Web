@@ -59,12 +59,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
+    'oauth2_provider',
+    'corsheaders',
     'easy_thumbnails',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.facebook',
     'rest_framework',
+    'graphene_django',
+    'graph_auth',
     'community.accounts',
     'community.groups',
     'community.rest_api',
@@ -85,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'community.urls'
@@ -154,6 +159,8 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -229,3 +236,12 @@ CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 CELERY_TASK_SERIALIZER = 'json'
+
+
+#GRAPHENE // GraphQL API Config
+GRAPHENE = {
+    'SCHEMA': 'community.schema.schema',
+    'MIDDLEWARE': [
+        'graphene_django.debug.DjangoDebugMiddleware',
+    ],
+}
