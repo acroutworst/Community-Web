@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 import oauth2_provider.views as oauth2_views
 from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt
 from .schema import ProtectedGraphQLEndpoint
 from . import views
 
@@ -48,4 +49,4 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
-    urlpatterns.append(url(r'^graphql', GraphQLView.as_view(graphiql=True)))
+    urlpatterns.append(url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))))
