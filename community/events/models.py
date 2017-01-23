@@ -37,8 +37,7 @@ class EventImage(models.Model):
 class EventAttendee(models.Model):
     STATUS_CHOICES = (
         ('GOING', 'going'),
-        ('PROBABLY', 'probably'),
-        ('MIGHT', 'might'),
+        ('INTERESTED', 'interested'),
         ('NOT_GOING', 'not going'),
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_attendee')
