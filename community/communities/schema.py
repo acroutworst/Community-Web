@@ -20,20 +20,20 @@ class RegisterCommunity(Mutation):
         acronym = graphene.String()
         phone_number = graphene.String()
         description = graphene.String()
-        creator = graphene.ID()
         slug = graphene.String()
 
     ok = graphene.Boolean()
     community = graphene.Field(lambda: CommunityNode)
 
     def mutate(self, args, context, info):
-        creator_id = from_global_id(args.get('creator'))[1]
+        if not context.user.is_authenticated():
+            return False
         community = CommunityModel(
             title=args.get('title'),
             acronym=args.get('acronym'),
             phone_number=args.get('phone_number'),
             description=args.get('description'),
-            creator=User.objects.get(id=creator_id),
+            creator=context.user,
             date_created=timezone.now(),
             slug=args.get('slug'),
         )
@@ -101,6 +101,13 @@ class Query(AbstractType):
     all_communities = DjangoFilterConnectionField(CommunityNode)
     community_user_profile = Node.Field(CommunityUserProfileNode)
     all_community_user_profiles = DjangoFilterConnectionField(CommunityUserProfileNode)
+    my_communities = DjangoFilterConnectionField(CommunityNode)
+
+    def resolve_my_communities(self, args, context, info):
+        if not context.user.is_authenticated():
+            return CommunityModel.objects.none()
+        else:
+            return CommunityModel.objects.filter(communityuserprofile__user=context.user, communityuserprofile__active=True)
 
 class Mutation(AbstractType):
     register_community = RegisterCommunity.Field()
