@@ -11,7 +11,7 @@ from . import views
 oauth2_endpoint_views = [
     url(r'^authorize/$', csrf_exempt(oauth2_views.AuthorizationView.as_view()), name="authorize"),
     url(r'^token/$', csrf_exempt(oauth2_views.TokenView.as_view()), name="token"),
-    url(r'^revoke-token/$', csrf_exempt(oauth2_views.RevokeTokenView.as_view()), name="revoke-token"),
+    url(r'^revoke_token/$', csrf_exempt(oauth2_views.RevokeTokenView.as_view()), name="revoke-token"),
 ]
 
 if settings.DEBUG:
