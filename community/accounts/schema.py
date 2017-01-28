@@ -11,7 +11,7 @@ class AccountNode(DjangoObjectType):
     class Meta:
         model = User
         filter_fields = ['username', 'email']
-        only_fields = ('username', 'firstname', 'lastname', 'email', 'date_joined', 'last_login', 'is_active')
+        only_fields = ('username', 'first_name', 'last_name', 'email', 'date_joined', 'last_login', 'is_active')
         interfaces = (Node,)
 
 class ProfileNode(DjangoObjectType):
