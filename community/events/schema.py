@@ -1,4 +1,4 @@
-from .models import Event as EventModel, Attendee as AttendeeModel
+from .models import Event as EventModel, EventAttendee as AttendeeModel
 from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, ObjectType, Mutation
