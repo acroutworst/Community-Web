@@ -20,7 +20,9 @@ class Query(community.communities.schema.Query,
     debug = graphene.Field(DjangoDebug, name='__debug')
 
 
-class Mutation(MeetupMutation,
+class Mutation(
+            community.accounts.schema.Mutation,
+            MeetupMutation,
             EventMutation,
             CommunityMutation,
             ObjectType):

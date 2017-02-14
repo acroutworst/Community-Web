@@ -28,7 +28,7 @@ class ModifyCommunity(Mutation):
 
     def mutate(self, args, context, info):
         if not context.user.is_authenticated():
-            return False
+            return ModifyCommunity(community=None, ok=False)
         community_id = from_global_id(args.get('community'))[1]
         community = CommunityModel.objects.get(id=community_id)
         print(args)
@@ -52,7 +52,7 @@ class RegisterCommunity(Mutation):
 
     def mutate(self, args, context, info):
         if not context.user.is_authenticated():
-            return False
+            return RegisterCommunity(community=None, ok=False)
         community = CommunityModel(
             title=args.get('title'),
             acronym=args.get('acronym'),
