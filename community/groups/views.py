@@ -72,7 +72,7 @@ def group_join(request,slug, id):
     group = Group.objects.get(id=id)
     user=request.user
     community=Community.objects.get(slug=slug)
-    member=GroupMembers.objects.filter(community=community,user=user,group=group).first()
+    member=GroupMembers.objects.filter(user=user,group=group).first()
     if member:
         if member.active:
             return HttpResponseRedirect('/communities/'+slug+'/greops/' + id)
