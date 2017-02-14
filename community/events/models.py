@@ -23,6 +23,7 @@ class Event(models.Model):
     location = models.CharField(max_length=128, blank=True, null=True)
     private = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+    image = models.ForeignKey('EventImage', on_delete=models.SET_NULL, null=True, default=None, related_name='current_event_image')
 
 class EventImage(models.Model):
     image = ThumbnailerImageField(null=False, upload_to=get_event_image_path)

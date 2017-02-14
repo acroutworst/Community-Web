@@ -31,7 +31,6 @@ class ModifyCommunity(Mutation):
             return ModifyCommunity(community=None, ok=False)
         community_id = from_global_id(args.get('community'))[1]
         community = CommunityModel.objects.get(id=community_id)
-        print(args)
         vals = args
         vals.pop('community', None)
         vals.pop('user', None)
