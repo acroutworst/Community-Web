@@ -30,6 +30,37 @@ class AttendeeNode(DjangoObjectType):
         filter_fields = ['meetup', 'user', 'status']
         interfaces = (Node,)
 
+
+class ModifyMeetup(Mutation):
+    class Input:
+        community = graphene.ID()
+        meetup = graphene.ID()
+        description = graphene.String(required=False)
+        max_attendees = graphene.String(required=False)
+        active = graphene.Boolean(required=False)
+        duration = graphene.Int(required=False)
+        private = graphene.Boolean(required=False)
+
+
+    ok = graphene.Boolean()
+    meetup = graphene.Field(lambda: MeetupNode)
+
+    def mutate(self, args, context, info):
+        if not context.user.is_authenticated():
+            return False
+        community_id = from_global_id(args.get('community'))[1]
+        meetup_id = from_global_id(args.get('meetup'))[1]
+        meetup = MeetupModel.objects.get(id=meetup_id, community=Community.objects.get(id=community_id))
+        if context.user != meetup.creator:
+            return False
+        vals = args
+        vals.pop('community', None)
+        vals.pop('meetup', None)
+        meetup.__dict__.update(vals)
+        meetup.save()
+        return ModifyMeetup(meetup=meetup, ok=True)
+
+
 class RegisterMeetup(Mutation):
     class Input:
         name = graphene.String()
@@ -37,14 +68,14 @@ class RegisterMeetup(Mutation):
         max_attendees = graphene.Int()
         private = graphene.Boolean()
         duration = graphene.Int()
-        creator = graphene.ID()
         community = graphene.ID()
 
     ok = graphene.Boolean()
     meetup = graphene.Field(lambda: MeetupNode)
 
     def mutate(self, args, context, info):
-        creator_id = from_global_id(args.get('creator'))[1]
+        if not context.user.is_authenticated():
+            return False
         community_id = from_global_id(args.get('community'))[1]
         meetup = MeetupModel(
             name=args.get('name'),
@@ -52,7 +83,7 @@ class RegisterMeetup(Mutation):
             max_attendees=args.get('max_attendees'),
             private=args.get('private'),
             duration=args.get('duration'),
-            creator=User.objects.get(id=creator_id),
+            creator=context.user,
             community=Community.objects.get(id=community_id),
             created_date=timezone.now(),
         )
@@ -90,42 +121,6 @@ class AttendMeetup(Mutation):
         ok = True
         return AttendMeetup(attendee=attendee, meetup=meetup, ok=ok)
 
-class ModifyMeetup(Mutation):
-    class Input:
-        meetup = graphene.ID()
-        community = graphene.ID()
-        name = graphene.String(required=False)
-        description = graphene.String(required=False)
-        max_attendees = graphene.Int(required=False)
-        private = graphene.Boolean(required=False)
-        duration = graphene.Int(required=False)
-
-    ok = graphene.Boolean()
-    meetup = graphene.Field(lambda: MeetupNode)
-
-    def mutate(self, args, context, info):
-        meetup_id = from_global_id(args.get('meetup'))[1]
-        community_id = from_global_id(args.get('community'))[1]
-        user = context.user
-        meetup = MeetupModel.objects.get(community_id=community_id, id=meetup_id)
-        name = args.get('name')
-        description = args.get('description')
-        max_attendees = args.get('max_attendees')
-        private = args.get('private')
-        duration = args.get('duration')
-        if name:
-            meetup.name = name
-        if description:
-            meetup.description = description
-        if max_attendees:
-            meetup.max_attendees = max_attendees
-        if private:
-            meetup.private = private
-        if duration:
-            meetup.duration = duration
-        meetup.save()
-        ok = True
-        return ModifyMeetup(meetup=meetup, ok=ok)
 
 class UpdateAttendeeStatus(Mutation):
     class Input:

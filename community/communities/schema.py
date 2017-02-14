@@ -14,6 +14,31 @@ class CommunityNode(DjangoObjectType):
         filter_fields = ['title', 'acronym', 'creator', 'date_created', 'slug']
         interfaces = (Node,)
 
+class ModifyCommunity(Mutation):
+    class Input:
+        community = graphene.ID()
+        user = graphene.ID(required=False)
+        acronym = graphene.String()
+        phone_number = graphene.String()
+        description = graphene.String()
+
+
+    ok = graphene.Boolean()
+    community = graphene.Field(lambda: CommunityNode)
+
+    def mutate(self, args, context, info):
+        if not context.user.is_authenticated():
+            return ModifyCommunity(community=None, ok=False)
+        community_id = from_global_id(args.get('community'))[1]
+        community = CommunityModel.objects.get(id=community_id)
+        print(args)
+        vals = args
+        vals.pop('community', None)
+        vals.pop('user', None)
+        community.__dict__.update(vals)
+        community.save()
+        return ModifyCommunity(community=community, ok=True)
+
 class RegisterCommunity(Mutation):
     class Input:
         title = graphene.String()
@@ -27,7 +52,7 @@ class RegisterCommunity(Mutation):
 
     def mutate(self, args, context, info):
         if not context.user.is_authenticated():
-            return False
+            return RegisterCommunity(community=None, ok=False)
         community = CommunityModel(
             title=args.get('title'),
             acronym=args.get('acronym'),
@@ -67,6 +92,7 @@ class JoinCommunity(Mutation):
         profile.save()
         ok = True
         return JoinCommunity(community=community, profile=profile, ok=ok)
+
 
 class LeaveCommunity(Mutation):
     class Input:
@@ -113,3 +139,4 @@ class Mutation(AbstractType):
     register_community = RegisterCommunity.Field()
     join_community = JoinCommunity.Field()
     leave_community = LeaveCommunity.Field()
+    modify_community = ModifyCommunity.Field()
