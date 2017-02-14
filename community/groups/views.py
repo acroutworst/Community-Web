@@ -85,7 +85,6 @@ def group_join(request,slug, id):
     else:
 
         member = GroupMembers()#user=user,group=group,join_date=datetime.datetime.now())
-        member.community=community
         member.user=user
         member.group=group
         member.join_date=datetime.datetime.now()
@@ -140,9 +139,3 @@ def group_member_view (request,slug, id):
         'members':member,
     }
     return render(request,template_name='groups/member.html',context=context)
-
-
-
-
-
-
