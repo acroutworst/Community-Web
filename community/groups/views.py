@@ -72,7 +72,7 @@ def group_join(request,slug, id):
     group = Group.objects.get(id=id)
     user=request.user
     community=Community.objects.get(slug=slug)
-    member=GroupMembers.objects.filter(community=community,user=user,group=group).first()
+    member=GroupMembers.objects.filter(user=user,group=group).first()
     if member:
         if member.active:
             return HttpResponseRedirect('/communities/'+slug+'/greops/' + id)
@@ -85,7 +85,6 @@ def group_join(request,slug, id):
     else:
 
         member = GroupMembers()#user=user,group=group,join_date=datetime.datetime.now())
-        member.community=community
         member.user=user
         member.group=group
         member.join_date=datetime.datetime.now()
@@ -140,9 +139,3 @@ def group_member_view (request,slug, id):
         'members':member,
     }
     return render(request,template_name='groups/member.html',context=context)
-
-
-
-
-
-

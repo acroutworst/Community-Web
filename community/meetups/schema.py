@@ -41,7 +41,6 @@ class ModifyMeetup(Mutation):
         duration = graphene.Int(required=False)
         private = graphene.Boolean(required=False)
 
-
     ok = graphene.Boolean()
     meetup = graphene.Field(lambda: MeetupNode)
 
@@ -122,7 +121,7 @@ class AttendMeetup(Mutation):
         return AttendMeetup(attendee=attendee, meetup=meetup, ok=ok)
 
 
-class UpdateAttendeeStatus(Mutation):
+class UpdateMeetupAttendeeStatus(Mutation):
     class Input:
         meetup = graphene.ID()
         status = graphene.String()
@@ -163,4 +162,4 @@ class Mutation(AbstractType):
     register_meetup = RegisterMeetup.Field()
     attend_meetup = AttendMeetup.Field()
     modify_meetup = ModifyMeetup.Field()
-    update_attendee_status = UpdateAttendeeStatus.Field()
+    update_attendee_status = UpdateMeetupAttendeeStatus.Field()
