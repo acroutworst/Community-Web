@@ -28,7 +28,7 @@ class RegisterAccount(Mutation):
     def mutate(self, args, context, info):
         if context.user.is_authenticated():
             return RegisterAccount(account=context.user, ok=False)
-        account = User(
+        account = User.objects.create_user(
             username=args.get('username'),
             email=args.get('email'),
             first_name=args.get('first_name'),
