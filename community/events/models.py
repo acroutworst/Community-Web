@@ -13,7 +13,7 @@ def get_event_image_path(instance, filename):
 
 class Event(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=True, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, null=True, blank=True, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField('date created', default=timezone.now, auto_created=True)
     start_datetime = models.DateTimeField('date created', default=timezone.now)
