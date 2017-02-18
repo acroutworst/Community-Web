@@ -25,6 +25,9 @@ class Event(models.Model):
     active = models.BooleanField(default=True)
     image = models.ForeignKey('EventImage', on_delete=models.SET_NULL, blank=True, null=True, default=None, related_name='current_event_image')
 
+    def __str__(self):
+        return self.title
+
 class EventImage(models.Model):
     image = ThumbnailerImageField(null=False, upload_to=get_event_image_path)
     event = models.ForeignKey(Event, related_name='event_image', on_delete=models.CASCADE)
