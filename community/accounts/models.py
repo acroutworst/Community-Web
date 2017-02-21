@@ -22,7 +22,6 @@ class Profile(models.Model):
     class Meta:
         unique_together = ('user', 'id')
 
-
 class ProfileImage(models.Model):
     image = ThumbnailerImageField(null=False, upload_to=get_profile_image_path)
     profile = models.ForeignKey(Profile, related_name='profile_image', on_delete=models.CASCADE)

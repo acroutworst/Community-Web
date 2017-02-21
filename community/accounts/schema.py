@@ -21,6 +21,7 @@ class RegisterAccount(Mutation):
         first_name = graphene.String()
         last_name = graphene.String()
         password = graphene.String()
+        image = graphene.String(required=False)
 
     ok = graphene.Boolean()
     account = graphene.Field(lambda: AccountNode)
@@ -35,7 +36,17 @@ class RegisterAccount(Mutation):
             last_name=args.get('last_name'),
             password=args.get('password'),
         )
+        image_upload = args.get('image')
+        profile = ProfileModel.objects.get(user=account)
+        if context.FILES and context.method == 'POST' and image_upload:
+            image = ProfileImageModel.objects.create(
+                image=context.FILES[image_upload],
+                profile=profile
+            )
         account.save()
+        if image:
+            image.save()
+            profile.save()
         return RegisterAccount(account=account, ok=True)
 
 class ModifyAccount(Mutation):
@@ -73,6 +84,11 @@ class ModifyProfile(Mutation):
             return ModifyProfile(profile=None, ok=False)
         user = context.user
         profile = ProfileModel.objects.get(user=user)
+        image_id = args.pop('image', None)
+        if image_id:
+            image_id = from_global_id(image_id)
+            image = ProfileImageModel.objects.get(profile=profile, id=image_id)
+            profile.image = image
         profile.__dict__.update(args)
         profile.save()
         return ModifyProfile(profile=profile, ok=True)
@@ -83,6 +99,35 @@ class ProfileImageNode(DjangoObjectType):
         model = ProfileImageModel
         filter_fields = ['profile']
         interfaces = (Node,)
+
+class UploadProfileImage(Mutation):
+    class Input:
+        user = graphene.ID(required=False)
+        image = graphene.String()
+        set_current = graphene.Boolean(required=False)
+
+    ok = graphene.Boolean()
+    profile = graphene.Field(lambda: ProfileNode)
+    image = graphene.Field(lambda: ProfileImageNode)
+
+    def mutate(self, args, context, info):
+        if not context.user.is_authenticated():
+            return UploadProfileImage(profile=None, ok=False)
+        user_id = args.get('user')
+        user = User.objects.get(id=from_global_id(user_id)) if user_id else context.user
+        profile = user.profile
+        image_upload = args.get('image')
+        if context.FILES and context.method == 'POST' and image_upload:
+            image = ProfileImageModel.objects.create(
+                image=context.FILES[image_upload],
+                profile=profile
+            )
+            image.save()
+        if args.get('set_current'):
+            profile.image = image
+            profile.save()
+        return UploadProfileImage(profile=profile, image=image, ok=True)
+
 
 class Query(AbstractType):
     profile = Node.Field(ProfileNode)
