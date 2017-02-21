@@ -42,12 +42,12 @@ class RegisterGroup(Mutation):
         image_upload = args.get('image')
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
-                image=context.FILES['image_upload'],
+                image=context.FILES[image_upload],
                 group=group
             )
-            image.save()
             group.image = image
         group.save()
+        if image: image.save()
         ok = True
         return RegisterCommunity(group=group, ok=ok)
 
@@ -77,7 +77,7 @@ class ModifyGroup(Mutation):
         if image_id:
             image = GroupImage.objects.get(group=group, id=image_id)
             group.image = image
-        image_upload = args.pop('image_upload', None)
+        image_upload = args.pop(image_upload, None)
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
                 image=context.FILES['image_upload'],
@@ -115,7 +115,7 @@ class UploadGroupImage(Mutation):
         image_upload = args.get('image')
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
-                image=context.FILES['image_upload'],
+                image=context.FILES[image_upload],
                 group=group
             )
             image.save()

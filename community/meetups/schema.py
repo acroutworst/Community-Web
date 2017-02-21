@@ -15,12 +15,6 @@ class MeetupNode(DjangoObjectType):
         filter_fields = ['community', 'active', 'private', 'creator', 'name']
         interfaces = (Node,)
 
-        # @classmethod
-        # def get_node(cls, id, context, info):
-        #     try:
-        #         meetup = cls._meta.model.objects.get(id=id)
-        #     except cls._meta.model.DoesNotExist:
-        #         return None
     def get_meetup(self):
         return self.model
 

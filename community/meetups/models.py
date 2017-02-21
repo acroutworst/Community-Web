@@ -60,8 +60,7 @@ class Meetup(models.Model):
 class Attendee(models.Model):
     STATUS_CHOICES = (
         ('GOING', 'going'),
-        ('PROBABLY', 'probably'),
-        ('MIGHT', 'might'),
+        ('INTERESTED', 'interested'),
         ('NOT_GOING', 'not going'),
     )
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE, related_name='attendee')

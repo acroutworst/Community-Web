@@ -59,7 +59,7 @@ class ModifyEvent(Mutation):
         image_upload = args.pop('image_upload', None)
         if context.FILES and context.method == 'POST' and image_upload:
             image = EventImage(
-                image=context.FILES['image_upload'],
+                image=context.FILES[image_upload],
                 event=event
             )
             image.save()
@@ -105,12 +105,13 @@ class RegisterEvent(Mutation):
         image_upload = args.get('image')
         if context.FILES and context.method == 'POST' and image_upload:
             image = EventImage(
-                image=context.FILES['image_upload'],
+                image=context.FILES[image_upload],
                 group=group
             )
-            image.save()
             event.image = image
         event.save()
+        if image:
+            image.save()
         ok = True
         return RegisterEvent(event=event, ok=ok)
 
@@ -140,7 +141,7 @@ class UploadEventImage(Mutation):
         image_upload = args.get('image')
         if context.FILES and context.method == 'POST' and image_upload:
             image = EventImage(
-                image=context.FILES['image_upload'],
+                image=context.FILES[image_upload],
                 event=event
             )
             image.save()
