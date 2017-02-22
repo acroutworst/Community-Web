@@ -40,6 +40,7 @@ class RegisterGroup(Mutation):
             community=Community.objects.get(id=from_global_id(args.pop('community', None))[1])
         )
         image_upload = args.get('image')
+        image = None
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
                 image=context.FILES[image_upload],
