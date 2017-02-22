@@ -38,6 +38,7 @@ class RegisterAccount(Mutation):
         )
         image_upload = args.get('image')
         profile = ProfileModel.objects.get(user=account)
+        image = None
         if context.FILES and context.method == 'POST' and image_upload:
             image = ProfileImageModel.objects.create(
                 image=context.FILES[image_upload],
