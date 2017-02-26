@@ -1,11 +1,11 @@
-from .models import Profile as ProfileModel, ProfileImage as ProfileImageModel
-from graphene_django.types import DjangoObjectType
-from graphene_django.filter.fields import DjangoFilterConnectionField
-from graphene import AbstractType, Node, Mutation
-from django.contrib.auth.models import User
-from oauth2_provider.models import AccessToken
 import graphene
+from django.contrib.auth.models import User
+from graphene import AbstractType, Node, Mutation
+from graphene_django.filter.fields import DjangoFilterConnectionField
+from graphene_django.types import DjangoObjectType
 from graphql_relay.node.node import from_global_id
+
+from .models import Profile as ProfileModel, ProfileImage as ProfileImageModel
 
 
 class AccountNode(DjangoObjectType):
@@ -125,9 +125,9 @@ class UploadProfileImage(Mutation):
                 profile=profile
             )
             image.save()
-        if args.get('set_current'):
-            profile.image = image
-            profile.save()
+            if args.get('set_current'):
+                profile.image
+                profile.save()
         return UploadProfileImage(profile=profile, image=image, ok=True)
 
 
