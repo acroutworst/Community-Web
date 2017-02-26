@@ -5,6 +5,7 @@ from graphene import AbstractType, Node, Mutation
 from django.contrib.auth.models import User
 from oauth2_provider.models import AccessToken
 import graphene
+from graphql_relay.node.node import from_global_id
 
 
 class AccountNode(DjangoObjectType):
