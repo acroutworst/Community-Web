@@ -3,7 +3,7 @@ from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, ObjectType, Mutation
 from django.utils import timezone
-import graph_auth.schema
+# import graph_auth.schema
 import graphene
 from community.communities.models import Community
 from django.contrib.auth.models import User
@@ -107,7 +107,7 @@ class RegisterEvent(Mutation):
         if context.FILES and context.method == 'POST' and image_upload:
             image = EventImage(
                 image=context.FILES[image_upload],
-                group=group
+                event=event
             )
             event.image = image
         event.save()
@@ -212,11 +212,11 @@ class UpdateAttendeeStatus(Mutation):
             user = User.objects.get(id=from_global_id(args.get('user'))[1])
         else:
             user = context.user
-        EventAttendee.objects.get(user=user, community_id=community_id, event_id=event_id)
+        attendee = EventAttendee.objects.get(user=user, community_id=community_id, event_id=event_id)
         attendee.status = args.get('status')
         attendee.save()
         ok = True
-        return AttendEvent(attendee=attendee, event=event, ok=ok)
+        return AttendEvent(attendee=attendee, event=attendee.event, ok=ok)
 
 
 class Query(AbstractType):

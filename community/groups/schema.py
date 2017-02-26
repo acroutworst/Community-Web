@@ -1,8 +1,8 @@
+from community.communities.models import Community
 from .models import Group, GroupMembers, GroupImage
 from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, Mutation
-from django.contrib.auth.models import User
 from django.utils import timezone
 import graphene
 from graphql_relay.node.node import from_global_id
@@ -50,7 +50,7 @@ class RegisterGroup(Mutation):
         group.save()
         if image: image.save()
         ok = True
-        return RegisterCommunity(group=group, ok=ok)
+        return RegisterGroup(group=group, ok=ok)
 
 
 class ModifyGroup(Mutation):
@@ -78,7 +78,7 @@ class ModifyGroup(Mutation):
         if image_id:
             image = GroupImage.objects.get(group=group, id=image_id)
             group.image = image
-        image_upload = args.pop(image_upload, None)
+        image_upload = args.pop('image_upload', None)
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
                 image=context.FILES['image_upload'],
@@ -112,7 +112,7 @@ class UploadGroupImage(Mutation):
             return UploadGroupImage(group=None, image=None, ok=False)
         community_id = from_global_id(args.get('community'))[1]
         group_id = from_global_id(args.get('group'))[1]
-        group = EventModel.objects.get(community__id=community_id, id=group_id)
+        group = Group.objects.get(community__id=community_id, id=group_id)
         image_upload = args.get('image')
         if context.FILES and context.method == 'POST' and image_upload:
             image = GroupImage(
@@ -120,9 +120,9 @@ class UploadGroupImage(Mutation):
                 group=group
             )
             image.save()
-        if args.get('set_current'):
-            group.image = image
-            group.save()
+            if args.get('set_current'):
+                group.image = image
+                group.save()
         return UploadGroupImage(group=group, image=image, ok=True)
 
 class GroupMembersNode(DjangoObjectType):
@@ -147,7 +147,7 @@ class JoinGroup(Mutation):
             return JoinGroup(group=None, group_member=None, ok=False)
         community = Community.objects.get(id=from_global_id(args.pop('community', None))[1])
         group = Group.objects.get(id=from_global_id(args.pop('group', None))[1], community=community)
-        member = GroupMembers.objects.filter(group=group, user=user).first()
+        member = GroupMembers.objects.filter(group=group, user=context.user).first()
         if member and not member.active:
             member.active = True #reactivate membership
         else:
@@ -180,7 +180,7 @@ class ModifyGroupMembership(Mutation):
             return ModifyGroupMembership(group=None, group_member=None, ok=False)
         community = Community.objects.get(id=from_global_id(args.pop('community', None))[1])
         group = Group.objects.get(id=from_global_id(args.pop('group', None))[1], community=community)
-        member = GroupMembers.objects.filter(group=group, user=user).first()
+        member = GroupMembers.objects.filter(group=group, user=context.user).first()
         if not member:
             return ModifyGroupMembership(group=None, group_member=None, ok=False)
         else:

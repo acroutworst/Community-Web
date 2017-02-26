@@ -3,7 +3,7 @@ from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, ObjectType, Mutation
 from django.utils import timezone
-import graph_auth.schema
+# import graph_auth.schema
 import graphene
 from community.communities.models import Community
 from django.contrib.auth.models import User
@@ -133,11 +133,11 @@ class UpdateMeetupAttendeeStatus(Mutation):
             user = User.objects.get(id=from_global_id(args.get('user'))[1])
         else:
             user = context.user
-        AttendeeModel.objects.get(user=user, community_id=community_id, meetup_id=meetup_id)
+        attendee = AttendeeModel.objects.get(user=user, community_id=community_id, meetup_id=meetup_id)
         attendee.status = args.get('status')
         attendee.save()
         ok = True
-        return AttendMeetup(attendee=attendee, meetup=meetup, ok=ok)
+        return AttendMeetup(attendee=attendee, meetup=attendee.meetup, ok=ok)
 
 class Query(AbstractType):
     meetup = Node.Field(MeetupNode)
