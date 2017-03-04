@@ -14,6 +14,12 @@ class MeetupNode(DjangoObjectType):
         model = MeetupModel
         filter_fields = ['community', 'active', 'private', 'creator', 'name']
         interfaces = (Node,)
+        
+    attendee_count = graphene.Int()
+
+    def resolve_attendee_count(self, args, context, info):
+        return self.attendee_count()
+
 
     def get_meetup(self):
         return self.model
