@@ -26,6 +26,10 @@ class EventNode(DjangoObjectType):
         ]
         interfaces = (Node,)
 
+    attendee_count = graphene.Int()
+
+    def resolve_attendee_count(self, args, context, info):
+        return self.attendee_count()
 
 class ModifyEvent(Mutation):
     class Input:

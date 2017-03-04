@@ -25,6 +25,9 @@ class Event(models.Model):
     active = models.BooleanField(default=True)
     image = models.ForeignKey('EventImage', on_delete=models.SET_NULL, blank=True, null=True, default=None, related_name='current_event_image')
 
+    def attendee_count(self):
+        return len(EventAttendee.objects.filter(event=self, status='GOING'))
+
     def __str__(self):
         return self.title
 
@@ -51,7 +54,7 @@ class EventAttendee(models.Model):
     updated = models.DateTimeField('last updated', auto_now_add=True)
 
     def __str__(self):
-        return "{0} is attending {1}".format(self.user, self.meetup)
+        return "{0} is attending {1}".format(self.user, self.event)
 
     class Meta:
         unique_together = ('user', 'event')
