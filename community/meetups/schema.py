@@ -39,6 +39,7 @@ class ModifyMeetup(Mutation):
         max_attendees = graphene.String(required=False)
         active = graphene.Boolean(required=False)
         duration = graphene.Int(required=False)
+        location = graphene.String(required=False)
         private = graphene.Boolean(required=False)
 
     ok = graphene.Boolean()
@@ -68,6 +69,7 @@ class RegisterMeetup(Mutation):
         private = graphene.Boolean()
         duration = graphene.Int()
         community = graphene.ID()
+        location = graphene.String(required=False)
 
     ok = graphene.Boolean()
     meetup = graphene.Field(lambda: MeetupNode)
@@ -83,6 +85,7 @@ class RegisterMeetup(Mutation):
             private=args.get('private'),
             duration=args.get('duration'),
             creator=context.user,
+            location=args.get('location'),
             community=Community.objects.get(id=community_id),
             created_date=timezone.now(),
         )
