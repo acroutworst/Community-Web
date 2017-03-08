@@ -3,8 +3,8 @@ from ..communities.models import Community
 from ..groups.models import Group
 from django.contrib.auth.models import User
 from django.utils import timezone
-from datetime import datetime, timedelta
 from easy_thumbnails.fields import ThumbnailerImageField
+import os
 
 def get_event_image_path(instance, filename):
     if instance.event.group:
