@@ -82,9 +82,9 @@ class RegisterEvent(Mutation):
         title = graphene.String()
         start_datetime = graphene.String()
         end_datetime = graphene.String()
-        description = graphene.String()
-        location = graphene.String()
-        private = graphene.Boolean()
+        description = graphene.String(required=False)
+        location = graphene.String(required=False)
+        private = graphene.Boolean(required=False)
         image = graphene.String(required=False)
 
     ok = graphene.Boolean()
@@ -96,8 +96,8 @@ class RegisterEvent(Mutation):
         community_id = from_global_id(args.get('community'))[1]
         event = EventModel(
             title = args.get('title'),
-            start_datetime = args.get('start_time'),
-            end_datetime = args.get('end_time'),
+            start_datetime = args.get('start_datetime'),
+            end_datetime = args.get('end_datetime'),
             description = args.get('description'),
             location = args.get('location'),
             active = True,
@@ -106,6 +106,7 @@ class RegisterEvent(Mutation):
             community=Community.objects.get(id=community_id),
             created_date=timezone.now(),
         )
+        print(event)
         image_upload = args.get('image')
         image = None
         if context.FILES and context.method == 'POST' and image_upload:
