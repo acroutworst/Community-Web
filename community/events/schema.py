@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene import AbstractType, Node, ObjectType, Mutation
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 # import graph_auth.schema
 import graphene
 from community.communities.models import Community
@@ -71,6 +72,12 @@ class ModifyEvent(Mutation):
         vals = args
         vals.pop('community', None)
         vals.pop('event', None)
+        start_datetime = vals.pop('start_datetime', None)
+        end_datetime = vals.pop('end_datetime', None)
+        if start_datetime:
+            event.start_datetime = parse_datetime(start_datetime)
+        if end_datetime:
+            event.end_datetime = parse_datetime(end_datetime)
         event.__dict__.update(vals)
         event.save()
         return ModifyEvent(event=event, ok=True)
@@ -94,10 +101,10 @@ class RegisterEvent(Mutation):
         if not context.user.is_authenticated():
             return RegisterEvent(event=None, ok=False)
         community_id = from_global_id(args.get('community'))[1]
-        event = EventModel(
+        event = EventModel.objects.create(
             title = args.get('title'),
-            start_datetime = args.get('start_datetime'),
-            end_datetime = args.get('end_datetime'),
+            start_datetime = parse_datetime(args.get('start_datetime')),
+            end_datetime = parse_datetime(args.get('end_datetime')),
             description = args.get('description'),
             location = args.get('location'),
             active = True,
@@ -106,7 +113,6 @@ class RegisterEvent(Mutation):
             community=Community.objects.get(id=community_id),
             created_date=timezone.now(),
         )
-        print(event)
         image_upload = args.get('image')
         image = None
         if context.FILES and context.method == 'POST' and image_upload:
