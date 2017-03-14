@@ -203,7 +203,7 @@ class Query(AbstractType):
         if not context.user.is_authenticated():
             return Group.objects.none()
         else:
-            return Group.objects.filter(groupmembers__user=context.user, groupmembers__active=True)
+            return Group.objects.filter(groupmembers__user=context.user, groupmembers__active=True, **args)
 
 
 class Mutation(AbstractType):

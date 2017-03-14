@@ -241,7 +241,7 @@ class Query(AbstractType):
         if not context.user.is_authenticated():
             return CommunityModel.objects.none()
         else:
-            return CommunityModel.objects.filter(communityuserprofile__user=context.user, communityuserprofile__active=True)
+            return CommunityModel.objects.filter(communityuserprofile__user=context.user, communityuserprofile__active=True, **args)
 
 
 class Mutation(AbstractType):

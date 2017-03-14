@@ -243,7 +243,7 @@ class Query(AbstractType):
         if not context.user.is_authenticated():
             return EventModel.objects.none()
         else:
-            return EventModel.objects.filter(attendee__user=context.user)
+            return EventModel.objects.filter(attendee__user=context.user, **args)
 
 class Mutation(AbstractType):
     register_event = RegisterEvent.Field()

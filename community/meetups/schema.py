@@ -14,7 +14,7 @@ class MeetupNode(DjangoObjectType):
         model = MeetupModel
         filter_fields = ['community', 'active', 'private', 'creator', 'name']
         interfaces = (Node,)
-        
+
     attendee_count = graphene.Int()
 
     def resolve_attendee_count(self, args, context, info):
@@ -159,7 +159,7 @@ class Query(AbstractType):
         if not context.user.is_authenticated():
             return MeetupModel.objects.none()
         else:
-            return MeetupModel.objects.filter(attendee__user=context.user)
+            return MeetupModel.objects.filter(attendee__user=context.user, **args)
 
 class Mutation(AbstractType):
     register_meetup = RegisterMeetup.Field()
