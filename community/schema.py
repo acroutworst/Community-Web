@@ -1,34 +1,35 @@
-import community.meetups.schema
-import community.communities.schema
+from community.meetups.schema import Mutation as MeetupMutation, Query as MeetupQuery
+from community.communities.schema import Mutation as CommunityMutation, Query as CommunityQuery
+from community.events.schema import Query as EventQuery, Mutation as EventMutation
+from community.groups.schema import Query as GroupQuery, Mutation as GroupMutation
 import community.accounts.schema
-from graphene_django.types import DjangoObjectType
-from graphene_django.filter.fields import DjangoFilterConnectionField
-from graphene import AbstractType, Node, ObjectType
-import django.contrib.auth
 import graphene
+from graphene import ObjectType
 from graphene_django.views import GraphQLView
 from graphene_django.debug import DjangoDebug
-from graph_auth.schema import Query as AuthQuery, Mutation as AuthMutation, UserNode as AuthUserNode
 from oauth2_provider.views.generic import ProtectedResourceView
-from django.http import HttpResponse
-
 
 class ProtectedGraphQLEndpoint(ProtectedResourceView, GraphQLView):
     pass
 
 
-class Query(community.communities.schema.Query,
-            community.meetups.schema.Query,
+class Query(
             community.accounts.schema.Query,
-            AuthQuery,
+            CommunityQuery,
+            MeetupQuery,
+            GroupQuery,
+            EventQuery,
             ObjectType):
     debug = graphene.Field(DjangoDebug, name='__debug')
 
 
-class Mutation(AuthMutation,
-              community.communities.schema.Mutation,
-              community.meetups.schema.Mutation,
-              ObjectType):
+class Mutation(
+            community.accounts.schema.Mutation,
+            GroupMutation,
+            MeetupMutation,
+            EventMutation,
+            CommunityMutation,
+            ObjectType):
     pass
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

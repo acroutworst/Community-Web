@@ -23,7 +23,7 @@ def profile_view(request, userid=None):
         profile = Profile.objects.create(user=profile_user)
     else:
         profile = Profile.objects.get(user=profile_user)
-    attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=profile_user)
+    attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[2][0]).filter(user=profile_user)
     meetups = Meetup.objects.filter(attendee__in=attending, active=True)
     memberships = CommunityUserProfile.objects.filter(user=profile_user, active=True)
     context = {

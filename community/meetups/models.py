@@ -16,9 +16,13 @@ class Meetup(models.Model):
     name = models.CharField(max_length=128, blank=False, null=False)
     description = models.TextField(max_length=512, blank=True, null=True)
     max_attendees = models.IntegerField(blank=True, null=True)
+    location = models.CharField(max_length=128, blank=True, null=True)
     private = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     #tag
+
+    def attendee_count(self):
+        return len(Attendee.objects.filter(meetup=self, status='GOING'))
 
     def save(self, *args, **kwargs):
         create_task = False
@@ -60,8 +64,7 @@ class Meetup(models.Model):
 class Attendee(models.Model):
     STATUS_CHOICES = (
         ('GOING', 'going'),
-        ('PROBABLY', 'probably'),
-        ('MIGHT', 'might'),
+        ('INTERESTED', 'interested'),
         ('NOT_GOING', 'not going'),
     )
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE, related_name='attendee')

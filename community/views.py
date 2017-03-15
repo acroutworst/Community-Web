@@ -23,7 +23,7 @@ def home_login(request):
     user = request.user
     all_communities = Community.objects.all()
     my_communities = Community.objects.filter(communityuserprofile__in=CommunityUserProfile.objects.filter(user=user, active=True))
-    user_attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[3][0]).filter(user=user)
+    user_attending = Attendee.objects.exclude(status=Attendee.STATUS_CHOICES[2][0]).filter(user=user)
     meetup_list = Meetup.objects.filter(Q(attendee__in=user_attending) & Q(active=True))
     notifications = Notification.objects.filter(user=user).order_by('-date')[:2]
     feed = feedparser.parse('https://www.uwb.edu/news?rss=blogs')
@@ -41,4 +41,3 @@ def home_login(request):
         'num_entries': num_entries,
     }
     return render(request, template_name='dashboard.html', context=context)
-
